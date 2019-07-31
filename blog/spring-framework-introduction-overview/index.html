@@ -1,0 +1,1786 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+  
+  
+    
+  
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/theme-next/theme-next-needmoreshare2@1/needsharebutton.min.css">
+
+
+
+  
+  
+    
+      
+    
+    
+      
+    
+  <script src="//cdn.jsdelivr.net/npm/pace-js@1/pace.min.js"></script>
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/pace-js@1/themes/blue/pace-theme-minimal.css">
+
+
+
+
+
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Pacifico:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
+  
+
+
+
+
+
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/turbo.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/turbo.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/turbo.png?v=7.1.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.1.0',
+    sidebar: {"position":"left","display":"hide","offset":12,"onmobile":true,"dimmer":true,"width":260},
+    back2top: true,
+    back2top_sidebar: true,
+    fancybox: true,
+    fastclick: true,
+    lazyload: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Spring 框架概述和体系结构   什么是 SpringSpring框架是一种轻量级解决方案，是构建企业级应用程序的一站式解决方案。然而，Spring是模块化的，允许您只使用需要的部分，而不必引入其他部分。您可以使用IoC容器，上面可以使用任何web框架，但是也可以只使用Hibernate集成代码或JDBC抽象层。Spring框架支持声明式事务管理、通过RMI或web服务远程访问逻辑，以及用于持">
+<meta name="keywords" content="Spring">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring 框架概述和体系结构">
+<meta property="og:url" content="https://www.turbosnail.top/blog/spring-framework-introduction-overview/index.html">
+<meta property="og:site_name" content="TurboSnail">
+<meta property="og:description" content="Spring 框架概述和体系结构   什么是 SpringSpring框架是一种轻量级解决方案，是构建企业级应用程序的一站式解决方案。然而，Spring是模块化的，允许您只使用需要的部分，而不必引入其他部分。您可以使用IoC容器，上面可以使用任何web框架，但是也可以只使用Hibernate集成代码或JDBC抽象层。Spring框架支持声明式事务管理、通过RMI或web服务远程访问逻辑，以及用于持">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://docs.spring.io/spring/docs/4.3.21.RELEASE/spring-framework-reference/htmlsingle/images/spring-overview.png">
+<meta property="og:image" content="https://oscimg.oschina.net/oscnet/3683ec88a2bca1a9df1dc65099552b271f7.jpg">
+<meta property="og:updated_time" content="2019-04-28T01:30:57.149Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring 框架概述和体系结构">
+<meta name="twitter:description" content="Spring 框架概述和体系结构   什么是 SpringSpring框架是一种轻量级解决方案，是构建企业级应用程序的一站式解决方案。然而，Spring是模块化的，允许您只使用需要的部分，而不必引入其他部分。您可以使用IoC容器，上面可以使用任何web框架，但是也可以只使用Hibernate集成代码或JDBC抽象层。Spring框架支持声明式事务管理、通过RMI或web服务远程访问逻辑，以及用于持">
+<meta name="twitter:image" content="https://docs.spring.io/spring/docs/4.3.21.RELEASE/spring-framework-reference/htmlsingle/images/spring-overview.png">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="TurboSnail" type="application/atom+xml">
+
+
+
+  
+  
+  <link rel="canonical" href="https://www.turbosnail.top/blog/spring-framework-introduction-overview/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Spring 框架概述和体系结构 | TurboSnail</title>
+  
+
+
+
+
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?c3528f0271a75c57e103a28d6b11ebec";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">TurboSnail</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">The harder, The luckier</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives<span class="badge">33</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags<span class="badge">39</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories<span class="badge">13</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>About</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Search</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+    <div class="reading-progress-bar"></div>
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.turbosnail.top/blog/spring-framework-introduction-overview/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="TurboSnail">
+      <meta itemprop="description" content="Please love me three thousand times">
+      <meta itemprop="image" content="/images/turbo.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="TurboSnail">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Spring 框架概述和体系结构
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-12-13 18:24:54" itemprop="dateCreated datePublished" datetime="2018-12-13T18:24:54+08:00">2018-12-13</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Spring/" itemprop="url" rel="index"><span itemprop="name">Spring</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                <span title="Symbols count in article">4.7k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                <span title="Reading time">4 mins.</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Spring 框架概述和体系结构  </p>
+<h1 id="什么是-Spring"><a href="#什么是-Spring" class="headerlink" title="什么是 Spring"></a>什么是 Spring</h1><p>Spring框架是一种轻量级解决方案，是构建企业级应用程序的一站式解决方案。然而，Spring是模块化的，允许您只使用需要的部分，而不必引入其他部分。您可以使用IoC容器，上面可以使用任何web框架，但是也可以只使用Hibernate集成代码或JDBC抽象层。Spring框架支持声明式事务管理、通过RMI或web服务远程访问逻辑，以及用于持久化数据的各种选项。它提供了一个功能齐全的MVC框架，使您能够透明地将AOP集成到软件中。</p>
+<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>Spring的设计是非侵入性的，这意味着您的域逻辑代码通常不依赖于框架本身。在集成层(例如数据访问层)中，将存在一些对数据访问技术和Spring库的依赖。但是，应该很容易将这些依赖项与代码库的其他部分隔离开来。 </p>
+<p>Spring框架是一个Java平台，它为开发Java应用程序提供了全面的基础设施支持。Spring处理基础设施，这样您就可以专注于您的应用程序。 </p>
+<p>Spring使您能够从“普通的旧Java对象”(pojo)构建应用程序，并将企业服务非入侵地应用于pojo。此功能适用于Java SE编程模型以及完整和部分Java EE。</p>
+<h2 id="依赖注入和控制反转"><a href="#依赖注入和控制反转" class="headerlink" title="依赖注入和控制反转"></a>依赖注入和控制反转</h2><p>Java应用程序(一个松散的术语，它运行从受约束的嵌入式应用程序到n层的服务器端企业应用程序)通常由协作形成应用程序的对象组成。因此，应用程序中的对象相互依赖</p>
+<p>尽管Java平台提供了丰富的应用程序开发功能，但是它缺乏将基本构建块组织成一个连贯的整体的方法，这就把这个任务留给了架构师和开发人员。虽然可以使用设计模式,例如工厂,抽象工厂,建筑,装饰,和服务定位器组成的各种类和对象实例应用程序组成,这些模式是:最佳实践给出一个名字,有什么模式的描述,如何应用它,它解决的问题,等等。模式是形式化的 </p>
+<p>Spring Framework Inversion of Control (IoC)组件通过提供一种形式化的方法，将不同的组件组合成一个完全可用的应用程序，从而解决了这个问题。Spring框架将形式化的设计模式编码为一级对象，您可以将其集成到自己的应用程序中。许多组织和机构以这种方式使用Spring框架来设计健壮的、可维护的应用程序。</p>
+<h1 id="Spring框架体系"><a href="#Spring框架体系" class="headerlink" title="Spring框架体系"></a>Spring框架体系</h1><p>（本框架体系描述的是spring 4.x版本）<br>Spring框架由大约20个模块组成的特性组成。这些模块分为核心容器、数据访问/集成、Web、AOP(面向方面编程)、工具、消息传递和测试。<br><img src="https://docs.spring.io/spring/docs/4.3.21.RELEASE/spring-framework-reference/htmlsingle/images/spring-overview.png" alt="Spring4框架体系图" title="Spring4框架体系图"></p>
+<h2 id="核心容器"><a href="#核心容器" class="headerlink" title="核心容器"></a>核心容器</h2><p>核心容器由<code>spring-core</code>、<code>spring-beans</code>、<code>spring-context</code>、<code>spring-context-support</code>和<code>spring-expression(Spring Expression Language)</code>模块组成。</p>
+<ul>
+<li><code>spring-core</code>和<code>spring-beans</code> 模块提供了框架的基本部分，包括<code>控制反转</code>（Inversion of Control, IOC）和<code>依赖注入</code>（Dependency Injection, DI）。BeanFactory是一个复杂的工厂模式实现。它移除了编码式单例的需要，并且可以把配置和依赖从实际编码逻辑中解耦，BeanFactory 容器实例化后并不会自动实例化 Bean，只有当 Bean被使用时 BeanFactory 容器才会对该 Bean 进行实例化与依赖关系的装配。</li>
+<li><code>spring-context</code> 上下文模块构建在<code>core</code>和<code>bean</code>模块之上:它是以一种类似JNDI注册的方式访问对象。Context模块继承Beans模块的特性，并添加了国际化(例如使用资源包)、事件广播、资源加载和透明地创建上下文(例如使用Servlet容器)的支持。context模块还支持EJB、JMX和基本远程处理等JavaEE特性。ApplicationContext是Context模块的核心接口。<br><code>spring-context-support</code>支持将常见的第三方库集成到Spring应用程序上下文中，用于缓存(EhCache、Guava、JCache)、邮件(JavaMail)、调度(CommonJ、Quartz)和模板引擎(FreeMarker、JasperReports、Velocity)。</li>
+<li><code>spring-expression</code> 模块是统一表达式语言(unified expression language，unified EL)的扩展，用于在运行时查询和操作对象图。该语言支持设置和获取属性值、属性赋值、方法调用、访问数组、集合和索引的内容、逻辑和算术操作符、命名变量，以及从Spring的IoC容器按名称检索对象。还支持列表映射、选择以及常见的列表聚合。<h2 id="AOP-和-Instrumentation"><a href="#AOP-和-Instrumentation" class="headerlink" title="AOP 和 Instrumentation"></a>AOP 和 Instrumentation</h2></li>
+<li><code>spring-aop</code> 模块提供面向切面的编程实现，允许你定义方法拦截器和切入点对代码干净地解耦分离。使用源码级的元数据功能，还可以将行为信息以类似.NET属性的方式合并到代码中。</li>
+<li><code>spring-aspects</code> 模块集成自 AspectJ 框架， 主要是为 Spring AOP 提供多种 AOP 实现方法</li>
+<li><code>spring-instrument</code> 模块提供用于某些应用服务器的类instrumentation 支持和类加载器实现。<br><code>spring-instrument-tomcat</code> 模块用于Tomcat的Spring的instrumentation代理</li>
+</ul>
+<h2 id="Messaging"><a href="#Messaging" class="headerlink" title="Messaging"></a>Messaging</h2><ul>
+<li>Spring Framework 4 包含<code>spring-messaging</code>模块，来自Spring集成项目的抽象，如Message、MessageChannel、MessageHandler等，用来提供基于消息的基础服务。该模块还包括一组用于将消息映射到方法的注解，类似于基于编程模型的Spring MVC的注解。</li>
+</ul>
+<h2 id="数据访问和集成"><a href="#数据访问和集成" class="headerlink" title="数据访问和集成"></a>数据访问和集成</h2><p>Data Access/Integration 层由<code>JDBC</code>、<code>ORM</code>、<code>OXM</code>、<code>JMS</code>和<code>Transaction</code> 模块组成。</p>
+<ul>
+<li><code>spring-jdbc</code> 模块提供了JDBC抽象层，它消除了冗长的JDBC编码和对数据库供应商特定错误代码解析的需要。主要是提供JDBC模板方式、关系数据库对象化方式、SimpleJdbc方式、事务管理来简化JDBC编程，主要实现类是 JdbcTemplate、SimpleJdbcTemplate 以及 NamedParameterJdbcTemplate</li>
+<li><code>spring-tx</code> 模块支持对实现特殊接口的类和所有pojo(普通旧Java对象)进行编程式和声明式事务管理。</li>
+<li><code>spring-orm</code> 模块为流行的 object-relational mapping（对象-关系映射）API(包括JPA、JDO和Hibernate)提供了集成层。使用spring-orm模块，可以结合O/R映射框架与Spring提供的所有其他特性结合，如简单声明性事务管理特性。</li>
+<li><code>spring-oxm</code>模块提供了一个抽象层用于支持 Object/XML mapping （对象/XML映射）的实现，如JAXB、Castor、XMLBeans、JiBX和XStream。</li>
+<li><code>spring-jms</code>模块包含生成和消费消息的功能。从Spring4.1开始，提供了与spring-messaging模块的集成。</li>
+</ul>
+<h2 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><p>Web层由<code>spring-web</code>、<code>spring-webmvc</code>、<code>spring-websocket</code>和<code>spring-webmvc-portlet</code>模块组成。</p>
+<ul>
+<li><code>spring-web</code> 模块提供了基本的面向web的集成功能。例如多部分文件上传功能，使用Servlet listeners和面向Web的应用程序上下文初始化IoC容器。它还包含HTTP客户端和Spring远程访问web相关的部分的支持。</li>
+<li><code>spring-webmvc</code> 模块(也称为Web servlet模块)包含Spring的模型-视图-控制器(model-view-controller，MVC)和Web应用程序的REST Web服务实现。Spring的MVC框架提供了domain model（域模型）代码和web form之间的完全分离，并集成了Spring框架的所有其他特性。</li>
+<li><code>spring-websocket</code> 模块主要是与 Web 前端的全双工通讯的协议。</li>
+<li><code>spring-webmvc-portlet</code> 模块(也称为Web-Portlet模块)提供了要在Portlet环境中使用的MVC实现，并反映了基于servlet的spring-webmvc模块的功能。（该模块在Spring5中移除）</li>
+<li><code>spring-webflux</code> 是一个新的非堵塞函数式 Reactive Web 框架， 可以用来建立异步的、非阻塞、事件驱动的服务，并且扩展性非常好。（Spring5新模块）</li>
+</ul>
+<h2 id="Test"><a href="#Test" class="headerlink" title="Test"></a>Test</h2><ul>
+<li><code>spring -test</code>模块支持使用JUnit或TestNG对Spring组件进行单元测试和集成测试。它提供了Spring ApplicationContext的一致加载和这些上下文的缓存。它还提供了模拟对象，您可以使用这些模拟对象单独测试代码。</li>
+</ul>
+<h1 id="Spring-包之间的依赖关系"><a href="#Spring-包之间的依赖关系" class="headerlink" title="Spring 包之间的依赖关系"></a>Spring 包之间的依赖关系</h1><h2 id="包列表"><a href="#包列表" class="headerlink" title="包列表"></a>包列表</h2><ul>
+<li><code>spring-core</code> 核心工具类</li>
+<li><code>spring-beans</code> bean支持</li>
+<li><code>spring-expression</code> Spring表达式语言(SpEL)</li>
+<li><code>spring-aop</code> 基于代理的AOP支持</li>
+<li><code>spring-aspects</code> 基于AspectJ方面</li>
+<li><code>spring-context</code> 应用程序上下文运行时，包括调度和远程抽象</li>
+<li><code>spring-context-support</code> 支持将公共第三方库集成到Spring应用程序上下文中的类</li>
+<li><code>spring-messaging</code> 支持消息传递体系结构和协议</li>
+<li><code>spring-instrument</code> 用于JVM引导的插装代理</li>
+<li><code>spring-instrument-tomcat</code> Tomcat的插装代理</li>
+<li><code>spring-jdbc</code> JDBC支持包，包括数据源设置和JDBC访问支持</li>
+<li><code>spring-tx</code> 事务基础设施，包括DAO支持和JCA集成</li>
+<li><code>spring-orm</code> 对象/关系映射，包括JPA和Hibernate支持</li>
+<li><code>spring-oxm</code> Object/XML Mipmg 对象/ XML映射</li>
+<li><code>spring-jms</code> JMS支持包，包括发送/接收JMS消息的帮助类</li>
+<li><code>spring-test</code> 支持单元测试和集成测试Spring组件</li>
+<li><code>spring-web</code> 基本的web支持，包括web客户机和基于web的远程处理</li>
+<li><code>spring-webmvc</code> Servlet栈的基于http的模型-视图-控制器和REST端点</li>
+<li><code>spring-websocket</code> WebSocket和SockJS基础架构，包括STOMP消息传递支持</li>
+<li><code>spring-webmvc-portlet</code> 要在Portlet环境中使用的MVC实现</li>
+</ul>
+<h2 id="依赖关系图"><a href="#依赖关系图" class="headerlink" title="依赖关系图"></a>依赖关系图</h2><p>spring-core依赖了commons-logging，而其他模块都依赖了spring-core，所以整个spring框架都依赖了commons-logging，如果有自己的日志实现如log4j，可以排除对commons-logging的依赖，没有日志实现而排除了commons-logging依赖，编译报错</p>
+<p>下图是spring4的jar之间的直接依赖图，在maven中配置spring依赖时不会再混乱了，简洁配置</p>
+<p><img src="https://oscimg.oschina.net/oscnet/3683ec88a2bca1a9df1dc65099552b271f7.jpg" alt="Spring4 jar包直接依赖图" title="Spring4 jar包直接依赖图"></p>
+
+      
+    </div>
+
+    
+      
+
+  <div class="popular-posts-header">Related Posts</div>
+  <ul class="popular-posts">
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="\blog\spring-mvc-flow-usage\" rel="bookmark">Spring Mvc 使用</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="\blog\spring-mvc-exceptions-handling\" rel="bookmark">Spring Mvc 异常处理机制和统一异常处理</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="\blog\java-mail-javamail-spring\" rel="bookmark">Java 发送邮件实现（JavaMail 和 Spring 实现）</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="\blog\spring-aop-capabilities-usage\" rel="bookmark">Spring 的 AOP 的支持</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="\blog\spring-mvc-view-resolution\" rel="bookmark">Spring Mvc 视图解析</a></div>
+      
+    </li>
+  
+  </ul>
+
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+      <div>
+        
+
+
+
+
+  
+
+
+
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>TurboSnail</li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    
+    <a href="https://www.turbosnail.top/blog/spring-framework-introduction-overview/" title="Spring 框架概述和体系结构">https://www.turbosnail.top/blog/spring-framework-introduction-overview/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</span> unless stating additionally.</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Spring/" rel="tag"># Spring</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div class="social_share">
+            
+            
+              <div id="needsharebutton-postbottom">
+                <span class="btn">
+                  <i class="fa fa-share-alt" aria-hidden="true"></i>
+                </span>
+              </div>
+            
+            
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/linux-mysql8-install/" rel="next" title="Linux 下安装 MySql 8">
+                <i class="fa fa-chevron-left"></i> Linux 下安装 MySql 8
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/spring-ioc-container/" rel="prev" title="Spring 的 IoC 容器">
+                Spring 的 IoC 容器 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="gitalk-container">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/turbo.png" alt="TurboSnail">
+            
+              <p class="site-author-name" itemprop="name">TurboSnail</p>
+              <div class="site-description motion-element" itemprop="description">Please love me three thousand times</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">33</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21vcmdhbjQxMg==" title="GitHub &rarr; https://github.com/morgan412"><i class="fa fa-fw fa-github"></i>GitHub</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="bWFpbHRvOnpvdXhxNDEyQGZveG1haWwuY29t" title="E-Mail &rarr; mailto:zouxq412@foxmail.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</span>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是-Spring"><span class="nav-number">1.</span> <span class="nav-text">什么是 Spring</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#依赖注入和控制反转"><span class="nav-number">1.2.</span> <span class="nav-text">依赖注入和控制反转</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring框架体系"><span class="nav-number">2.</span> <span class="nav-text">Spring框架体系</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#核心容器"><span class="nav-number">2.1.</span> <span class="nav-text">核心容器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AOP-和-Instrumentation"><span class="nav-number">2.2.</span> <span class="nav-text">AOP 和 Instrumentation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Messaging"><span class="nav-number">2.3.</span> <span class="nav-text">Messaging</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据访问和集成"><span class="nav-number">2.4.</span> <span class="nav-text">数据访问和集成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Web"><span class="nav-number">2.5.</span> <span class="nav-text">Web</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Test"><span class="nav-number">2.6.</span> <span class="nav-text">Test</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring-包之间的依赖关系"><span class="nav-number">3.</span> <span class="nav-text">Spring 包之间的依赖关系</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#包列表"><span class="nav-number">3.1.</span> <span class="nav-text">包列表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#依赖关系图"><span class="nav-number">3.2.</span> <span class="nav-text">依赖关系图</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+  
+    <div id="sidebar-dimmer"></div>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">TurboSnail</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="Symbols count total">239k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="Reading time total">3:38</span>
+  
+</div>
+
+
+  <div class="powered-by">Powered by <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <span class="exturl theme-link" data-url="aHR0cHM6Ly90aGVtZS1uZXh0Lm9yZw==">NexT.Pisces</span></div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script src="//cdn.jsdelivr.net/npm/jquery@2/dist/jquery.min.js"></script>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/fastclick@1/lib/fastclick.min.js"></script>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/jquery-lazyload@1/jquery.lazyload.min.js"></script>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
+
+  
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+
+  
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-reading-progress@1/reading_progress.min.js"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.0"></script>
+
+  <script src="/js/motion.js?v=7.1.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.0"></script>
+
+
+  
+  <script src="/js/js.cookie.js?v=7.1.0"></script>
+  <script src="/js/scroll-cookie.js?v=7.1.0"></script>
+
+
+  
+  <script src="/js/exturl.js?v=7.1.0"></script>
+
+
+  
+  
+  
+    
+  
+
+  
+
+  
+  
+  
+
+
+  
+
+
+  
+    
+
+  
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+
+
+  
+
+<script src="//cdn.jsdelivr.net/npm/js-md5@0/src/md5.min.js"></script>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'f20629d71f8311993aa5',
+    clientSecret: '6d18c3450a1b6a918c5a1d02b0a741dcefce2aad',
+    repo: 'morgan412.github.io',
+    owner: 'morgan412',
+    admin: ['morgan412'],
+    id: md5(location.pathname),
+    
+      language: window.navigator.language || window.navigator.userLanguage,
+    
+    distractionFreeMode: 'true'
+  });
+  gitalk.render('gitalk-container');
+</script>
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+
+  
+<script>
+if ($('body').find('pre.mermaid').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      mermaid.initialize({
+        theme: 'forest',
+        logLevel: 3,
+        flowchart: { curve: 'linear' },
+        gantt: { axisFormat: '%m/%d/%Y' },
+        sequence: { actorMargin: 50 }
+      });
+    }
+  });
+}
+</script>
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+  
+  
+    
+  
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-needmoreshare2@1/needsharebutton.min.js"></script>
+  <script>
+    
+      pbOptions = {};
+      
+        pbOptions.iconStyle = "box";
+      
+        pbOptions.boxForm = "horizontal";
+      
+        pbOptions.position = "bottomCenter";
+      
+        pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+        flOptions.iconStyle = "box";
+      
+        flOptions.boxForm = "horizontal";
+      
+        flOptions.position = "middleRight";
+      
+        flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+
+  
+
+  
+
+  
+  
+  
+    
+  
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-bookmark@1/bookmark.min.js"></script>
+  <script>
+  
+    bookmark.scrollToMark('auto', "#more");
+  
+  </script>
+
+
+  
+
+  
+
+  
+
+
+  
+    
+    
+
+<script src="/static/heart/heart.js"></script>
+<script>
+	$('body').css('background-image', 'url(http://106.13.11.180/' + (Math.floor(Math.random()*40)) + '.jpg)');
+	setInterval(function (){
+		$('body').css('background-image', 'url(http://106.13.11.180/' + (Math.floor(Math.random()*40)) + '.jpg)');
+	},600000);
+</script>
+  
+</body>
+</html>
