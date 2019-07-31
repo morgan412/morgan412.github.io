@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://www.turbosnail.top/blog/design-pattern-philosophy/</loc>
+    <lastmod>2019-07-31</lastmod>
+  </url>  <url>
+    <loc>https://www.turbosnail.top/blog/swagger-usage-annotation/</loc>
+    <lastmod>2019-07-29</lastmod>
+  </url>  <url>
+    <loc>https://www.turbosnail.top/blog/spring-cloud-jpa/</loc>
+    <lastmod>2019-05-23</lastmod>
+  </url>  <url>
+    <loc>https://www.turbosnail.top/blog/spring-cloud-zuul/</loc>
+    <lastmod>2019-05-17</lastmod>
+  </url>  <url>
+    <loc>https://www.turbosnail.top/blog/spring-cloud-zuul-filters/</loc>
+    <lastmod>2019-05-17</lastmod>
+  </url>  <url>
+    <loc>https://www.turbosnail.top/blog/spring-cloud-hystrix/</loc>
+    <lastmod>2019-05-16</lastmod>
+  </url>  <url>
+    <loc>https://www.turbosnail.top/blog/spring-cloud-eureka/</loc>
+    <lastmod>2019-05-06</lastmod>
+  </url>  <url>
+    <loc>https://www.turbosnail.top/blog/spring-cloud-config/</loc>
+    <lastmod>2019-05-06</lastmod>
+  </url>  <url>
+    <loc>https://www.turbosnail.top/blog/spring-cloud-consumer-feign/</loc>
+    <lastmod>2019-05-06</lastmod>
+  </url>  <url>
+    <loc>https://www.turbosnail.top/blog/spring-cloud-consumer-ribbon/</loc>
+    <lastmod>2019-05-06</lastmod>
+  </url>  <url>
+    <loc>https://www.turbosnail.top/blog/spring-boot-profiles/</loc>
+    <lastmod>2019-05-05</lastmod>
+  </url>  <url>
+    <loc>https://www.turbosnail.top/blog/git-introduction-usage/</loc>
+    <lastmod>2019-04-30</lastmod>
+  </url>  <url>
+    <loc>https://www.turbosnail.top/blog/docker-introduction-usage/</loc>
+    <lastmod>2019-04-28</lastmod>
+  </url>  <url>
+    <loc>https://www.turbosnail.top/blog/linux-swap/</loc>
+    <lastmod>2019-04-28</lastmod>
+  </url>  <url>
+    <loc>https://www.turbosnail.top/blog/spring-boot-actuator/</loc>
+    <lastmod>2019-04-28</lastmod>
+  </url>  <url>
+    <loc>https://www.turbosnail.top/blog/java-annotation/</loc>
+    <lastmod>2019-04-28</lastmod>
+  </url>  <url>
+    <loc>https://www.turbosnail.top/blog/spring-mvc-exceptions-handling/</loc>
+    <lastmod>2019-04-28</lastmod>
+  </url>  <url>
+    <loc>https://www.turbosnail.top/blog/spring-mvc-view-resolution/</loc>
+    <lastmod>2019-04-28</lastmod>
+  </url>  <url>
+    <loc>https://www.turbosnail.top/blog/spring-boot-quickstart/</loc>
+    <lastmod>2019-04-28</lastmod>
+  </url>  <url>
+    <loc>https://www.turbosnail.top/blog/spring-mvc-flow-usage/</loc>
+    <lastmod>2019-04-28</lastmod>
+  </url>  <url>
+    <loc>https://www.turbosnail.top/blog/mybatis-plus-code-generator/</loc>
+    <lastmod>2019-04-28</lastmod>
+  </url>  <url>
+    <loc>https://www.turbosnail.top/blog/java-mail-javamail-spring/</loc>
+    <lastmod>2019-04-28</lastmod>
+  </url>  <url>
+    <loc>https://www.turbosnail.top/blog/java-lambda-usage/</loc>
+    <lastmod>2019-04-28</lastmod>
+  </url>  <url>
+    <loc>https://www.turbosnail.top/blog/mybatis-generator/</loc>
+    <lastmod>2019-04-28</lastmod>
+  </url>  <url>
+    <loc>https://www.turbosnail.top/blog/mybatis-custom-plugin-pagehelper/</loc>
+    <lastmod>2019-04-28</lastmod>
+  </url>  <url>
+    <loc>https://www.turbosnail.top/blog/mybatis-dynamic-sql/</loc>
+    <lastmod>2019-04-28</lastmod>
+  </url>  <url>
+    <loc>https://www.turbosnail.top/blog/mybatis-spring/</loc>
+    <lastmod>2019-04-28</lastmod>
+  </url>  <url>
+    <loc>https://www.turbosnail.top/blog/mybatis-configuration-usage/</loc>
+    <lastmod>2019-04-28</lastmod>
+  </url>  <url>
+    <loc>https://www.turbosnail.top/blog/spring-aop-capabilities-usage/</loc>
+    <lastmod>2019-04-28</lastmod>
+  </url>  <url>
+    <loc>https://www.turbosnail.top/blog/spring-ioc-container/</loc>
+    <lastmod>2019-04-28</lastmod>
+  </url>  <url>
+    <loc>https://www.turbosnail.top/blog/spring-framework-introduction-overview/</loc>
+    <lastmod>2019-04-28</lastmod>
+  </url>  <url>
+    <loc>https://www.turbosnail.top/blog/linux-mysql8-install/</loc>
+    <lastmod>2019-04-28</lastmod>
+  </url>  <url>
+    <loc>https://www.turbosnail.top/blog/linux-jdk-install/</loc>
+    <lastmod>2019-04-28</lastmod>
+  </url>
+</urlset>

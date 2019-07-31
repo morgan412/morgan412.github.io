@@ -1,0 +1,601 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>TurboSnail</title>
+  
+  <subtitle>The harder, The luckier</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="https://www.turbosnail.top/"/>
+  <updated>2019-07-29T02:54:03.022Z</updated>
+  <id>https://www.turbosnail.top/</id>
+  
+  <author>
+    <name>TurboSnail</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Swagger使用和注释介绍</title>
+    <link href="https://www.turbosnail.top/blog/swagger-usage-annotation/"/>
+    <id>https://www.turbosnail.top/blog/swagger-usage-annotation/</id>
+    <published>2019-07-12T08:58:38.000Z</published>
+    <updated>2019-07-29T02:54:03.022Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;介绍&quot;&gt;&lt;a href=&quot;#介绍&quot; class=&quot;headerlink&quot; title=&quot;介绍&quot;&gt;&lt;/a&gt;介绍&lt;/h1&gt;&lt;h2 id=&quot;什么是Swagger&quot;&gt;&lt;a href=&quot;#什么是Swagger&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="其他" scheme="https://www.turbosnail.top/categories/%E5%85%B6%E4%BB%96/"/>
+    
+    
+      <category term="swagger" scheme="https://www.turbosnail.top/tags/swagger/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>设计模式-面向对象设计原则</title>
+    <link href="https://www.turbosnail.top/blog/design-pattern-philosophy/"/>
+    <id>https://www.turbosnail.top/blog/design-pattern-philosophy/</id>
+    <published>2019-07-04T08:58:38.000Z</published>
+    <updated>2019-07-31T03:18:03.174Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;设计模式（Design
+        
+      
+    
+    </summary>
+    
+      <category term="设计模式" scheme="https://www.turbosnail.top/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+    
+      <category term="设计模式" scheme="https://www.turbosnail.top/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+      <category term="设计原则" scheme="https://www.turbosnail.top/tags/%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Spring Data JPA 使用</title>
+    <link href="https://www.turbosnail.top/blog/spring-cloud-jpa/"/>
+    <id>https://www.turbosnail.top/blog/spring-cloud-jpa/</id>
+    <published>2019-05-21T08:58:38.000Z</published>
+    <updated>2019-05-23T10:11:15.429Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;Java 持久层框架访问数据库的方式大致分为两种。一种以 SQL 中心，封装一定程度的 JDBC 操作，比如 MyBatis。另一种是以 Java Entity 为中心，将实体的关系对应到数据库表之间的关系，如 ORM (Object Relational
+        
+      
+    
+    </summary>
+    
+      <category term="Spring Data" scheme="https://www.turbosnail.top/categories/Spring-Data/"/>
+    
+    
+      <category term="Spring Data JPA" scheme="https://www.turbosnail.top/tags/Spring-Data-JPA/"/>
+    
+      <category term="JPA" scheme="https://www.turbosnail.top/tags/JPA/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Spring Cloud Zuul 过滤器</title>
+    <link href="https://www.turbosnail.top/blog/spring-cloud-zuul-filters/"/>
+    <id>https://www.turbosnail.top/blog/spring-cloud-zuul-filters/</id>
+    <published>2019-05-16T02:51:43.000Z</published>
+    <updated>2019-05-17T07:23:09.505Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;Spring Cloud Zuul 除了可以实现请求的路由功能，还有一个重要的功能就是&lt;strong&gt;过滤器&lt;/strong&gt;。Zuul
+        
+      
+    
+    </summary>
+    
+      <category term="Spring Cloud" scheme="https://www.turbosnail.top/categories/Spring-Cloud/"/>
+    
+    
+      <category term="Spring Cloud" scheme="https://www.turbosnail.top/tags/Spring-Cloud/"/>
+    
+      <category term="Zuul" scheme="https://www.turbosnail.top/tags/Zuul/"/>
+    
+      <category term="微服务" scheme="https://www.turbosnail.top/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
+    
+      <category term="服务网关" scheme="https://www.turbosnail.top/tags/%E6%9C%8D%E5%8A%A1%E7%BD%91%E5%85%B3/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Spring Cloud Zuul 构建微服务网关</title>
+    <link href="https://www.turbosnail.top/blog/spring-cloud-zuul/"/>
+    <id>https://www.turbosnail.top/blog/spring-cloud-zuul/</id>
+    <published>2019-05-10T01:51:43.000Z</published>
+    <updated>2019-05-17T09:44:56.663Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;为什么要有服务网关？在使用微服务架构时，一个客户端的业务需求可能会调用多个服务的接口，例如一次购物，需要调用商品服务，下单的时候要调用订单服务（服务划分更细的话还要调用更多的微服务）。客户端直接跟各个服务通信会有一些问题或者说弊端，客户端的调用会复杂，更重要的是会有跨域请求
+        
+      
+    
+    </summary>
+    
+      <category term="Spring Cloud" scheme="https://www.turbosnail.top/categories/Spring-Cloud/"/>
+    
+    
+      <category term="Spring Cloud" scheme="https://www.turbosnail.top/tags/Spring-Cloud/"/>
+    
+      <category term="Zuul" scheme="https://www.turbosnail.top/tags/Zuul/"/>
+    
+      <category term="微服务" scheme="https://www.turbosnail.top/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
+    
+      <category term="服务网关" scheme="https://www.turbosnail.top/tags/%E6%9C%8D%E5%8A%A1%E7%BD%91%E5%85%B3/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Spring Cloud 断路器 Hystrix</title>
+    <link href="https://www.turbosnail.top/blog/spring-cloud-hystrix/"/>
+    <id>https://www.turbosnail.top/blog/spring-cloud-hystrix/</id>
+    <published>2019-05-06T01:51:43.000Z</published>
+    <updated>2019-05-16T07:05:21.519Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;在微服务架构中，通常存在多个服务调用层。微服务之间通过网络进行通信，从而支撑起整个应用，为了保证高可用，单个服务通常也会集群部署。但由于网络原因或者自身原因，每个服务并不能保证100%
+        
+      
+    
+    </summary>
+    
+      <category term="Spring Cloud" scheme="https://www.turbosnail.top/categories/Spring-Cloud/"/>
+    
+    
+      <category term="Spring Cloud" scheme="https://www.turbosnail.top/tags/Spring-Cloud/"/>
+    
+      <category term="微服务" scheme="https://www.turbosnail.top/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
+    
+      <category term="Feign" scheme="https://www.turbosnail.top/tags/Feign/"/>
+    
+      <category term="Ribbon" scheme="https://www.turbosnail.top/tags/Ribbon/"/>
+    
+      <category term="Hystrix" scheme="https://www.turbosnail.top/tags/Hystrix/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Spring Cloud 服务消费（Feign）</title>
+    <link href="https://www.turbosnail.top/blog/spring-cloud-consumer-feign/"/>
+    <id>https://www.turbosnail.top/blog/spring-cloud-consumer-feign/</id>
+    <published>2019-05-05T03:02:21.000Z</published>
+    <updated>2019-05-06T01:59:55.483Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;在使用 RestTemplate 实现 Rest API 调用的时候，是通过拼接字符串的方式构造 URL，向具体服务实例发起 Http 请求。在定义 RestTemplate 的时候，还可以增加 &lt;code&gt;@LoadBalanced&lt;/code&gt;
+        
+      
+    
+    </summary>
+    
+      <category term="Spring Cloud" scheme="https://www.turbosnail.top/categories/Spring-Cloud/"/>
+    
+    
+      <category term="Spring Cloud" scheme="https://www.turbosnail.top/tags/Spring-Cloud/"/>
+    
+      <category term="微服务" scheme="https://www.turbosnail.top/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
+    
+      <category term="Eureka" scheme="https://www.turbosnail.top/tags/Eureka/"/>
+    
+      <category term="Feign" scheme="https://www.turbosnail.top/tags/Feign/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Spring Cloud 服务消费（Ribbon）</title>
+    <link href="https://www.turbosnail.top/blog/spring-cloud-consumer-ribbon/"/>
+    <id>https://www.turbosnail.top/blog/spring-cloud-consumer-ribbon/</id>
+    <published>2019-05-01T09:29:43.000Z</published>
+    <updated>2019-05-06T01:59:47.235Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;之前介绍了使用 Eureka 作为服务发现组件，构建了 Eureka Server 作为服务注册中心，使用 Eureka Client 去注册服务 &lt;span class=&quot;exturl&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="Spring Cloud" scheme="https://www.turbosnail.top/categories/Spring-Cloud/"/>
+    
+    
+      <category term="Spring Cloud" scheme="https://www.turbosnail.top/tags/Spring-Cloud/"/>
+    
+      <category term="微服务" scheme="https://www.turbosnail.top/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
+    
+      <category term="Eureka" scheme="https://www.turbosnail.top/tags/Eureka/"/>
+    
+      <category term="Ribbon" scheme="https://www.turbosnail.top/tags/Ribbon/"/>
+    
+      <category term="RestTemplate" scheme="https://www.turbosnail.top/tags/RestTemplate/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Spring Cloud Config 统一配置中心</title>
+    <link href="https://www.turbosnail.top/blog/spring-cloud-config/"/>
+    <id>https://www.turbosnail.top/blog/spring-cloud-config/</id>
+    <published>2019-04-24T15:30:38.000Z</published>
+    <updated>2019-05-06T07:59:35.631Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;Spring Cloud Config 统一配置中心 &lt;/p&gt;
+&lt;h1 id=&quot;统一配置中心&quot;&gt;&lt;a href=&quot;#统一配置中心&quot; class=&quot;headerlink&quot; title=&quot;统一配置中心&quot;&gt;&lt;/a&gt;统一配置中心&lt;/h1&gt;&lt;h2 id=&quot;统一管理配置&quot;&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+      <category term="Spring Cloud" scheme="https://www.turbosnail.top/categories/Spring-Cloud/"/>
+    
+    
+      <category term="Spring Cloud" scheme="https://www.turbosnail.top/tags/Spring-Cloud/"/>
+    
+      <category term="微服务" scheme="https://www.turbosnail.top/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
+    
+      <category term="Spring Cloud Config" scheme="https://www.turbosnail.top/tags/Spring-Cloud-Config/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Spring Cloud 服务注册与发现、高可用（Eureka）</title>
+    <link href="https://www.turbosnail.top/blog/spring-cloud-eureka/"/>
+    <id>https://www.turbosnail.top/blog/spring-cloud-eureka/</id>
+    <published>2019-04-17T09:59:47.000Z</published>
+    <updated>2019-05-06T08:04:05.891Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;Spring Cloud 服务注册与发现、高可用（Eureka）&lt;/p&gt;
+&lt;h1 id=&quot;服务注册发现&quot;&gt;&lt;a href=&quot;#服务注册发现&quot; class=&quot;headerlink&quot; title=&quot;服务注册发现&quot;&gt;&lt;/a&gt;服务注册发现&lt;/h1&gt;&lt;h2 id=&quot;服务发现&quot;&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+      <category term="Spring Cloud" scheme="https://www.turbosnail.top/categories/Spring-Cloud/"/>
+    
+    
+      <category term="Spring Cloud" scheme="https://www.turbosnail.top/tags/Spring-Cloud/"/>
+    
+      <category term="微服务" scheme="https://www.turbosnail.top/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
+    
+      <category term="Eureka" scheme="https://www.turbosnail.top/tags/Eureka/"/>
+    
+      <category term="服务注册" scheme="https://www.turbosnail.top/tags/%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Git 详细介绍和使用</title>
+    <link href="https://www.turbosnail.top/blog/git-introduction-usage/"/>
+    <id>https://www.turbosnail.top/blog/git-introduction-usage/</id>
+    <published>2019-04-04T09:43:41.000Z</published>
+    <updated>2019-04-30T09:47:52.092Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;git /gɪt/ 是一个开源的分布式版本控制系统&lt;/p&gt;
+&lt;p&gt;最初是 Linus Torvalds 为了帮助管理 Linux 内核开发而开发的一个开放源码的版本控制软件&lt;/p&gt;
+&lt;h1 id=&quot;介绍&quot;&gt;&lt;a href=&quot;#介绍&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="Git" scheme="https://www.turbosnail.top/categories/Git/"/>
+    
+    
+      <category term="Git" scheme="https://www.turbosnail.top/tags/Git/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Docker 入门实践</title>
+    <link href="https://www.turbosnail.top/blog/docker-introduction-usage/"/>
+    <id>https://www.turbosnail.top/blog/docker-introduction-usage/</id>
+    <published>2019-04-02T09:58:13.000Z</published>
+    <updated>2019-04-28T01:30:57.208Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;Docker-是什么&quot;&gt;&lt;a href=&quot;#Docker-是什么&quot; class=&quot;headerlink&quot; title=&quot;Docker 是什么&quot;&gt;&lt;/a&gt;Docker 是什么&lt;/h1&gt;&lt;h2 id=&quot;Docker-容器&quot;&gt;&lt;a href=&quot;#Docker-容器&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="Docker" scheme="https://www.turbosnail.top/categories/Docker/"/>
+    
+    
+      <category term="Docker" scheme="https://www.turbosnail.top/tags/Docker/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux 使用文件增加虚拟内存 swap</title>
+    <link href="https://www.turbosnail.top/blog/linux-swap/"/>
+    <id>https://www.turbosnail.top/blog/linux-swap/</id>
+    <published>2019-03-25T01:29:12.000Z</published>
+    <updated>2019-04-28T01:30:57.206Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;之前买了个云服务器玩，不过是最低配置的1核1G，后来发现这个内存太小了，随便装几个软件就不行了，内存消耗较大的像 redis 运行起来很多问题。&lt;/p&gt;
+&lt;p&gt;前些时间了解了下 Docker 容器，去尝试了下发现 MySQL
+        
+      
+    
+    </summary>
+    
+      <category term="Linux" scheme="https://www.turbosnail.top/categories/Linux/"/>
+    
+    
+      <category term="Linux" scheme="https://www.turbosnail.top/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Spring Boot 多环境配置</title>
+    <link href="https://www.turbosnail.top/blog/spring-boot-profiles/"/>
+    <id>https://www.turbosnail.top/blog/spring-boot-profiles/</id>
+    <published>2019-03-08T06:52:51.000Z</published>
+    <updated>2019-05-05T00:35:22.279Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;Spring Boot
+        
+      
+    
+    </summary>
+    
+      <category term="Spring Boot" scheme="https://www.turbosnail.top/categories/Spring-Boot/"/>
+    
+    
+      <category term="Spring Boot" scheme="https://www.turbosnail.top/tags/Spring-Boot/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Spring Boot 的生产级特性--Actuator监控端点</title>
+    <link href="https://www.turbosnail.top/blog/spring-boot-actuator/"/>
+    <id>https://www.turbosnail.top/blog/spring-boot-actuator/</id>
+    <published>2019-02-28T09:56:08.000Z</published>
+    <updated>2019-04-28T01:30:57.201Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;Spring Boot 生产级的特性&lt;/p&gt;
+&lt;p&gt;Spring Boot 有许多开箱即用的模块或者说插件，其中 &lt;code&gt;spring-boot-actuator&lt;/code&gt; 提供了大量的生产级的特性。添加
+        
+      
+    
+    </summary>
+    
+      <category term="Spring Boot" scheme="https://www.turbosnail.top/categories/Spring-Boot/"/>
+    
+    
+      <category term="Spring Boot" scheme="https://www.turbosnail.top/tags/Spring-Boot/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java 注解</title>
+    <link href="https://www.turbosnail.top/blog/java-annotation/"/>
+    <id>https://www.turbosnail.top/blog/java-annotation/</id>
+    <published>2019-02-28T07:15:28.000Z</published>
+    <updated>2019-04-28T01:30:57.199Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;Java 注解其实大家不陌生，使用 spring、mybatis 这样的框架时，会有许多的注解，那注解到底是什么？&lt;/p&gt;
+&lt;p&gt;&lt;span class=&quot;exturl&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="Java" scheme="https://www.turbosnail.top/categories/Java/"/>
+    
+    
+      <category term="Java" scheme="https://www.turbosnail.top/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Spring Mvc 异常处理机制和统一异常处理</title>
+    <link href="https://www.turbosnail.top/blog/spring-mvc-exceptions-handling/"/>
+    <id>https://www.turbosnail.top/blog/spring-mvc-exceptions-handling/</id>
+    <published>2019-02-21T09:06:54.000Z</published>
+    <updated>2019-04-28T01:30:57.196Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;异常处理机制&quot;&gt;&lt;a href=&quot;#异常处理机制&quot; class=&quot;headerlink&quot; title=&quot;异常处理机制&quot;&gt;&lt;/a&gt;异常处理机制&lt;/h1&gt;&lt;p&gt;Spring MVC 是通过 &lt;code&gt;HandlerExceptionResolver&lt;/code&gt;
+        
+      
+    
+    </summary>
+    
+      <category term="Spring" scheme="https://www.turbosnail.top/categories/Spring/"/>
+    
+    
+      <category term="Spring" scheme="https://www.turbosnail.top/tags/Spring/"/>
+    
+      <category term="Spring Mvc" scheme="https://www.turbosnail.top/tags/Spring-Mvc/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Spring Mvc 视图解析</title>
+    <link href="https://www.turbosnail.top/blog/spring-mvc-view-resolution/"/>
+    <id>https://www.turbosnail.top/blog/spring-mvc-view-resolution/</id>
+    <published>2019-02-20T07:59:05.000Z</published>
+    <updated>2019-04-28T01:30:57.193Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;在 Spring Mvc 中，我们自己编写的控制器方法 (Controller) 并没有直接去渲染结果，使用 response 去输出到浏览器。方法返回的是 ModelAndView，甚至只是一个 String 类型的视图名，那 Spring Mvc
+        
+      
+    
+    </summary>
+    
+      <category term="Spring" scheme="https://www.turbosnail.top/categories/Spring/"/>
+    
+    
+      <category term="Spring" scheme="https://www.turbosnail.top/tags/Spring/"/>
+    
+      <category term="Spring Mvc" scheme="https://www.turbosnail.top/tags/Spring-Mvc/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Spring Boot 快速入门</title>
+    <link href="https://www.turbosnail.top/blog/spring-boot-quickstart/"/>
+    <id>https://www.turbosnail.top/blog/spring-boot-quickstart/</id>
+    <published>2019-02-14T09:31:38.000Z</published>
+    <updated>2019-04-28T01:30:57.191Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;Spring Boot 简化了 Spring 应用的配置和开发，它管理着 Spring 容器和第三方插件，并提供很多默认系统级的服务，这样我们只要少量的配置和代码就能完成大部分 Spring 应用。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Spring Boot
+        
+      
+    
+    </summary>
+    
+      <category term="Spring Boot" scheme="https://www.turbosnail.top/categories/Spring-Boot/"/>
+    
+    
+      <category term="Spring Boot" scheme="https://www.turbosnail.top/tags/Spring-Boot/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Spring Mvc 使用</title>
+    <link href="https://www.turbosnail.top/blog/spring-mvc-flow-usage/"/>
+    <id>https://www.turbosnail.top/blog/spring-mvc-flow-usage/</id>
+    <published>2019-01-29T01:16:21.000Z</published>
+    <updated>2019-04-28T01:30:57.188Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;Spring Mvc 是基于 Servlet API 构建的 Web 框架，围绕一个 &lt;code&gt;DispatcherServlet&lt;/code&gt; 设计的，这个 Servlet
+        
+      
+    
+    </summary>
+    
+      <category term="Spring" scheme="https://www.turbosnail.top/categories/Spring/"/>
+    
+    
+      <category term="Spring" scheme="https://www.turbosnail.top/tags/Spring/"/>
+    
+      <category term="Spring Mvc" scheme="https://www.turbosnail.top/tags/Spring-Mvc/"/>
+    
+  </entry>
+  
+</feed>
