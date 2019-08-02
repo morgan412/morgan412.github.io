@@ -156,21 +156,20 @@
 
 
 
-  <meta name="description" content="Spring Cloud Zuul 除了可以实现请求的路由功能，还有一个重要的功能就是过滤器。Zuul 的路由功能让所有的微服务提供的接口有统一的网关入口，但并不是所有的接口都是对外完全开发的，它们的访问权限一般都有一定的限制。那我们可以在每个服务都加上对应的校验和权限鉴定，那这些通常都是用过滤器或拦截器实现的，而且一个系统的各个服务的校验也大都是相似，这些相似的校验逻辑打码在每个服务都会有一份，">
-<meta name="keywords" content="Spring Cloud,Zuul,微服务,服务网关">
+  <meta name="description" content="介绍单例模式（Singleton Pattern）是一个比较简单的设计模式，属于创建型模式。其定义为  确保某一个类只有一个实例，而且自行实例化并向整个系统提供这个实例  在系统中，单例模式要求一个单例对象只能有一个实例，这类对象如果有多个实例就可能会产生一些问题，如：资源消耗过多，处理结果不一致等，一般单例会有以下使用场景  生成唯一 序列号 整个项目的共享访问点或共享数据，如Web页面计数器">
+<meta name="keywords" content="设计模式,单例模式">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Spring Cloud Zuul 过滤器">
-<meta property="og:url" content="https://www.turbosnail.top/blog/spring-cloud-zuul-filters/index.html">
+<meta property="og:title" content="单例模式-只有一个实例">
+<meta property="og:url" content="https://www.turbosnail.top/blog/design-pattern-singleton/index.html">
 <meta property="og:site_name" content="TurboSnail">
-<meta property="og:description" content="Spring Cloud Zuul 除了可以实现请求的路由功能，还有一个重要的功能就是过滤器。Zuul 的路由功能让所有的微服务提供的接口有统一的网关入口，但并不是所有的接口都是对外完全开发的，它们的访问权限一般都有一定的限制。那我们可以在每个服务都加上对应的校验和权限鉴定，那这些通常都是用过滤器或拦截器实现的，而且一个系统的各个服务的校验也大都是相似，这些相似的校验逻辑打码在每个服务都会有一份，">
+<meta property="og:description" content="介绍单例模式（Singleton Pattern）是一个比较简单的设计模式，属于创建型模式。其定义为  确保某一个类只有一个实例，而且自行实例化并向整个系统提供这个实例  在系统中，单例模式要求一个单例对象只能有一个实例，这类对象如果有多个实例就可能会产生一些问题，如：资源消耗过多，处理结果不一致等，一般单例会有以下使用场景  生成唯一 序列号 整个项目的共享访问点或共享数据，如Web页面计数器">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="https://oscimg.oschina.net/oscnet/f073b575ee175b50e22a8575b29c8cf883b.jpg">
-<meta property="og:image" content="https://oscimg.oschina.net/oscnet/c8c1bf370aa5feee689a2c5365271ac3e28.jpg">
-<meta property="og:updated_time" content="2019-05-17T07:23:09.505Z">
+<meta property="og:image" content="https://oscimg.oschina.net/oscnet/9884e94899f92b1c97d33be04a5cad5ad31.jpg">
+<meta property="og:updated_time" content="2019-08-02T07:26:32.199Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Spring Cloud Zuul 过滤器">
-<meta name="twitter:description" content="Spring Cloud Zuul 除了可以实现请求的路由功能，还有一个重要的功能就是过滤器。Zuul 的路由功能让所有的微服务提供的接口有统一的网关入口，但并不是所有的接口都是对外完全开发的，它们的访问权限一般都有一定的限制。那我们可以在每个服务都加上对应的校验和权限鉴定，那这些通常都是用过滤器或拦截器实现的，而且一个系统的各个服务的校验也大都是相似，这些相似的校验逻辑打码在每个服务都会有一份，">
-<meta name="twitter:image" content="https://oscimg.oschina.net/oscnet/f073b575ee175b50e22a8575b29c8cf883b.jpg">
+<meta name="twitter:title" content="单例模式-只有一个实例">
+<meta name="twitter:description" content="介绍单例模式（Singleton Pattern）是一个比较简单的设计模式，属于创建型模式。其定义为  确保某一个类只有一个实例，而且自行实例化并向整个系统提供这个实例  在系统中，单例模式要求一个单例对象只能有一个实例，这类对象如果有多个实例就可能会产生一些问题，如：资源消耗过多，处理结果不一致等，一般单例会有以下使用场景  生成唯一 序列号 整个项目的共享访问点或共享数据，如Web页面计数器">
+<meta name="twitter:image" content="https://oscimg.oschina.net/oscnet/9884e94899f92b1c97d33be04a5cad5ad31.jpg">
 
 
 
@@ -180,7 +179,7 @@
 
   
   
-  <link rel="canonical" href="https://www.turbosnail.top/blog/spring-cloud-zuul-filters/">
+  <link rel="canonical" href="https://www.turbosnail.top/blog/design-pattern-singleton/">
 
 
 
@@ -190,7 +189,7 @@
   };
 </script>
 
-  <title>Spring Cloud Zuul 过滤器 | TurboSnail</title>
+  <title>单例模式-只有一个实例 | TurboSnail</title>
   
 
 
@@ -461,7 +460,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.turbosnail.top/blog/spring-cloud-zuul-filters/">
+    <link itemprop="mainEntityOfPage" href="https://www.turbosnail.top/blog/design-pattern-singleton/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="TurboSnail">
@@ -478,7 +477,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">Spring Cloud Zuul 过滤器
+          <h2 class="post-title" itemprop="name headline">单例模式-只有一个实例
 
               
             
@@ -504,7 +503,7 @@
                 
               
 
-              <time title="Created: 2019-05-16 10:51:43" itemprop="dateCreated datePublished" datetime="2019-05-16T10:51:43+08:00">2019-05-16</time>
+              <time title="Created: 2019-08-01 10:00:38" itemprop="dateCreated datePublished" datetime="2019-08-01T10:00:38+08:00">2019-08-01</time>
             
 
             
@@ -522,7 +521,7 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Spring-Cloud/" itemprop="url" rel="index"><span itemprop="name">Spring Cloud</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/设计模式/" itemprop="url" rel="index"><span itemprop="name">设计模式</span></a></span>
 
                 
                 
@@ -551,7 +550,7 @@
                   <i class="fa fa-file-word-o"></i>
                 </span>
                 
-                <span title="Symbols count in article">7.6k</span>
+                <span title="Symbols count in article">3.8k</span>
               
 
               
@@ -563,7 +562,7 @@
                   <i class="fa fa-clock-o"></i>
                 </span>
                 
-                <span title="Reading time">7 mins.</span>
+                <span title="Reading time">3 mins.</span>
               
             </div>
           
@@ -583,147 +582,50 @@
       
 
       
-        <p>Spring Cloud Zuul 除了可以实现请求的路由功能，还有一个重要的功能就是<strong>过滤器</strong>。Zuul 的路由功能让所有的微服务提供的接口有统一的网关入口，但并不是所有的接口都是对外完全开发的，它们的访问权限一般都有一定的限制。那我们可以在每个服务都加上对应的校验和权限鉴定，那这些通常都是用过滤器或拦截器实现的，而且一个系统的各个服务的校验也大都是相似，这些相似的校验逻辑打码在每个服务都会有一份，不仅冗余且维护麻烦。更好的办法就是在请求的最前端统一去做这样的事情，而统一的 API 服务网关入口就是合适的选择</p>
-<p>Zuul 可以通过定义过滤器来实现请求的拦截和过滤，而它本身的大部分功能也是通过过滤器实现的</p>
-<h1 id="过滤器"><a href="#过滤器" class="headerlink" title="过滤器"></a>过滤器</h1><p>在 Zuul 中自定义过滤器需要继承抽象类 <code>ZuulFilter</code>，需要实现以下4个方法：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">String <span class="title">filterType</span><span class="params">()</span>； <span class="comment">// 过滤器类型</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">filterOrder</span><span class="params">()</span>； <span class="comment">// 执行顺序，数值越小优先级越高</span></span></span><br><span class="line"><span class="function">                      </span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">shouldFilter</span><span class="params">()</span>； <span class="comment">// 执行过滤器的条件</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">Object <span class="title">run</span><span class="params">()</span> <span class="keyword">throws</span> ZuulException； <span class="comment">// 具体的过滤操作</span></span></span><br></pre></td></tr></table></figure>
-<p>从名字我们也能知道各个方法的作用，下面来了解下过滤器类型和过滤器的生命周期，以及自定义过滤器的使用</p>
-<h2 id="过滤器类型和生命周期"><a href="#过滤器类型和生命周期" class="headerlink" title="过滤器类型和生命周期"></a>过滤器类型和生命周期</h2><p>Zuul 定义了4种不同的过滤器类型，对应着请求的典型生命周期</p>
+        <h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>单例模式（Singleton Pattern）是一个比较简单的设计模式，属于创建型模式。其定义为</p>
+<blockquote>
+<p><strong>确保某一个类只有一个实例，而且自行实例化并向整个系统提供这个实例</strong></p>
+</blockquote>
+<p>在系统中，单例模式要求一个单例对象只能有一个实例，这类对象如果有多个实例就可能会产生一些问题，如：资源消耗过多，处理结果不一致等，一般单例会有以下使用场景</p>
 <ul>
-<li><code>PRE</code>: 在请求被路由之前执行。可以用于请求身份验证、选择源服务器和记录调试信息</li>
-<li><code>ROURING</code>: 该过滤器将请求路由到服务。用于构建和发送给微服务的请求（使用 Apache HttpClient 或 Netflix Ribbon 请求服务）</li>
-<li><code>POST</code>:  在请求被路由到服务之后执行。可以用于向响应添加标准的 HTTP Header、收集统计数据和指标，以及将响应从源服务发送到客户端</li>
-<li><code>ERROR</code>:  该过滤器在其他阶段发生错误时执行</li>
+<li>生成唯一 序列号</li>
+<li>整个项目的共享访问点或共享数据，如Web页面计数器</li>
+<li>创建一个对象实例需要消耗过多资源，如I/O和数据库连接等</li>
 </ul>
-<p>除了默认的过滤器流，Zuul 还允许我们创建自定义过滤器类型并显式地执行它们。例如，我们可以自定义一个 <code>STATIC</code> 类型的过滤器，它在Zuul 中生成响应，而不是将请求转发到后端的服务</p>
-<p>下面是 Zuul 的生命周期图，描述着各种类型的过滤器的执行顺序（图片来源于 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL05ldGZsaXgvenV1bC93aWtp" title="https://github.com/Netflix/zuul/wiki">Zuul Wiki<i class="fa fa-external-link"></i></span>）</p>
-<p><img src="https://oscimg.oschina.net/oscnet/f073b575ee175b50e22a8575b29c8cf883b.jpg" alt="Zuul 的生命周期图"></p>
-<h2 id="Spring-Cloud-Zuul-的过滤器"><a href="#Spring-Cloud-Zuul-的过滤器" class="headerlink" title="Spring Cloud Zuul 的过滤器"></a>Spring Cloud Zuul 的过滤器</h2><p>Spring Cloud Zuul 作为服务网关的大部分功能都是通过过滤器实现的，它在请求的各个阶段实现了一系列的过滤器，在 Spring Cloud Zuul 网关服务启动时自动加载和启用。实现的这些过滤器是在 <code>spring-cloud-netflix-zuul</code> 模块中的 <code>org.springframework.cloud.netflix.zuul.filters</code> 包下面</p>
-<p><img src="https://oscimg.oschina.net/oscnet/c8c1bf370aa5feee689a2c5365271ac3e28.jpg" alt></p>
-<p>下面介绍部分过滤器的功能</p>
-<p><strong>Pre filters</strong></p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">filter</th>
-<th style="text-align:center">order</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center"><code>ServletDetectionFilter</code></td>
-<td style="text-align:center">-3</td>
-<td>检测请求是否通过 Spring 调度程序，即判断请求是交由 Spring DispatcherServlet 处理，还是 ZuulServlet 处理(主要是用于大文件上传)</td>
-</tr>
-<tr>
-<td style="text-align:center"><code>Servlet30WrapperFilter</code></td>
-<td style="text-align:center">-2</td>
-<td>把原始 HttpServletRequest 包装成 Servlet30RequestWrapper 对象</td>
-</tr>
-<tr>
-<td style="text-align:center"><code>FormBodyWrapperFilter</code></td>
-<td style="text-align:center">-1</td>
-<td>解析表单数据并为下游服务重新编码</td>
-</tr>
-<tr>
-<td style="text-align:center"><code>DebugFilter</code></td>
-<td style="text-align:center">1</td>
-<td>如果设置 debug 请求参数，则此过滤器将RequestContext.setDebugRouting() 和 RequestContext.setDebugRequest() 设置为true</td>
-</tr>
-<tr>
-<td style="text-align:center"><code>PreDecorationFilter</code></td>
-<td style="text-align:center">5</td>
-<td>根据提供的 RouteLocator 确定路由的位置和方式，它还为下游请求设置各种与代理相关的头文件</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Route filters</strong></p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">filter</th>
-<th style="text-align:center">order</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center"><code>RibbonRoutingFilter</code></td>
-<td style="text-align:center">10</td>
-<td>使用 Ribbon、Hystrix 和 可插拔 HTTP客户机发送请求。只对 RequestContext 存在 serviceId 参数的请求进行处理，即只对通过 serviceId配置路由规则的请求路由。可以使用不同的 HTTP 客户端：HttpClient、OkHttpClient、Netflix Ribbon HTTP client</td>
-</tr>
-<tr>
-<td style="text-align:center"><code>SimpleHostRoutingFilter</code></td>
-<td style="text-align:center">100</td>
-<td>通过 Apache HttpClient 发送请求到预定的 url，这些 url 可以在 RequestContext.getRouteHost() 中找到，即只对通过 url 配置路由规则的请求路由</td>
-</tr>
-<tr>
-<td style="text-align:center"><code>SendForwardFilter</code></td>
-<td style="text-align:center">500</td>
-<td>通过使用 Servlet RequestDispatcher 转发请求。用于转发请求到当前应用的端点</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Post filters</strong></p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">filter</th>
-<th style="text-align:center">order</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center"><code>LocationRewriteFilter</code></td>
-<td style="text-align:center">900</td>
-<td>负责将 Location header 重写为 Zuul URL</td>
-</tr>
-<tr>
-<td style="text-align:center"><code>SendResponseFilter</code></td>
-<td style="text-align:center">1000</td>
-<td>将代理请求的响应写入当前响应</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Error filters</strong></p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">filter</th>
-<th style="text-align:center">order</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center"><code>SendErrorFilter</code></td>
-<td style="text-align:center">0</td>
-<td>利用请求上下文中的错误信息来组织成一个 forward 到 <code>/error</code> 错误端点的请求来产生错误响应</td>
-</tr>
-</tbody>
-</table>
+<p>在Java中，一个单例对象在一个JVM中，只会有一个实例存在。以下是单例模式结构图</p>
+<p><img src="https://oscimg.oschina.net/oscnet/9884e94899f92b1c97d33be04a5cad5ad31.jpg" alt="单例模式结构图"></p>
+<ul>
+<li>有一个该单例对象的静态成员变量</li>
+<li>私有的构造函数，只能被自身实例化</li>
+<li>提供一个静态公共方法实例化对象，并访问该对象实例</li>
+</ul>
+<h1 id="单例模式实现"><a href="#单例模式实现" class="headerlink" title="单例模式实现"></a>单例模式实现</h1><p>单例模式有两种实现方式：</p>
+<ul>
+<li>饿汉式</li>
+<li>懒汉式(延迟加载) </li>
+</ul>
+<h2 id="饿汉式"><a href="#饿汉式" class="headerlink" title="饿汉式"></a>饿汉式</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 饿汉式单例</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton1</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 静态成员变量，在静态初始化时便实例化对象</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Singleton1 singleton = <span class="keyword">new</span> Singleton1();</span><br><span class="line">    <span class="comment">// 构造私有</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton1</span><span class="params">()</span></span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton1 <span class="title">getSingletonInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> singleton;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>饿汉式</strong>指的是，在类加载的时候便实例化了该单例对象，不管有没有使用，先创建了再说。这种方式是可以保证线程安全的，但是如果该对象一直没有被使用，就浪费了空间资源。</p>
+<p>但是对于一些空间占用较大、或是只在某些特定场景才使用的单例，我们会想要在第一次使用的时候才去实例化，这时，就需要<strong>懒汉式</strong>的延迟加载</p>
+<h2 id="懒汉式"><a href="#懒汉式" class="headerlink" title="懒汉式"></a>懒汉式</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 懒汉式单例（非线程安全）</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton2</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton2 singleton;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton2</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">    <span class="comment">// 获取实例</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton2 <span class="title">getSingletonInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(singleton == <span class="keyword">null</span>)&#123;</span><br><span class="line">            singleton =  <span class="keyword">new</span> Singleton2();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> singleton;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>从上面代码可以看出，<strong>懒汉式</strong>与<strong>饿汉式</strong>在于单例对象的创建时机。饿汉式是在类加载时便实例化对象，调用时无须判断直接返回即可；而懒汉式是在第一次调用时实例化，并且每次调用都需要判断是否已经实例化</p>
+<p>但是上面的这种方式在<strong>多线程下是不安全的</strong>，多个线程同时访问<code>getSingletonInstance()</code>时，可能会创建多个实例，便不再是单例了。那怎么解决线程安全的问题呢？首先我们可能会想到对<code>getSingletonInstance()</code>方法加上<strong>synchronized</strong>关键字</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 懒汉式单例（synchronized关键字线程安全）</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton3</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton3 singleton;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton3</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">    <span class="comment">// 获取实例</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> Singleton3 <span class="title">getSingletonInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(singleton == <span class="keyword">null</span>)&#123;</span><br><span class="line">            singleton =  <span class="keyword">new</span> Singleton3();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> singleton;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>getSingletonInstance()</code>方法加上了同步锁，增加了获取实例的时间消耗，且在多线程下可能会发生阻塞。但其实我们并不想每次获取实例的时候都去加上锁，只是想在第一次调用创建对象时保证线程安全即可</p>
+<h2 id="双重校验锁（DCL）"><a href="#双重校验锁（DCL）" class="headerlink" title="双重校验锁（DCL）"></a>双重校验锁（DCL）</h2><p>对<code>getSingletonInstance()</code>方法加上锁，确实能保证线程安全，却存在性能的问题。是不是要必要对整个方法加锁？还是当我检查到实例还没有创建，才去同步</p>
+<p><strong>双重校验锁（double-checked locking，DCL）</strong>是能解决这个问题的</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 双重校验锁（double-checked locking，DCL）</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton4</span> </span>&#123;</span><br><span class="line">     <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 成员变量这里会加上关键字 volatile，目的是为了防止指令重排序</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">volatile</span> Singleton4 singleton;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton4</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">    <span class="comment">// 获取实例</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton4 <span class="title">getSingletonInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">// 第一次校验，没有实例化才进入同步代码块</span></span><br><span class="line">        <span class="keyword">if</span>(singleton == <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (Singleton4.class)&#123;</span><br><span class="line">                <span class="comment">// 进入同步代码块后，再判断，如果为空才创建实例</span></span><br><span class="line">                <span class="keyword">if</span>(singleton == <span class="keyword">null</span>)&#123;</span><br><span class="line">                    singleton =  <span class="keyword">new</span> Singleton4();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> singleton;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>不对方法加上锁，只对创建实例的代码加锁即可。方法中会有两次<strong>判空</strong>的操作，第一次是为了不必要的同步，为null才进入同步代码块，第二次是进入同步代码块后判断为null才创建实例</p>
 <blockquote>
-<p><strong>禁用过滤器</strong></p>
-<p>默认情况下，这些过滤器在代理和服务器模式下都是启用的。如果在某些场景下，禁用某个过滤器，可以设置 <code>zuul.&lt;SimpleClassName&gt;.&lt;filterType&gt;.disable=true</code>。例如，要禁用<code>org.springframework.cloud.netflix.zuul.filter.post.sendresponsefilter</code>，设置 <code>zuul.SendResponseFilter.post.disable=true</code></p>
+<p>注意：这里的成员变量加上了<strong>volatile</strong>关键字</p>
+<p>使用<strong>volatile</strong>可以保证数据的可见性，不过<strong>synchronized</strong>也是能保证同步数据的可见性的，这里使用<strong>volatile</strong>更多的目的是为了禁止Java指令重排序</p>
 </blockquote>
-<h2 id="自定义过滤器"><a href="#自定义过滤器" class="headerlink" title="自定义过滤器"></a>自定义过滤器</h2><p>创建一个 Spring Boot 项目 <code>zuul-filters</code>，Zuul 的服务网关路由配置可以见 <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnR1cmJvc25haWwudG9wLzIwMTkvMDUvc3ByaW5nLWNsb3VkLXp1dWwv" title="https://blog.turbosnail.top/2019/05/spring-cloud-zuul/">Spring Cloud Zuul 构建微服务网关<i class="fa fa-external-link"></i></span></p>
-<figure class="highlight yml"><figcaption><span>application.yml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">  application:</span></span><br><span class="line"><span class="attr">    name:</span> <span class="string">zuul-filters</span></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line"><span class="attr">  port:</span> <span class="number">8090</span></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line"><span class="attr">  client:</span></span><br><span class="line"><span class="attr">    service-url:</span></span><br><span class="line"><span class="attr">      defaultZone:</span> <span class="attr">http://localhost:8761/eureka/</span></span><br><span class="line"></span><br><span class="line"><span class="attr">zuul:</span></span><br><span class="line"><span class="attr">  ignoredServices:</span> <span class="string">'*'</span></span><br><span class="line"><span class="attr">  routes:</span></span><br><span class="line"><span class="attr">    product:</span></span><br><span class="line"><span class="attr">      path:</span> <span class="string">/product/**</span></span><br><span class="line"><span class="attr">      serviceId:</span> <span class="string">product-service</span></span><br><span class="line"></span><br><span class="line"><span class="attr">management:</span></span><br><span class="line"><span class="attr">  endpoints:</span></span><br><span class="line"><span class="attr">    web:</span></span><br><span class="line"><span class="attr">      exposure:</span></span><br><span class="line"><span class="attr">        include:</span> <span class="string">'*'</span></span><br></pre></td></tr></table></figure>
-<p>自定义一个过滤器 <code>AccessFilter</code>，对请求中没有 accessToken 参数的请求，返回 401拒绝访问</p>
-<figure class="highlight java"><figcaption><span>AccessFilter.java</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Log</span>4j2</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AccessFilter</span> <span class="keyword">extends</span> <span class="title">ZuulFilter</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">filterOrder</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// run before PreDecoration</span></span><br><span class="line">        <span class="keyword">return</span> FilterConstants.PRE_DECORATION_FILTER_ORDER - <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">filterType</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> FilterConstants.PRE_TYPE;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">shouldFilter</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        RequestContext ctx = RequestContext.getCurrentContext();</span><br><span class="line">        <span class="comment">// a filter has already forwarded</span></span><br><span class="line">        <span class="comment">// a filter has already determined serviceId</span></span><br><span class="line">        <span class="keyword">return</span> !ctx.containsKey(FilterConstants.FORWARD_TO_KEY)</span><br><span class="line">                &amp;&amp; !ctx.containsKey(FilterConstants.SERVICE_ID_KEY);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        RequestContext ctx = RequestContext.getCurrentContext();</span><br><span class="line">        HttpServletRequest request = ctx.getRequest();</span><br><span class="line"></span><br><span class="line">        log.info(<span class="string">"send &#123;&#125; request to &#123;&#125;"</span>, request.getMethod(), request.getRequestURL().toString());</span><br><span class="line"></span><br><span class="line">        String token = request.getParameter(<span class="string">"accessToken"</span>);</span><br><span class="line">        <span class="keyword">if</span>(StringUtils.isBlank(token)) &#123;</span><br><span class="line">            log.warn(<span class="string">"access token is empty"</span>);</span><br><span class="line">            <span class="comment">// 过滤该请求，不对其进行路由</span></span><br><span class="line">            ctx.setSendZuulResponse(<span class="keyword">false</span>);</span><br><span class="line">            ctx.setResponseStatusCode(<span class="number">401</span>);</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        log.info(<span class="string">"access token ok"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>实现自定义过滤器后，把它添加到 Spring 的 Beans 中</p>
-<figure class="highlight java"><figcaption><span>ZuulFiltersApplication.java</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@EnableZuulProxy</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ZuulFiltersApplication</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SpringApplication.run(ZuulFiltersApplication.class, args);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> AccessFilter <span class="title">accessFilter</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> AccessFilter();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>下面我们来测试下结果，启动项目 <code>eureka-server</code>、<code>product-serivce</code>(作为代理的服务)、<code>zuul-filters</code></p>
-<p>访问 <code>http://localhost:8090/product/product/1</code> 返回 401<br>访问 <code>http://localhost:8090/product/product/1?accessToken=111</code> 会正常路由到 product-service 的 <code>/product/1</code></p>
-<p>参考代码见：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21vcmdhbjQxMi9zcHJpbmctY2xvdWQtZGVtby90cmVlL21hc3Rlci9uZXRmbGl4" title="https://github.com/morgan412/spring-cloud-demo/tree/master/netflix">demo<i class="fa fa-external-link"></i></span></p>
-<h2 id="过滤器管理端点"><a href="#过滤器管理端点" class="headerlink" title="过滤器管理端点"></a>过滤器管理端点</h2><p> <code>@EnableZuulProxy</code> 注解配合 Spring Boot Actuator，Zuul 会暴露额外的两个管理端点：<code>Routes</code> 和 <code>Filters</code>。分别是关于路由和过滤器的端点（服务路由的端点在这里介绍 <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnR1cmJvc25haWwudG9wLzIwMTkvMDUvc3ByaW5nLWNsb3VkLXp1dWwv" title="https://blog.turbosnail.top/2019/05/spring-cloud-zuul/">Spring Cloud Zuul 构建微服务网关<i class="fa fa-external-link"></i></span>）</p>
-<p><code>spring-cloud-starter-netflix-zuul</code> 已经依赖了 <code>spring-boot-starter-actuator</code>，所以上面的工程已经包含了路由管理的功能。关于过滤器的管理端点的路径为 <code>/filters</code> </p>
-<p>访问路径 <span class="exturl" data-url="aHR0cDovL2xvY2FsaG9zdDo4MDkwL2FjdHVhdG9yL2ZpbHRlcnM=" title="http://localhost:8090/actuator/filters">http://localhost:8090/actuator/filters<i class="fa fa-external-link"></i></span> </p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"error"</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"class"</span>: <span class="string">"org.springframework.cloud.netflix.zuul.filters.post.SendErrorFilter"</span>,</span><br><span class="line">      <span class="attr">"order"</span>: <span class="number">0</span>,</span><br><span class="line">      <span class="attr">"disabled"</span>: <span class="literal">false</span>,</span><br><span class="line">      <span class="attr">"static"</span>: <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">"post"</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"class"</span>: <span class="string">"org.springframework.cloud.netflix.zuul.filters.post.SendResponseFilter"</span>,</span><br><span class="line">      <span class="attr">"order"</span>: <span class="number">1000</span>,</span><br><span class="line">      <span class="attr">"disabled"</span>: <span class="literal">false</span>,</span><br><span class="line">      <span class="attr">"static"</span>: <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">"pre"</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"class"</span>: <span class="string">"org.springframework.cloud.netflix.zuul.filters.pre.DebugFilter"</span>,</span><br><span class="line">      <span class="attr">"order"</span>: <span class="number">1</span>,</span><br><span class="line">      <span class="attr">"disabled"</span>: <span class="literal">false</span>,</span><br><span class="line">      <span class="attr">"static"</span>: <span class="literal">true</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"class"</span>: <span class="string">"org.springframework.cloud.netflix.zuul.filters.pre.FormBodyWrapperFilter"</span>,</span><br><span class="line">      <span class="attr">"order"</span>: <span class="number">-1</span>,</span><br><span class="line">      <span class="attr">"disabled"</span>: <span class="literal">false</span>,</span><br><span class="line">      <span class="attr">"static"</span>: <span class="literal">true</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"class"</span>: <span class="string">"com.turbosnail.zuul.filter.AccessFilter"</span>,</span><br><span class="line">      <span class="attr">"order"</span>: <span class="number">4</span>,</span><br><span class="line">      <span class="attr">"disabled"</span>: <span class="literal">false</span>,</span><br><span class="line">      <span class="attr">"static"</span>: <span class="literal">true</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"class"</span>: <span class="string">"org.springframework.cloud.netflix.zuul.filters.pre.Servlet30WrapperFilter"</span>,</span><br><span class="line">      <span class="attr">"order"</span>: <span class="number">-2</span>,</span><br><span class="line">      <span class="attr">"disabled"</span>: <span class="literal">false</span>,</span><br><span class="line">      <span class="attr">"static"</span>: <span class="literal">true</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"class"</span>: <span class="string">"org.springframework.cloud.netflix.zuul.filters.pre.ServletDetectionFilter"</span>,</span><br><span class="line">      <span class="attr">"order"</span>: <span class="number">-3</span>,</span><br><span class="line">      <span class="attr">"disabled"</span>: <span class="literal">false</span>,</span><br><span class="line">      <span class="attr">"static"</span>: <span class="literal">true</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"class"</span>: <span class="string">"org.springframework.cloud.netflix.zuul.filters.pre.PreDecorationFilter"</span>,</span><br><span class="line">      <span class="attr">"order"</span>: <span class="number">5</span>,</span><br><span class="line">      <span class="attr">"disabled"</span>: <span class="literal">false</span>,</span><br><span class="line">      <span class="attr">"static"</span>: <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">"route"</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"class"</span>: <span class="string">"org.springframework.cloud.netflix.zuul.filters.route.SimpleHostRoutingFilter"</span>,</span><br><span class="line">      <span class="attr">"order"</span>: <span class="number">100</span>,</span><br><span class="line">      <span class="attr">"disabled"</span>: <span class="literal">false</span>,</span><br><span class="line">      <span class="attr">"static"</span>: <span class="literal">true</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"class"</span>: <span class="string">"org.springframework.cloud.netflix.zuul.filters.route.RibbonRoutingFilter"</span>,</span><br><span class="line">      <span class="attr">"order"</span>: <span class="number">10</span>,</span><br><span class="line">      <span class="attr">"disabled"</span>: <span class="literal">false</span>,</span><br><span class="line">      <span class="attr">"static"</span>: <span class="literal">true</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"class"</span>: <span class="string">"org.springframework.cloud.netflix.zuul.filters.route.SendForwardFilter"</span>,</span><br><span class="line">      <span class="attr">"order"</span>: <span class="number">500</span>,</span><br><span class="line">      <span class="attr">"disabled"</span>: <span class="literal">false</span>,</span><br><span class="line">      <span class="attr">"static"</span>: <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>访问404是因为没有暴露端点，可以设置 management.endpoints.web.exposure.include: ‘*’</p>
-</blockquote>
+<h2 id="静态内部类"><a href="#静态内部类" class="headerlink" title="静态内部类"></a>静态内部类</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 静态内部类</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton5</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton5</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取实例</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton5 <span class="title">getSingletonInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> SingletonHolder.SINGLETON;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 内部类，JVM在类加载的时候，是互斥的，可以保证线程安全</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">SingletonHolder</span></span>&#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Singleton5 SINGLETON = <span class="keyword">new</span> Singleton5();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>JVM在类加载的时候是会保证数据同步的，我们可以<strong>通过内部类来创建单例对象</strong>。第一次加载Singleton5时并不会加载内部类，不去使用内部类的时候，该内部类就不会加载。只有第一次调用<code>getSingletonInstance()</code>方法，会去加载内部类并实例化单例对象，这样就可以做到延迟加载和线程安全了</p>
+<h2 id="枚举方式"><a href="#枚举方式" class="headerlink" title="枚举方式"></a>枚举方式</h2><p>使用枚举方式来实现单例是非常简洁的，支持序列化机制，绝对防止多次实例化</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 枚举方式</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> Singleton6 &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 枚举方式实现单例</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    SINGLETON;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handle</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// to do something</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>该单例的使用方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SingletonDemo</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">// 枚举方式</span></span><br><span class="line">        Singleton6 singleton = Singleton6.SINGLETON;</span><br><span class="line">        singleton.handle();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -737,35 +639,7 @@
     <li class="popular-posts-item">
       
       
-      <div class="popular-posts-title"><a href="\blog\spring-cloud-zuul\" rel="bookmark">Spring Cloud Zuul 构建微服务网关</a></div>
-      
-    </li>
-  
-    <li class="popular-posts-item">
-      
-      
-      <div class="popular-posts-title"><a href="\blog\spring-cloud-config\" rel="bookmark">Spring Cloud Config 统一配置中心</a></div>
-      
-    </li>
-  
-    <li class="popular-posts-item">
-      
-      
-      <div class="popular-posts-title"><a href="\blog\spring-cloud-consumer-feign\" rel="bookmark">Spring Cloud 服务消费（Feign）</a></div>
-      
-    </li>
-  
-    <li class="popular-posts-item">
-      
-      
-      <div class="popular-posts-title"><a href="\blog\spring-cloud-eureka\" rel="bookmark">Spring Cloud 服务注册与发现、高可用（Eureka）</a></div>
-      
-    </li>
-  
-    <li class="popular-posts-item">
-      
-      
-      <div class="popular-posts-title"><a href="\blog\spring-cloud-consumer-ribbon\" rel="bookmark">Spring Cloud 服务消费（Ribbon）</a></div>
+      <div class="popular-posts-title"><a href="\blog\design-pattern-philosophy\" rel="bookmark">设计模式-面向对象设计原则</a></div>
       
     </li>
   
@@ -802,7 +676,7 @@
   <li class="post-copyright-link">
     <strong>Post link: </strong>
     
-    <a href="https://www.turbosnail.top/blog/spring-cloud-zuul-filters/" title="Spring Cloud Zuul 过滤器">https://www.turbosnail.top/blog/spring-cloud-zuul-filters/</a>
+    <a href="https://www.turbosnail.top/blog/design-pattern-singleton/" title="单例模式-只有一个实例">https://www.turbosnail.top/blog/design-pattern-singleton/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</span> unless stating additionally.</li>
@@ -815,13 +689,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Spring-Cloud/" rel="tag"># Spring Cloud</a>
+            <a href="/tags/设计模式/" rel="tag"># 设计模式</a>
           
-            <a href="/tags/Zuul/" rel="tag"># Zuul</a>
-          
-            <a href="/tags/微服务/" rel="tag"># 微服务</a>
-          
-            <a href="/tags/服务网关/" rel="tag"># 服务网关</a>
+            <a href="/tags/单例模式/" rel="tag"># 单例模式</a>
           
         </div>
       
@@ -855,8 +725,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/spring-cloud-zuul/" rel="next" title="Spring Cloud Zuul 构建微服务网关">
-                <i class="fa fa-chevron-left"></i> Spring Cloud Zuul 构建微服务网关
+              <a href="/blog/swagger-usage-annotation/" rel="next" title="Swagger使用和注释介绍">
+                <i class="fa fa-chevron-left"></i> Swagger使用和注释介绍
               </a>
             
           </div>
@@ -864,10 +734,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/blog/spring-cloud-jpa/" rel="prev" title="Spring Data JPA 使用">
-                Spring Data JPA 使用 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -1156,7 +1022,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#过滤器"><span class="nav-number">1.</span> <span class="nav-text">过滤器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#过滤器类型和生命周期"><span class="nav-number">1.1.</span> <span class="nav-text">过滤器类型和生命周期</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-Cloud-Zuul-的过滤器"><span class="nav-number">1.2.</span> <span class="nav-text">Spring Cloud Zuul 的过滤器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义过滤器"><span class="nav-number">1.3.</span> <span class="nav-text">自定义过滤器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#过滤器管理端点"><span class="nav-number">1.4.</span> <span class="nav-text">过滤器管理端点</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#单例模式实现"><span class="nav-number">2.</span> <span class="nav-text">单例模式实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#饿汉式"><span class="nav-number">2.1.</span> <span class="nav-text">饿汉式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#懒汉式"><span class="nav-number">2.2.</span> <span class="nav-text">懒汉式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#双重校验锁（DCL）"><span class="nav-number">2.3.</span> <span class="nav-text">双重校验锁（DCL）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#静态内部类"><span class="nav-number">2.4.</span> <span class="nav-text">静态内部类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#枚举方式"><span class="nav-number">2.5.</span> <span class="nav-text">枚举方式</span></a></li></ol></li></ol></div>
             
 
           </div>

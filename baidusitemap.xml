@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://www.turbosnail.top/blog/design-pattern-philosophy/</loc>
-    <lastmod>2019-07-31</lastmod>
+    <loc>https://www.turbosnail.top/blog/design-pattern-singleton/</loc>
+    <lastmod>2019-08-02</lastmod>
   </url>  <url>
     <loc>https://www.turbosnail.top/blog/swagger-usage-annotation/</loc>
-    <lastmod>2019-07-29</lastmod>
+    <lastmod>2019-08-01</lastmod>
+  </url>  <url>
+    <loc>https://www.turbosnail.top/blog/design-pattern-philosophy/</loc>
+    <lastmod>2019-07-31</lastmod>
   </url>  <url>
     <loc>https://www.turbosnail.top/blog/spring-cloud-jpa/</loc>
     <lastmod>2019-05-23</lastmod>

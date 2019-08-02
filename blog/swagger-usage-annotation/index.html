@@ -167,7 +167,7 @@
 <meta property="og:image" content="https://oscimg.oschina.net/oscnet/e91d725889e8b7c65533852c8a859ef82f2.jpg">
 <meta property="og:image" content="https://oscimg.oschina.net/oscnet/4cad8b2429b53343dfe317e2bf906e0246d.jpg">
 <meta property="og:image" content="https://oscimg.oschina.net/oscnet/cf6afd8aea68510e66715ba28a671836e41.jpg">
-<meta property="og:updated_time" content="2019-07-29T02:54:03.022Z">
+<meta property="og:updated_time" content="2019-08-01T00:35:29.466Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Swagger使用和注释介绍">
 <meta name="twitter:description" content="介绍什么是SwaggerSwagger是一个规范和完整的框架，用于生成、描述、调用和可视化 RESTful 风格的 Web 服务。总体目标是使客户端和文件系统作为服务器以同样的速度来更新。文件的方法，参数和模型紧密集成到服务器端的代码，允许API来始终保持同步。 作用  接口文档在线自动生成 功能测试 Swagger是一组开源项目，其中主要要项目如下：  Swagger-tools:提供各种与Sw">
@@ -322,7 +322,7 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives<span class="badge">33</span></a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives<span class="badge">34</span></a>
 
   </li>
         
@@ -341,7 +341,7 @@
       
     
 
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags<span class="badge">39</span></a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags<span class="badge">41</span></a>
 
   </li>
         
@@ -602,7 +602,7 @@
 </ul>
 <h2 id="在Spring使用Swagger"><a href="#在Spring使用Swagger" class="headerlink" title="在Spring使用Swagger"></a>在Spring使用Swagger</h2><p>在Spring中集成Swagger会使用到<code>springfox-swagger</code>，它对Spring和Swagger的使用进行了整合</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.springfox<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>springfox-swagger2<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;springfox.swagger.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.springfox<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>springfox-swagger-ui<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;springfox.swagger.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><h2 id="Spring中配置Swagger"><a href="#Spring中配置Swagger" class="headerlink" title="Spring中配置Swagger"></a>Spring中配置Swagger</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Swagger2配置类</span></span><br><span class="line"><span class="comment"> * 在与spring boot集成时，放在与Application.java同级的目录下。</span></span><br><span class="line"><span class="comment"> * 或者通过 <span class="doctag">@Import</span> 导入配置</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@EnableSwagger</span>2</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Swagger2</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 创建API应用</span></span><br><span class="line"><span class="comment">     * apiInfo() 增加API相关信息</span></span><br><span class="line"><span class="comment">     * 通过select()函数返回一个ApiSelectorBuilder实例,用来控制哪些接口暴露给Swagger来展现，</span></span><br><span class="line"><span class="comment">     * 本例采用指定扫描的包路径来定义指定要建立API的目录。</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Docket <span class="title">createRestApi</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Docket(DocumentationType.SWAGGER_2)</span><br><span class="line">                .apiInfo(apiInfo())</span><br><span class="line">                .select()</span><br><span class="line">                .apis(RequestHandlerSelectors.basePackage(<span class="string">"com.turbo.demo	.controller"</span>))</span><br><span class="line">                .paths(PathSelectors.any())</span><br><span class="line">                .build();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 创建该API的基本信息（这些基本信息会展现在文档页面中）</span></span><br><span class="line"><span class="comment">     * 访问地址：http://项目实际地址/swagger-ui.html</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> ApiInfo <span class="title">apiInfo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ApiInfoBuilder()</span><br><span class="line">                .title(<span class="string">"Spring Boot中使用Swagger2构建RESTful APIs"</span>)</span><br><span class="line">                .description(<span class="string">""</span>)</span><br><span class="line">                .termsOfServiceUrl(<span class="string">""</span>)</span><br><span class="line">                .contact(<span class="string">"zou"</span>, <span class="string">""</span>, <span class="string">"zouxq412@foxmail.com"</span>)</span><br><span class="line">                .version(<span class="string">"1.0"</span>)</span><br><span class="line">                .build();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><h2 id="Spring中配置Swagger"><a href="#Spring中配置Swagger" class="headerlink" title="Spring中配置Swagger"></a>Spring中配置Swagger</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Swagger2配置类</span></span><br><span class="line"><span class="comment"> * 在与spring boot集成时，放在与Application.java同级的目录下。</span></span><br><span class="line"><span class="comment"> * 或者通过 <span class="doctag">@Import</span> 导入配置</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@EnableSwagger</span>2</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Swagger2</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 创建API应用</span></span><br><span class="line"><span class="comment">     * apiInfo() 增加API相关信息</span></span><br><span class="line"><span class="comment">     * 通过select()函数返回一个ApiSelectorBuilder实例,用来控制哪些接口暴露给Swagger来展现，</span></span><br><span class="line"><span class="comment">     * 本例采用指定扫描的包路径来定义指定要建立API的目录。</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Docket <span class="title">createRestApi</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Docket(DocumentationType.SWAGGER_2)</span><br><span class="line">                .apiInfo(apiInfo())</span><br><span class="line">                .select()</span><br><span class="line">                .apis(RequestHandlerSelectors.basePackage(<span class="string">"com.turbo.demo.controller"</span>))</span><br><span class="line">                .paths(PathSelectors.any())</span><br><span class="line">                .build();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 创建该API的基本信息（这些基本信息会展现在文档页面中）</span></span><br><span class="line"><span class="comment">     * 访问地址：http://项目实际地址/swagger-ui.html</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> ApiInfo <span class="title">apiInfo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ApiInfoBuilder()</span><br><span class="line">                .title(<span class="string">"Spring Boot中使用Swagger2构建RESTful APIs"</span>)</span><br><span class="line">                .description(<span class="string">""</span>)</span><br><span class="line">                .termsOfServiceUrl(<span class="string">""</span>)</span><br><span class="line">                .contact(<span class="string">"zou"</span>, <span class="string">""</span>, <span class="string">"zouxq412@foxmail.com"</span>)</span><br><span class="line">                .version(<span class="string">"1.0"</span>)</span><br><span class="line">                .build();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="API注解"><a href="#API注解" class="headerlink" title="API注解"></a>API注解</h2><h3 id="Api"><a href="#Api" class="headerlink" title="@Api"></a>@Api</h3><p>用在类上，该注解将一个Controller（Class）标注为一个swagger资源（API）。在默认情况下，Swagger-Core只会扫描解析具有@Api注解的类，而会自动忽略其他类别资源（JAX-RS endpoints，Servlets等等）的注解。该注解包含以下几个重要属性</p>
 <ul>
 <li>tags<br>API分组标签。具有相同标签的API将会被归并在一组内展示。</li>
@@ -766,6 +766,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/blog/design-pattern-singleton/" rel="prev" title="单例模式-只有一个实例">
+                单例模式-只有一个实例 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -839,7 +843,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">33</span>
+                    <span class="site-state-item-count">34</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -977,7 +981,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">35</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">37</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
@@ -1091,7 +1099,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="Symbols count total">239k</span>
+    <span title="Symbols count total">243k</span>
   
 
   
@@ -1100,7 +1108,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="Reading time total">3:38</span>
+    <span title="Reading time total">3:41</span>
   
 </div>
 
