@@ -156,24 +156,22 @@
 
 
 
-  <meta name="description" content="Spring Boot 简化了 Spring 应用的配置和开发，它管理着 Spring 容器和第三方插件，并提供很多默认系统级的服务，这样我们只要少量的配置和代码就能完成大部分 Spring 应用。 Spring Boot 的特性  可以创建独立的 Spring 应用，即可运行的 jar 包 提供嵌入式的 Web Server，不需要在部署 war 包 没有代码生成，也不需要XML配置 自动化配置">
-<meta name="keywords" content="Spring Boot">
+  <meta name="description" content="工厂模式工厂模式是一种比较常见的创建型设计模式，分为简单工厂模式、工厂方法模式、抽象工厂模式 工厂模式旨在把对象的创建和使用分离开来，把创建对象的职责交给工厂类，这样会有哪些好处？  解耦：对象的创建和使用分离  减少代码重复、创建蔓延，降低维护成本：对于创建较为复杂的对象，可以减少代码重复、降低维护成本   简单工厂模式介绍 简单工厂模式-又叫做静态工厂方法，工厂类提供创建对象的方法（如crea">
+<meta name="keywords" content="设计模式,工厂模式,抽象工厂">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Spring Boot 快速入门">
-<meta property="og:url" content="https://www.turbosnail.top/blog/spring-boot-quickstart/index.html">
+<meta property="og:title" content="工厂模式-简单工厂模式、工厂方法模式、抽象工厂模式">
+<meta property="og:url" content="https://www.turbosnail.top/blog/design-pattern-factory/index.html">
 <meta property="og:site_name" content="TurboSnail">
-<meta property="og:description" content="Spring Boot 简化了 Spring 应用的配置和开发，它管理着 Spring 容器和第三方插件，并提供很多默认系统级的服务，这样我们只要少量的配置和代码就能完成大部分 Spring 应用。 Spring Boot 的特性  可以创建独立的 Spring 应用，即可运行的 jar 包 提供嵌入式的 Web Server，不需要在部署 war 包 没有代码生成，也不需要XML配置 自动化配置">
+<meta property="og:description" content="工厂模式工厂模式是一种比较常见的创建型设计模式，分为简单工厂模式、工厂方法模式、抽象工厂模式 工厂模式旨在把对象的创建和使用分离开来，把创建对象的职责交给工厂类，这样会有哪些好处？  解耦：对象的创建和使用分离  减少代码重复、创建蔓延，降低维护成本：对于创建较为复杂的对象，可以减少代码重复、降低维护成本   简单工厂模式介绍 简单工厂模式-又叫做静态工厂方法，工厂类提供创建对象的方法（如crea">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="https://oscimg.oschina.net/oscnet/4ef65c96440f0917e7a429d1c41970c64f3.jpg">
-<meta property="og:image" content="https://oscimg.oschina.net/oscnet/0570b44270665b2ac527ecc6b3af9b4ba40.jpg">
-<meta property="og:image" content="https://oscimg.oschina.net/oscnet/3f935c707e640ac91a7cf9a5440736f0e27.jpg">
-<meta property="og:image" content="https://oscimg.oschina.net/oscnet/8b6269dc022e06faf456311c2f756232b90.jpg">
-<meta property="og:image" content="https://oscimg.oschina.net/oscnet/7cf5debaaea880d24a2c795ae3a17d86fbb.jpg">
-<meta property="og:updated_time" content="2019-04-28T01:30:57.191Z">
+<meta property="og:image" content="https://oscimg.oschina.net/oscnet/dc69e4186baf85b2bf0942bf338a114acf6.jpg">
+<meta property="og:image" content="https://oscimg.oschina.net/oscnet/1567fd0e7d85b1397bc5bdf6edb5b866645.jpg">
+<meta property="og:image" content="https://oscimg.oschina.net/oscnet/1b2a1737ea005c4a2be0d6d7a327edeb7c8.jpg">
+<meta property="og:updated_time" content="2019-08-08T02:16:08.822Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Spring Boot 快速入门">
-<meta name="twitter:description" content="Spring Boot 简化了 Spring 应用的配置和开发，它管理着 Spring 容器和第三方插件，并提供很多默认系统级的服务，这样我们只要少量的配置和代码就能完成大部分 Spring 应用。 Spring Boot 的特性  可以创建独立的 Spring 应用，即可运行的 jar 包 提供嵌入式的 Web Server，不需要在部署 war 包 没有代码生成，也不需要XML配置 自动化配置">
-<meta name="twitter:image" content="https://oscimg.oschina.net/oscnet/4ef65c96440f0917e7a429d1c41970c64f3.jpg">
+<meta name="twitter:title" content="工厂模式-简单工厂模式、工厂方法模式、抽象工厂模式">
+<meta name="twitter:description" content="工厂模式工厂模式是一种比较常见的创建型设计模式，分为简单工厂模式、工厂方法模式、抽象工厂模式 工厂模式旨在把对象的创建和使用分离开来，把创建对象的职责交给工厂类，这样会有哪些好处？  解耦：对象的创建和使用分离  减少代码重复、创建蔓延，降低维护成本：对于创建较为复杂的对象，可以减少代码重复、降低维护成本   简单工厂模式介绍 简单工厂模式-又叫做静态工厂方法，工厂类提供创建对象的方法（如crea">
+<meta name="twitter:image" content="https://oscimg.oschina.net/oscnet/dc69e4186baf85b2bf0942bf338a114acf6.jpg">
 
 
 
@@ -183,7 +181,7 @@
 
   
   
-  <link rel="canonical" href="https://www.turbosnail.top/blog/spring-boot-quickstart/">
+  <link rel="canonical" href="https://www.turbosnail.top/blog/design-pattern-factory/">
 
 
 
@@ -193,7 +191,7 @@
   };
 </script>
 
-  <title>Spring Boot 快速入门 | TurboSnail</title>
+  <title>工厂模式-简单工厂模式、工厂方法模式、抽象工厂模式 | TurboSnail</title>
   
 
 
@@ -464,7 +462,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.turbosnail.top/blog/spring-boot-quickstart/">
+    <link itemprop="mainEntityOfPage" href="https://www.turbosnail.top/blog/design-pattern-factory/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="TurboSnail">
@@ -481,7 +479,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">Spring Boot 快速入门
+          <h2 class="post-title" itemprop="name headline">工厂模式-简单工厂模式、工厂方法模式、抽象工厂模式
 
               
             
@@ -507,7 +505,7 @@
                 
               
 
-              <time title="Created: 2019-02-14 17:31:38" itemprop="dateCreated datePublished" datetime="2019-02-14T17:31:38+08:00">2019-02-14</time>
+              <time title="Created: 2019-08-07 10:00:38" itemprop="dateCreated datePublished" datetime="2019-08-07T10:00:38+08:00">2019-08-07</time>
             
 
             
@@ -525,7 +523,7 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Spring-Boot/" itemprop="url" rel="index"><span itemprop="name">Spring Boot</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/设计模式/" itemprop="url" rel="index"><span itemprop="name">设计模式</span></a></span>
 
                 
                 
@@ -554,7 +552,7 @@
                   <i class="fa fa-file-word-o"></i>
                 </span>
                 
-                <span title="Symbols count in article">4.7k</span>
+                <span title="Symbols count in article">4.3k</span>
               
 
               
@@ -586,46 +584,92 @@
       
 
       
-        <p>Spring Boot 简化了 Spring 应用的配置和开发，它管理着 Spring 容器和第三方插件，并提供很多默认系统级的服务，这样我们只要少量的配置和代码就能完成大部分 Spring 应用。</p>
-<p><strong>Spring Boot 的特性</strong></p>
-<ol>
-<li>可以创建独立的 Spring 应用，即可运行的 jar 包</li>
-<li>提供嵌入式的 Web Server，不需要在部署 war 包</li>
-<li>没有代码生成，也不需要XML配置</li>
-<li>自动化配置，许多的配置都有习惯性的默认值</li>
-<li>提供一系列生产级特性（例如嵌入式服务器，安全性，度量标准，运行状况检查和外部化配置）</li>
-<li>开箱即用的 Spring 插件，“核心 + 插件” 的架构体系</li>
-</ol>
-<h1 id="快速入门"><a href="#快速入门" class="headerlink" title="快速入门"></a>快速入门</h1><p>完成一个简单的 web 应用，实现一个简单的 Http 请求处理，通过这个例子对 Spring Boot 有一个初步的了解，并体验其结构简单、开发快速的特性</p>
-<h2 id="创建-Maven-工程"><a href="#创建-Maven-工程" class="headerlink" title="创建 Maven 工程"></a>创建 Maven 工程</h2><p>使用 IDE 创建一个简单 Maven 工程，然后在 pom 文件中添加 Spring Boot 的依赖。</p>
-<p>要使用 Spring Boot，仅需 pom 文件继承自 <code>spring-boot-starter-parent</code> 项目，并添加一个或多个 “Starters” 的依赖(这里是web应用，添加 <code>spring-boot-starter-web</code> 依赖)<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">"http://maven.apache.org/POM/4.0.0"</span> <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.example<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>demo01<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>0.0.1-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.1.2.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>我们引入的依赖配置，只要 groupId 和 artifactId 即可，因为 version 已经在父 pom （spring-boot-starter-parent）中定义了</p>
+        <h1 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h1><p>工厂模式是一种比较常见的<strong>创建型</strong>设计模式，分为简单工厂模式、工厂方法模式、抽象工厂模式</p>
+<p>工厂模式旨在把对象的创建和使用分离开来，把创建对象的职责交给工厂类，这样会有哪些好处？</p>
+<ul>
+<li><p><strong>解耦</strong>：对象的创建和使用分离</p>
+</li>
+<li><p><strong>减少代码重复、创建蔓延，降低维护成本</strong>：对于创建较为复杂的对象，可以减少代码重复、降低维护成本</p>
+</li>
+</ul>
+<h1 id="简单工厂模式"><a href="#简单工厂模式" class="headerlink" title="简单工厂模式"></a>简单工厂模式</h1><h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><blockquote>
+<p><strong>简单工厂模式</strong>-又叫做静态工厂方法，工厂类提供创建对象的方法（如create），接收一个参数，通过不同的参数实例化不同的产品类</p>
 </blockquote>
-<p>准备好 pom 之后，创建一个有 main 方法的类，并在类上添加注释<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SpringApplication.run(Application.class, args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="快速创建-Spring-Boot-项目"><a href="#快速创建-Spring-Boot-项目" class="headerlink" title="快速创建 Spring Boot 项目"></a>快速创建 Spring Boot 项目</h2><p>另外创建 Spring Boot 项目还有更加便捷的方法</p>
-<p>1、通过 <span class="exturl" data-url="aHR0cHM6Ly9zdGFydC5zcHJpbmcuaW8v" title="Spring Initializr">Spring Initializr<i class="fa fa-external-link"></i></span> 工具产生基础项目  </p>
-<p>2、访问 <span class="exturl" data-url="aHR0cHM6Ly9zdGFydC5zcHJpbmcuaW8v" title="https://start.spring.io/">https://start.spring.io/<i class="fa fa-external-link"></i></span>  选择构建工具(Maven/Gradle)、Spring Boot版本以及一些工程基本信息 </p>
-<p><img src="https://oscimg.oschina.net/oscnet/4ef65c96440f0917e7a429d1c41970c64f3.jpg" alt></p>
-<p>3、Generate Project 之后下载压缩包  </p>
-<p>4、解压压缩包，并使用 IDE 工具导入工程</p>
-<p>如果是使用 IntelliJ IDEA 工具，可以直接新建 Spring Boot 工程 （eclipse 可以下载 spring tools 插件）</p>
-<p>1、File &gt; New &gt; Project 中选择 Spring Initializr </p>
-<p><img src="https://oscimg.oschina.net/oscnet/0570b44270665b2ac527ecc6b3af9b4ba40.jpg" alt></p>
-<p>2、创建的时候也可以直接选择需要的依赖项 </p>
-<p><img src="https://oscimg.oschina.net/oscnet/3f935c707e640ac91a7cf9a5440736f0e27.jpg" alt></p>
-<p>3、创建的项目结构如下  </p>
-<p><img src="https://oscimg.oschina.net/oscnet/8b6269dc022e06faf456311c2f756232b90.jpg" alt></p>
-<p><strong>pom 文件</strong></p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">"http://maven.apache.org/POM/4.0.0"</span> <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.1.2.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">relativePath</span>/&gt;</span> <span class="comment">&lt;!-- lookup parent from repository --&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.example<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>demo<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>0.0.1-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>demo<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">description</span>&gt;</span>Demo project for Spring Boot<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">java.version</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">java.version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h1 id="编写-Controller-服务"><a href="#编写-Controller-服务" class="headerlink" title="编写 Controller 服务"></a>编写 Controller 服务</h1><p>创建 HelloController 类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"/hello"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">hello</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Hello World"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>此时，我们就可以启动 DemoApplication 程序了，直接运行，我们可以看到控制台信息 </p>
-<p><img src="https://oscimg.oschina.net/oscnet/7cf5debaaea880d24a2c795ae3a17d86fbb.jpg" alt></p>
-<p>打开浏览器访问 <span class="exturl" data-url="aHR0cDovL2xvY2FsaG9zdDo4MDgwL2hlbGxv" title="http://localhost:8080/hello">http://localhost:8080/hello<i class="fa fa-external-link"></i></span> 可以看到输出</p>
-<h1 id="创建一个可执行的Jar"><a href="#创建一个可执行的Jar" class="headerlink" title="创建一个可执行的Jar"></a>创建一个可执行的Jar</h1><p>要创建可执行jar，我们需要添加 <code>spring-boot-maven-plugin</code> 到我们的 pom.xml<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>简单工厂方法并不属于23种常见设计模式之一，适用于相对简单的场景，创建较少的对象。最重要的一点是它违背了<strong>开闭原则（对扩展开发，对修改关闭）</strong>(可以通过反射机制避免)，因为在扩展产品类的时候需要添加条件分支（如if-else、switch-case），需要修改工厂类方法</p>
+<h2 id="简单工厂类图"><a href="#简单工厂类图" class="headerlink" title="简单工厂类图"></a>简单工厂类图</h2><p>简单工厂模式角色分配</p>
+<ul>
+<li><strong>工厂(Factory)</strong>：负责实现创建所有实例的内部逻辑，工厂类可以被外界直接调用，创建所需的产品对象</li>
+<li><strong>抽象产品(Product)</strong>：负责描述所有实例的公共接口</li>
+<li><strong>具体产品(ConcreteProduct)</strong>：简单工厂模式的创建目标</li>
+</ul>
+<p><img src="https://oscimg.oschina.net/oscnet/dc69e4186baf85b2bf0942bf338a114acf6.jpg" alt></p>
+<h2 id="代码实例"><a href="#代码实例" class="headerlink" title="代码实例"></a>代码实例</h2><p>创建一个可以展示不同图表的工具，可以展示柱状图、饼图、折线图，每个图表对象都有方法<code>display()</code>展示图表。</p>
+<p><strong>简单工厂</strong></p>
+<figure class="highlight java"><figcaption><span>ChartFactory.java</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ChartFactory</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 创建图表  负担太重、不符合开闭原则</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> IChart <span class="title">create</span><span class="params">(String type)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">switch</span> (type) &#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">"bar"</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">new</span> BarChart();</span><br><span class="line">            <span class="keyword">case</span> <span class="string">"pie"</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">new</span> PieChart();</span><br><span class="line">            <span class="keyword">case</span> <span class="string">"line"</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">new</span> LineChart();</span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>静态方法工厂</strong></p>
+<figure class="highlight java"><figcaption><span>ChartFactory2.java</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ChartFactory2</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> BarChart <span class="title">createBarChart</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> BarChart();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> PieChart <span class="title">createPieChart</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> PieChart();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> LineChart <span class="title">createLineChart</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> LineChart();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="反射机制改良简单工厂"><a href="#反射机制改良简单工厂" class="headerlink" title="反射机制改良简单工厂"></a>反射机制改良简单工厂</h2><p>使用简单工厂模式，当我们需要扩展的时候，是不符合<strong>开闭原则</strong>的，如上面的例子需要多一种图表展示，那么工厂类的创建方法就需要多处理一个条件分支。那如何可以让我们对扩展开放、对修改关闭呢？使用反射机制是可以做到的</p>
+<figure class="highlight java"><figcaption><span>ChartFactory3.java</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ChartFactory3</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> IChart <span class="title">create</span><span class="params">(Class&lt;? extends IChart&gt; clazz)</span> </span>&#123;</span><br><span class="line">        IChart chart = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            chart = clazz.newInstance();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InstantiationException | IllegalAccessException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> chart;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> IChart <span class="title">create</span><span class="params">(String className)</span> </span>&#123;</span><br><span class="line">        IChart chart = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            chart = (IChart) Class.forName(className).newInstance();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InstantiationException | IllegalAccessException | ClassNotFoundException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> chart;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>可执行jar（有时称为“fat jar”）是包含已编译类以及代码需要运行的所有jar依赖项的归档</p>
+<p>Spring 的Ioc容器是通过配置文件和反射机制解决了简单工厂中的缺点</p>
 </blockquote>
+<h1 id="工厂方法模式"><a href="#工厂方法模式" class="headerlink" title="工厂方法模式"></a>工厂方法模式</h1><h2 id="介绍-1"><a href="#介绍-1" class="headerlink" title="介绍"></a>介绍</h2><p>工厂方法的使用频率很高，经常可以在一些项目中看见</p>
+<blockquote>
+<p><strong>工厂方法(Factory Method)</strong> - 定义一个用于创建对象的接口，让子类决定实例化哪一个类。工厂方法使一个类的实例化延迟到其子类</p>
+</blockquote>
+<p>工厂方法<strong>针对每一种产品提供一个工厂类，通过不同的工厂实例来创建不同的产品实例</strong>，相比于简单工厂来说，不再提供一个统一的工厂创建所有的对象</p>
+<p><strong>优点</strong></p>
+<ul>
+<li>工厂方法模式很好的减轻了工厂类的负担，把一种类交由一个工厂创建</li>
+<li>同时增加产品类并不需要修改工厂类，只需要添加创建该产品的工厂即可，使得工厂类符合开放-封闭原则</li>
+</ul>
+<p><strong>缺点</strong></p>
+<ul>
+<li>对于某些可以形成产品族（一组产品）的情况处理比较复杂</li>
+</ul>
+<h2 id="工厂方法类图"><a href="#工厂方法类图" class="headerlink" title="工厂方法类图"></a>工厂方法类图</h2><p>工厂方法模式角色分配</p>
+<ul>
+<li><strong>抽象工厂(Factory)</strong>：创建对象的工厂类的接口或父类</li>
+<li><strong>具体工厂(ConcreteFactory)</strong>：实现抽象工厂接口的具体工厂类</li>
+<li><strong>抽象产品(Product)</strong>：工厂类所创建对象的超类型，也就是具体产品对象的共同父类或接口</li>
+<li><strong>具体产品(ConcreteProduct)</strong>：具体产品由专门的具体工厂创建</li>
+</ul>
+<p><img src="https://oscimg.oschina.net/oscnet/1567fd0e7d85b1397bc5bdf6edb5b866645.jpg" alt></p>
+<h2 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h2><p>对上面简单工厂模式的例子修改，增加一个工厂接口和实现接口的具体工厂类</p>
+<p><strong>工厂接口</strong></p>
+<figure class="highlight java"><figcaption><span>IChartFactory.java</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IChartFactory</span> </span>&#123;</span><br><span class="line">    <span class="function">IChart <span class="title">getChart</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>工厂实现-<strong>柱状图工厂类</strong></p>
+<figure class="highlight java"><figcaption><span>BarChartFactory.java</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BarChartFactory</span> <span class="keyword">implements</span> <span class="title">IChartFactory</span></span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> IChart <span class="title">getChart</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> BarChart();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="抽象工厂模式"><a href="#抽象工厂模式" class="headerlink" title="抽象工厂模式"></a>抽象工厂模式</h1><h2 id="介绍-2"><a href="#介绍-2" class="headerlink" title="介绍"></a>介绍</h2><p>抽象工厂模式是比较难理解的工厂模式了，它的定义如下</p>
+<blockquote>
+<p><strong>抽象工厂模式(Abstract Factory)</strong> - 为创建一组相关或相互依赖的对象提供一个接口，而且无须指定它们的具体类</p>
+</blockquote>
+<ul>
+<li>抽象工厂是应对<strong>产品族</strong>概念的</li>
+<li>工厂方法模式是一种极端情况的抽象工厂模式（即只生产一种产品的抽象工厂模式），而抽象工厂模式<br>可以看成是工厂方法模式的一种推广</li>
+<li>最大的缺点就是产品族扩展非常困难，增加一个产品，工厂类就需要增加一个创建该产品对象的方法</li>
+</ul>
+<h2 id="抽象工厂类图"><a href="#抽象工厂类图" class="headerlink" title="抽象工厂类图"></a>抽象工厂类图</h2><p>抽象工厂模式角色分配</p>
+<ul>
+<li><strong>抽象工厂(AbstractFactory)</strong>：创建对象的工厂类的接口或父类，包含所有产品创建的抽象方法</li>
+<li><strong>具体工厂(ConcreteFactory)</strong>：实现抽象工厂接口的具体工厂类</li>
+<li><strong>抽象产品(AbstractProduct)</strong>：具体产品对象的共同父类或接口（有多个，一个产品族）</li>
+<li><strong>具体产品(ConcreteProduct)</strong>：具体产品由专门的具体工厂创建</li>
+</ul>
+<p><img src="https://oscimg.oschina.net/oscnet/1b2a1737ea005c4a2be0d6d7a327edeb7c8.jpg" alt></p>
+<p>如上类图，<code>ProductA</code>和<code>ProductB</code>是一个<strong>产品族</strong>的两个抽象产品，两个抽象产品都各自有可能有多个实现，ConcreteProductA1、ConcreteProductA2、ConcreteProductB1、ConcreteProductB2都是这些<strong>抽象产品的具体实现</strong>。<code>AbstractFactory</code>是工厂类的抽象接口，包含<strong>所有产品创建的抽象方法</strong>，工厂类不止是去创建一个产品对象，而是负责<strong>创建一个产品族的对象</strong></p>
+<h2 id="代码示例-1"><a href="#代码示例-1" class="headerlink" title="代码示例"></a>代码示例</h2><p>有组装过台式电脑的人可能知道一台电脑有很多配件组成，有CPU、主板、显卡、内存、硬盘、外设等，这些配件就可以看成是一个产品族的产品，而各个配件有不同的生产厂家和型号，有的可以混合搭配、有的需要指定型号。这里为了简单，假设只需要CPU和主板，CPU的生产厂家主要是Intel和AMD、对应的主板型号也不尽相同</p>
+<p><strong>抽象工厂</strong></p>
+<figure class="highlight java"><figcaption><span>IFactory.java</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IFactory</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function">ICpu <span class="title">createCpu</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">IMainboard <span class="title">createMainboard</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>抽象产品</strong></p>
+<figure class="highlight java"><figcaption><span>ICpu.java</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ICpu</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">installCpu</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><figcaption><span>IMainboard.java</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IMainboard</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">installMainboard</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>工厂模式区别</p>
+<ul>
+<li><strong>简单工厂</strong>：使用一个工厂对象用来生产同一等级结构中的任意产品。（不支持拓展增加产品）</li>
+<li><strong>工厂方法</strong>：使用多个工厂对象用来生产同一等级结构中对应的固定产品。（支持拓展增加产品）</li>
+<li><strong>抽象工厂</strong>：使用多个工厂对象用来生产不同产品族的全部产品。（不支持拓展增加产品族；支持增加产品）</li>
+</ul>
 
       
     </div>
@@ -639,14 +683,14 @@
     <li class="popular-posts-item">
       
       
-      <div class="popular-posts-title"><a href="\blog\spring-boot-profiles\" rel="bookmark">Spring Boot 多环境配置</a></div>
+      <div class="popular-posts-title"><a href="\blog\design-pattern-singleton\" rel="bookmark">单例模式-只有一个实例</a></div>
       
     </li>
   
     <li class="popular-posts-item">
       
       
-      <div class="popular-posts-title"><a href="\blog\spring-boot-actuator\" rel="bookmark">Spring Boot 的生产级特性--Actuator监控端点</a></div>
+      <div class="popular-posts-title"><a href="\blog\design-pattern-philosophy\" rel="bookmark">设计模式-面向对象设计原则</a></div>
       
     </li>
   
@@ -683,7 +727,7 @@
   <li class="post-copyright-link">
     <strong>Post link: </strong>
     
-    <a href="https://www.turbosnail.top/blog/spring-boot-quickstart/" title="Spring Boot 快速入门">https://www.turbosnail.top/blog/spring-boot-quickstart/</a>
+    <a href="https://www.turbosnail.top/blog/design-pattern-factory/" title="工厂模式-简单工厂模式、工厂方法模式、抽象工厂模式">https://www.turbosnail.top/blog/design-pattern-factory/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</span> unless stating additionally.</li>
@@ -696,7 +740,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Spring-Boot/" rel="tag"># Spring Boot</a>
+            <a href="/tags/设计模式/" rel="tag"># 设计模式</a>
+          
+            <a href="/tags/工厂模式/" rel="tag"># 工厂模式</a>
+          
+            <a href="/tags/抽象工厂/" rel="tag"># 抽象工厂</a>
           
         </div>
       
@@ -730,8 +778,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/spring-mvc-flow-usage/" rel="next" title="Spring Mvc 使用">
-                <i class="fa fa-chevron-left"></i> Spring Mvc 使用
+              <a href="/blog/design-pattern-singleton/" rel="next" title="单例模式-只有一个实例">
+                <i class="fa fa-chevron-left"></i> 单例模式-只有一个实例
               </a>
             
           </div>
@@ -739,10 +787,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/blog/spring-mvc-view-resolution/" rel="prev" title="Spring Mvc 视图解析">
-                Spring Mvc 视图解析 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -1035,7 +1079,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#快速入门"><span class="nav-number">1.</span> <span class="nav-text">快速入门</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建-Maven-工程"><span class="nav-number">1.1.</span> <span class="nav-text">创建 Maven 工程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#快速创建-Spring-Boot-项目"><span class="nav-number">1.2.</span> <span class="nav-text">快速创建 Spring Boot 项目</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#编写-Controller-服务"><span class="nav-number">2.</span> <span class="nav-text">编写 Controller 服务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#创建一个可执行的Jar"><span class="nav-number">3.</span> <span class="nav-text">创建一个可执行的Jar</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#工厂模式"><span class="nav-number">1.</span> <span class="nav-text">工厂模式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简单工厂模式"><span class="nav-number">2.</span> <span class="nav-text">简单工厂模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">2.1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简单工厂类图"><span class="nav-number">2.2.</span> <span class="nav-text">简单工厂类图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码实例"><span class="nav-number">2.3.</span> <span class="nav-text">代码实例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#反射机制改良简单工厂"><span class="nav-number">2.4.</span> <span class="nav-text">反射机制改良简单工厂</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#工厂方法模式"><span class="nav-number">3.</span> <span class="nav-text">工厂方法模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍-1"><span class="nav-number">3.1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#工厂方法类图"><span class="nav-number">3.2.</span> <span class="nav-text">工厂方法类图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码示例"><span class="nav-number">3.3.</span> <span class="nav-text">代码示例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#抽象工厂模式"><span class="nav-number">4.</span> <span class="nav-text">抽象工厂模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍-2"><span class="nav-number">4.1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#抽象工厂类图"><span class="nav-number">4.2.</span> <span class="nav-text">抽象工厂类图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码示例-1"><span class="nav-number">4.3.</span> <span class="nav-text">代码示例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
             
 
           </div>
