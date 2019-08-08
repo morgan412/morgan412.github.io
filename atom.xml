@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.turbosnail.top/"/>
-  <updated>2019-08-08T02:16:08.822Z</updated>
+  <updated>2019-08-08T09:29:46.982Z</updated>
   <id>https://www.turbosnail.top/</id>
   
   <author>
@@ -17,11 +17,40 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>原型模式-通过克隆创建对象</title>
+    <link href="https://www.turbosnail.top/blog/design-pattern-prototype/"/>
+    <id>https://www.turbosnail.top/blog/design-pattern-prototype/</id>
+    <published>2019-08-08T03:08:31.000Z</published>
+    <updated>2019-08-08T09:29:46.982Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;介绍&quot;&gt;&lt;a href=&quot;#介绍&quot; class=&quot;headerlink&quot; title=&quot;介绍&quot;&gt;&lt;/a&gt;介绍&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;原型模式&lt;/strong&gt;：Specify the kinds of objects to
+        
+      
+    
+    </summary>
+    
+      <category term="设计模式" scheme="https://www.turbosnail.top/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+    
+      <category term="设计模式" scheme="https://www.turbosnail.top/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+      <category term="原型模式" scheme="https://www.turbosnail.top/tags/%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
     <title>工厂模式-简单工厂模式、工厂方法模式、抽象工厂模式</title>
     <link href="https://www.turbosnail.top/blog/design-pattern-factory/"/>
     <id>https://www.turbosnail.top/blog/design-pattern-factory/</id>
     <published>2019-08-07T02:00:38.000Z</published>
-    <updated>2019-08-08T02:16:08.822Z</updated>
+    <updated>2019-08-08T03:54:02.399Z</updated>
     
     <summary type="html">
     
@@ -41,6 +70,10 @@
       <category term="设计模式" scheme="https://www.turbosnail.top/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
     
       <category term="工厂模式" scheme="https://www.turbosnail.top/tags/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/"/>
+    
+      <category term="简单工厂" scheme="https://www.turbosnail.top/tags/%E7%AE%80%E5%8D%95%E5%B7%A5%E5%8E%82/"/>
+    
+      <category term="工厂方法" scheme="https://www.turbosnail.top/tags/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95/"/>
     
       <category term="抽象工厂" scheme="https://www.turbosnail.top/tags/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82/"/>
     
@@ -561,34 +594,6 @@
         
         
           &lt;h1 id=&quot;异常处理机制&quot;&gt;&lt;a href=&quot;#异常处理机制&quot; class=&quot;headerlink&quot; title=&quot;异常处理机制&quot;&gt;&lt;/a&gt;异常处理机制&lt;/h1&gt;&lt;p&gt;Spring MVC 是通过 &lt;code&gt;HandlerExceptionResolver&lt;/code&gt;
-        
-      
-    
-    </summary>
-    
-      <category term="Spring" scheme="https://www.turbosnail.top/categories/Spring/"/>
-    
-    
-      <category term="Spring" scheme="https://www.turbosnail.top/tags/Spring/"/>
-    
-      <category term="Spring Mvc" scheme="https://www.turbosnail.top/tags/Spring-Mvc/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Spring Mvc 视图解析</title>
-    <link href="https://www.turbosnail.top/blog/spring-mvc-view-resolution/"/>
-    <id>https://www.turbosnail.top/blog/spring-mvc-view-resolution/</id>
-    <published>2019-02-20T07:59:05.000Z</published>
-    <updated>2019-04-28T01:30:57.193Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;在 Spring Mvc 中，我们自己编写的控制器方法 (Controller) 并没有直接去渲染结果，使用 response 去输出到浏览器。方法返回的是 ModelAndView，甚至只是一个 String 类型的视图名，那 Spring Mvc
         
       
     
