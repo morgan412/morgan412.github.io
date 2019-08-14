@@ -1,8 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://www.turbosnail.top/blog/design-pattern-adapter/</loc>
+    <lastmod>2019-08-14</lastmod>
+  </url>  <url>
     <loc>https://www.turbosnail.top/blog/design-pattern-prototype/</loc>
-    <lastmod>2019-08-08</lastmod>
+    <lastmod>2019-08-14</lastmod>
+  </url>  <url>
+    <loc>https://www.turbosnail.top/blog/design-pattern-template/</loc>
+    <lastmod>2019-08-14</lastmod>
+  </url>  <url>
+    <loc>https://www.turbosnail.top/blog/redis-intro-install-datatype/</loc>
+    <lastmod>2019-08-13</lastmod>
+  </url>  <url>
+    <loc>https://www.turbosnail.top/blog/mybatis-configuration-usage/</loc>
+    <lastmod>2019-08-12</lastmod>
+  </url>  <url>
+    <loc>https://www.turbosnail.top/blog/mybatis-spring/</loc>
+    <lastmod>2019-08-12</lastmod>
+  </url>  <url>
+    <loc>https://www.turbosnail.top/blog/spring-framework-introduction-overview/</loc>
+    <lastmod>2019-08-12</lastmod>
+  </url>  <url>
+    <loc>https://www.turbosnail.top/blog/design-pattern-builder/</loc>
+    <lastmod>2019-08-12</lastmod>
+  </url>  <url>
+    <loc>https://www.turbosnail.top/blog/design-pattern-philosophy/</loc>
+    <lastmod>2019-08-12</lastmod>
   </url>  <url>
     <loc>https://www.turbosnail.top/blog/design-pattern-factory/</loc>
     <lastmod>2019-08-08</lastmod>
@@ -12,9 +36,6 @@
   </url>  <url>
     <loc>https://www.turbosnail.top/blog/swagger-usage-annotation/</loc>
     <lastmod>2019-08-01</lastmod>
-  </url>  <url>
-    <loc>https://www.turbosnail.top/blog/design-pattern-philosophy/</loc>
-    <lastmod>2019-07-31</lastmod>
   </url>  <url>
     <loc>https://www.turbosnail.top/blog/spring-cloud-jpa/</loc>
     <lastmod>2019-05-23</lastmod>
@@ -88,19 +109,10 @@
     <loc>https://www.turbosnail.top/blog/mybatis-dynamic-sql/</loc>
     <lastmod>2019-04-28</lastmod>
   </url>  <url>
-    <loc>https://www.turbosnail.top/blog/mybatis-spring/</loc>
-    <lastmod>2019-04-28</lastmod>
-  </url>  <url>
-    <loc>https://www.turbosnail.top/blog/mybatis-configuration-usage/</loc>
-    <lastmod>2019-04-28</lastmod>
-  </url>  <url>
     <loc>https://www.turbosnail.top/blog/spring-aop-capabilities-usage/</loc>
     <lastmod>2019-04-28</lastmod>
   </url>  <url>
     <loc>https://www.turbosnail.top/blog/spring-ioc-container/</loc>
-    <lastmod>2019-04-28</lastmod>
-  </url>  <url>
-    <loc>https://www.turbosnail.top/blog/spring-framework-introduction-overview/</loc>
     <lastmod>2019-04-28</lastmod>
   </url>  <url>
     <loc>https://www.turbosnail.top/blog/linux-mysql8-install/</loc>

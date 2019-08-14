@@ -168,7 +168,7 @@
 <meta property="og:image" content="https://oscimg.oschina.net/oscnet/467b25acfaa0e25b12495d6475a783d71c2.jpg">
 <meta property="og:image" content="https://oscimg.oschina.net/oscnet/48c131f68f2feded0b55875a80022de4847.jpg">
 <meta property="og:image" content="https://oscimg.oschina.net/oscnet/82b32c1aa4004f6763c6b819d4dca6e65ec.jpg">
-<meta property="og:updated_time" content="2019-07-31T06:14:27.806Z">
+<meta property="og:updated_time" content="2019-08-12T01:07:35.980Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="设计模式-面向对象设计原则">
 <meta name="twitter:description" content="设计模式（Design Pattern）是前辈们在代码实践中所总结的经验，是解决某些特定问题的套路。在使用一些优秀的框架时，可能会接触到它里面所运用到的一些设计模式，又或许你在编码去设计一些模块时，为了提高代码可复用性、扩展性、可读性等，运用到的一些设计理念也会与某些设计模式思想相吻合。 系统的了解和学习设计模式是很有必要的，能帮助提升面对对象设计的能力，了解各种设计模式的特点和运用场景 在学习设">
@@ -323,7 +323,7 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives<span class="badge">36</span></a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives<span class="badge">40</span></a>
 
   </li>
         
@@ -342,7 +342,7 @@
       
     
 
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags<span class="badge">46</span></a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags<span class="badge">53</span></a>
 
   </li>
         
@@ -361,7 +361,7 @@
       
     
 
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories<span class="badge">13</span></a>
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories<span class="badge">14</span></a>
 
   </li>
         
@@ -663,8 +663,8 @@
 <p>里氏代换原则告诉我们，在软件中,只要父类能出现的地方子类就可以出现，而且替换为子类也不会产生任何错误或异常，程序将不会产生任何错误和异常，反过来则不成立，如果一个软件实体使用的是一个子类对象的话，那么它不一定能够使用基类对象</p>
 <p>里式替换才使得开发-封闭成为可能，<strong>子类的可替代性才使得使用父类类型的地方可以在无需修改的情况下就可以扩展</strong>。里氏代换原则是实现开闭原则的重要方式之一，由于使用基类对象的地方都可以使用子类对象，因此<strong>在程序中尽量使用基类类型来对对象进行定义，而在运行时再确定其子类类型，用子类对象来替换父类对象</strong></p>
 <ul>
-<li>子类的所有方法必须在父类中声明，或子类必须实现父类中声明的所有方法。根据里氏代换原则，为了保证<br>系统的扩展性，在程序中通常使用父类来进行定义，如果一个方法只存在子类中，在父类中不提供相应的声<br>明，则无法在以父类定义的对象中使用该方法。</li>
-<li>我们在运用里氏代换原则时，尽量把父类设计为抽象类或者接口，让子类继承父类或实现父接口，并实现<br>在父类中声明的方法，运行时，子类实例替换父类实例，我们可以很方便地扩展系统的功能，同时无须修改原<br>有子类的代码，增加新的功能可以通过增加一个新的子类来实现。里氏代换原则是开闭原则的具体实现手段之<br>一</li>
+<li>子类的所有方法必须在父类中声明，或子类必须实现父类中声明的所有方法。根据里氏代换原则，为了保证系统的扩展性，在程序中通常使用父类来进行定义，如果一个方法只存在子类中，在父类中不提供相应的声明，则无法在以父类定义的对象中使用该方法。</li>
+<li>我们在运用里氏代换原则时，尽量把父类设计为抽象类或者接口，让子类继承父类或实现父接口，并实现在父类中声明的方法，运行时，子类实例替换父类实例，我们可以很方便地扩展系统的功能，同时无须修改原有子类的代码，增加新的功能可以通过增加一个新的子类来实现。里氏代换原则是开闭原则的具体实现手段之一</li>
 </ul>
 <h2 id="依赖倒转原则"><a href="#依赖倒转原则" class="headerlink" title="依赖倒转原则"></a>依赖倒转原则</h2><p>如果说开闭原则是面向对象设计的目标的话，那么依赖倒转原则就是面向对象设计的主要实现机制之一，它是系统抽象化的具体实现</p>
 <blockquote>
@@ -752,7 +752,7 @@
 </ul>
 <h1 id="23种设计模式"><a href="#23种设计模式" class="headerlink" title="23种设计模式"></a>23种设计模式</h1><p>总体来说，设计模式按照功能分为三类23种：</p>
 <ul>
-<li><strong>创建型</strong>（5种） ： 工厂模式、抽象工厂模式、单例模式、原型模式、构建者模式</li>
+<li><strong>创建型</strong>（5种） ： 工厂模式、抽象工厂模式、单例模式、原型模式、建造者模式</li>
 <li><strong>结构型</strong>（7种）： 适配器模式、装饰模式、代理模式 、外观模式、桥接模式、组合模式、享元模式</li>
 <li><strong>行为型</strong>（11种）： 模板方法模式、策略模式 、观察者模式、中介者模式、状态模式、责任链模式、命令模式、迭代器模式、访问者模式、解释器模式、备忘录模式</li>
 </ul>
@@ -770,6 +770,13 @@
     <li class="popular-posts-item">
       
       
+      <div class="popular-posts-title"><a href="\blog\design-pattern-singleton\" rel="bookmark">单例模式-只有一个实例</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
       <div class="popular-posts-title"><a href="\blog\design-pattern-prototype\" rel="bookmark">原型模式-通过克隆创建对象</a></div>
       
     </li>
@@ -777,7 +784,14 @@
     <li class="popular-posts-item">
       
       
-      <div class="popular-posts-title"><a href="\blog\design-pattern-singleton\" rel="bookmark">单例模式-只有一个实例</a></div>
+      <div class="popular-posts-title"><a href="\blog\design-pattern-template\" rel="bookmark">模板方法模式-封装不变，扩展可变</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="\blog\design-pattern-builder\" rel="bookmark">建造者模式-一步步组装复杂的对象</a></div>
       
     </li>
   
@@ -959,7 +973,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">36</span>
+                    <span class="site-state-item-count">40</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -1002,7 +1016,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">11</span>
+                      
+                    
+                    <span class="site-state-item-count">12</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -1111,7 +1127,21 @@
                     
                       
                     
-                    <span class="site-state-item-count">42</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">46</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
@@ -1153,6 +1183,28 @@
                     
                   
                   <span class="exturl" data-url="bWFpbHRvOnpvdXhxNDEyQGZveG1haWwuY29t" title="E-Mail &rarr; mailto:zouxq412@foxmail.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Vfenhx" title="CSDN &rarr; https://blog.csdn.net/e_zxq"><i class="fa fa-fw fa-csdn"></i>CSDN</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uaW0vdXNlci81ZDEyZTdjMWYyNjVkYTFiYmU1ZTEzYzY=" title="掘金 &rarr; https://juejin.im/user/5d12e7c1f265da1bbe5e13c6"><i class="fa fa-fw fa-juejin"></i>掘金</span>
                 </span>
               
             </div>
@@ -1225,7 +1277,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="Symbols count total">254k</span>
+    <span title="Symbols count total">274k</span>
   
 
   
@@ -1234,7 +1286,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="Reading time total">3:51</span>
+    <span title="Reading time total">4:09</span>
   
 </div>
 
