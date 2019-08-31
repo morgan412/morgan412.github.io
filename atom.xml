@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.turbosnail.top/"/>
-  <updated>2019-08-14T10:08:26.157Z</updated>
+  <updated>2019-08-31T03:24:27.359Z</updated>
   <id>https://www.turbosnail.top/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>装饰模式-为类动态添加职责</title>
+    <link href="https://www.turbosnail.top/blog/design-pattern-decorator/"/>
+    <id>https://www.turbosnail.top/blog/design-pattern-decorator/</id>
+    <published>2019-08-30T03:12:45.000Z</published>
+    <updated>2019-08-31T03:24:27.359Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;装饰模式定义&quot;&gt;&lt;a href=&quot;#装饰模式定义&quot; class=&quot;headerlink&quot; title=&quot;装饰模式定义&quot;&gt;&lt;/a&gt;装饰模式定义&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;装饰模式（Decorator
+        
+      
+    
+    </summary>
+    
+      <category term="设计模式" scheme="https://www.turbosnail.top/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+    
+      <category term="设计模式" scheme="https://www.turbosnail.top/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+      <category term="装饰模式" scheme="https://www.turbosnail.top/tags/%E8%A3%85%E9%A5%B0%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
   
   <entry>
     <title>适配器模式-通过适配器来复用</title>
@@ -581,33 +610,6 @@
     
     
       <category term="Docker" scheme="https://www.turbosnail.top/tags/Docker/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Linux 使用文件增加虚拟内存 swap</title>
-    <link href="https://www.turbosnail.top/blog/linux-swap/"/>
-    <id>https://www.turbosnail.top/blog/linux-swap/</id>
-    <published>2019-03-25T01:29:12.000Z</published>
-    <updated>2019-04-28T01:30:57.206Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;之前买了个云服务器玩，不过是最低配置的1核1G，后来发现这个内存太小了，随便装几个软件就不行了，内存消耗较大的像 redis 运行起来很多问题。&lt;/p&gt;
-&lt;p&gt;前些时间了解了下 Docker 容器，去尝试了下发现 MySQL
-        
-      
-    
-    </summary>
-    
-      <category term="Linux" scheme="https://www.turbosnail.top/categories/Linux/"/>
-    
-    
-      <category term="Linux" scheme="https://www.turbosnail.top/tags/Linux/"/>
     
   </entry>
   
