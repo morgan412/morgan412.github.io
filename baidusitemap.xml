@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://www.turbosnail.top/blog/redis-base-data-structure/</loc>
+    <lastmod>2019-09-06</lastmod>
+  </url>  <url>
     <loc>https://www.turbosnail.top/blog/design-pattern-decorator/</loc>
-    <lastmod>2019-08-31</lastmod>
+    <lastmod>2019-09-04</lastmod>
   </url>  <url>
     <loc>https://www.turbosnail.top/blog/design-pattern-adapter/</loc>
-    <lastmod>2019-08-14</lastmod>
+    <lastmod>2019-09-04</lastmod>
   </url>  <url>
     <loc>https://www.turbosnail.top/blog/design-pattern-prototype/</loc>
     <lastmod>2019-08-14</lastmod>

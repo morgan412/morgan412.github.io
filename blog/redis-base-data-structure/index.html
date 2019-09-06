@@ -1,0 +1,2034 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+  
+  
+    
+  
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/theme-next/theme-next-needmoreshare2@1/needsharebutton.min.css">
+
+
+
+  
+  
+    
+      
+    
+    
+      
+    
+  <script src="//cdn.jsdelivr.net/npm/pace-js@1/pace.min.js"></script>
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/pace-js@1/themes/blue/pace-theme-minimal.css">
+
+
+
+
+
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Pacifico:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
+  
+
+
+
+
+
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/turbo.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/turbo.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/turbo.png?v=7.1.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.1.0',
+    sidebar: {"position":"left","display":"hide","offset":12,"onmobile":true,"dimmer":true,"width":260},
+    back2top: true,
+    back2top_sidebar: true,
+    fancybox: true,
+    fastclick: true,
+    lazyload: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="说明说到Redis的数据结构，我们大概会很快想到Redis的5种常见数据结构：字符串(String)、列表(List)、散列(Hash)、集合(Set)、有序集合(Sorted Set)，以及他们的特点和运用场景。不过它们是Redis对外暴露的数据结构，用于API的操作，而组成它们的底层基础数据结构又是什么呢 简单动态字符串（SDS）Redis是用C语言写的，但是Redis并没有使用C的字符串表示">
+<meta name="keywords" content="Redis,数据结构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入了解Redis底层数据结构">
+<meta property="og:url" content="https://www.turbosnail.top/blog/redis-base-data-structure/index.html">
+<meta property="og:site_name" content="TurboSnail">
+<meta property="og:description" content="说明说到Redis的数据结构，我们大概会很快想到Redis的5种常见数据结构：字符串(String)、列表(List)、散列(Hash)、集合(Set)、有序集合(Sorted Set)，以及他们的特点和运用场景。不过它们是Redis对外暴露的数据结构，用于API的操作，而组成它们的底层基础数据结构又是什么呢 简单动态字符串（SDS）Redis是用C语言写的，但是Redis并没有使用C的字符串表示">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://oscimg.oschina.net/oscnet/edc82c77be39429071e27195126ac6311c8.jpg">
+<meta property="og:image" content="https://oscimg.oschina.net/oscnet/7b3d3b0c972bdf9a49983be9711c067c8f2.jpg">
+<meta property="og:image" content="https://oscimg.oschina.net/oscnet/bb0bc1f426384fb070bdaed4f17c08733aa.jpg">
+<meta property="og:image" content="https://oscimg.oschina.net/oscnet/5c1b2b9e3aa0d387089b049a17b33444a3b.jpg">
+<meta property="og:image" content="https://oscimg.oschina.net/oscnet/b191283187a78d88b6d6b288f64ba07f3e2.jpg">
+<meta property="og:image" content="https://oscimg.oschina.net/oscnet/04fc588fdc911be11a7377adb4fc4a9a49b.jpg">
+<meta property="og:image" content="https://oscimg.oschina.net/oscnet/517624296108922537c046db78c6f0f6fb0.jpg">
+<meta property="og:image" content="https://oscimg.oschina.net/oscnet/e958c0e4ab37a930b6cdab23617feff932c.jpg">
+<meta property="og:image" content="https://oscimg.oschina.net/oscnet/ef9302d9e33cf1860c9a0b757be257db55b.jpg">
+<meta property="og:image" content="https://oscimg.oschina.net/oscnet/6f55d9ef2f8324a88437c664e891dcac580.jpg">
+<meta property="og:image" content="https://oscimg.oschina.net/oscnet/e3431295a37c6e31fec4e21eaa4d6c00cb8.jpg">
+<meta property="og:image" content="https://oscimg.oschina.net/oscnet/7c38521ac3192f9bebffacf0e79376faf53.jpg">
+<meta property="og:updated_time" content="2019-09-06T03:30:59.251Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深入了解Redis底层数据结构">
+<meta name="twitter:description" content="说明说到Redis的数据结构，我们大概会很快想到Redis的5种常见数据结构：字符串(String)、列表(List)、散列(Hash)、集合(Set)、有序集合(Sorted Set)，以及他们的特点和运用场景。不过它们是Redis对外暴露的数据结构，用于API的操作，而组成它们的底层基础数据结构又是什么呢 简单动态字符串（SDS）Redis是用C语言写的，但是Redis并没有使用C的字符串表示">
+<meta name="twitter:image" content="https://oscimg.oschina.net/oscnet/edc82c77be39429071e27195126ac6311c8.jpg">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="TurboSnail" type="application/atom+xml">
+
+
+
+  
+  
+  <link rel="canonical" href="https://www.turbosnail.top/blog/redis-base-data-structure/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>深入了解Redis底层数据结构 | TurboSnail</title>
+  
+
+
+
+
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?c3528f0271a75c57e103a28d6b11ebec";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">TurboSnail</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">The harder, The luckier</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives<span class="badge">42</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags<span class="badge">54</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories<span class="badge">14</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>About</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Search</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+    <div class="reading-progress-bar"></div>
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.turbosnail.top/blog/redis-base-data-structure/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="TurboSnail">
+      <meta itemprop="description" content="Please love me three thousand times">
+      <meta itemprop="image" content="/images/turbo.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="TurboSnail">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">深入了解Redis底层数据结构
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-09-06 09:18:52" itemprop="dateCreated datePublished" datetime="2019-09-06T09:18:52+08:00">2019-09-06</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Redis/" itemprop="url" rel="index"><span itemprop="name">Redis</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                <span title="Symbols count in article">12k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                <span title="Reading time">11 mins.</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h1><p>说到Redis的数据结构，我们大概会很快想到Redis的5种常见数据结构：字符串(String)、列表(List)、散列(Hash)、集合(Set)、有序集合(Sorted Set)，以及他们的特点和运用场景。不过它们是Redis对外暴露的数据结构，用于API的操作，而组成它们的底层基础数据结构又是什么呢</p>
+<h1 id="简单动态字符串（SDS）"><a href="#简单动态字符串（SDS）" class="headerlink" title="简单动态字符串（SDS）"></a>简单动态字符串（SDS）</h1><p>Redis是用C语言写的，但是Redis并没有使用C的字符串表示（C是字符串是以<code>\0</code>空字符结尾的字符数组），而是自己构建了一种<strong>简单动态字符串</strong>（simple dynamic string，SDS）的抽象类型，并作为Redis的默认字符串表示</p>
+<p>在Redis中，包含字符串值的键值对底层都是用SDS实现的</p>
+<h2 id="SDS的定义"><a href="#SDS的定义" class="headerlink" title="SDS的定义"></a>SDS的定义</h2><p>SDS的结构定义在<code>sds.h</code>文件中，SDS的定义在Redis 3.2版本之后有一些改变，由一种数据结构变成了5种数据结构，会根据SDS存储的内容长度来选择不同的结构，以达到节省内存的效果，具体的结构定义，我们看以下代码</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 3.0</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sdshdr</span> &#123;</span></span><br><span class="line">    <span class="comment">// 记录buf数组中已使用字节的数量，即SDS所保存字符串的长度</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> len;</span><br><span class="line">    <span class="comment">// 记录buf数据中未使用的字节数量</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> <span class="built_in">free</span>;</span><br><span class="line">    <span class="comment">// 字节数组，用于保存字符串</span></span><br><span class="line">    <span class="keyword">char</span> buf[];</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3.2</span></span><br><span class="line"><span class="comment">/* Note: sdshdr5 is never used, we just access the flags byte directly.</span></span><br><span class="line"><span class="comment"> * However is here to document the layout of type 5 SDS strings. */</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> __<span class="title">attribute__</span> ((__<span class="title">packed__</span>)) <span class="title">sdshdr5</span> &#123;</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> flags; <span class="comment">/* 3 lsb of type, and 5 msb of string length */</span></span><br><span class="line">    <span class="keyword">char</span> buf[];</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> __<span class="title">attribute__</span> ((__<span class="title">packed__</span>)) <span class="title">sdshdr8</span> &#123;</span></span><br><span class="line">    <span class="keyword">uint8_t</span> len; <span class="comment">/* used */</span></span><br><span class="line">    <span class="keyword">uint8_t</span> alloc; <span class="comment">/* excluding the header and null terminator */</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> flags; <span class="comment">/* 3 lsb of type, 5 unused bits */</span></span><br><span class="line">    <span class="keyword">char</span> buf[];</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> __<span class="title">attribute__</span> ((__<span class="title">packed__</span>)) <span class="title">sdshdr16</span> &#123;</span></span><br><span class="line">    <span class="keyword">uint16_t</span> len; <span class="comment">/* used */</span></span><br><span class="line">    <span class="keyword">uint16_t</span> alloc; <span class="comment">/* excluding the header and null terminator */</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> flags; <span class="comment">/* 3 lsb of type, 5 unused bits */</span></span><br><span class="line">    <span class="keyword">char</span> buf[];</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> __<span class="title">attribute__</span> ((__<span class="title">packed__</span>)) <span class="title">sdshdr32</span> &#123;</span></span><br><span class="line">    <span class="keyword">uint32_t</span> len; <span class="comment">/* used */</span></span><br><span class="line">    <span class="keyword">uint32_t</span> alloc; <span class="comment">/* excluding the header and null terminator */</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> flags; <span class="comment">/* 3 lsb of type, 5 unused bits */</span></span><br><span class="line">    <span class="keyword">char</span> buf[];</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> __<span class="title">attribute__</span> ((__<span class="title">packed__</span>)) <span class="title">sdshdr64</span> &#123;</span></span><br><span class="line">    <span class="keyword">uint64_t</span> len; <span class="comment">/* used */</span></span><br><span class="line">    <span class="keyword">uint64_t</span> alloc; <span class="comment">/* excluding the header and null terminator */</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> flags; <span class="comment">/* 3 lsb of type, 5 unused bits */</span></span><br><span class="line">    <span class="keyword">char</span> buf[];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>3.2版本之后，会根据字符串的长度来选择对应的数据结构</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">char</span> <span class="title">sdsReqType</span><span class="params">(<span class="keyword">size_t</span> string_size)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (string_size &lt; <span class="number">1</span>&lt;&lt;<span class="number">5</span>)  <span class="comment">// 32</span></span><br><span class="line">        <span class="keyword">return</span> SDS_TYPE_5;</span><br><span class="line">    <span class="keyword">if</span> (string_size &lt; <span class="number">1</span>&lt;&lt;<span class="number">8</span>)  <span class="comment">// 256</span></span><br><span class="line">        <span class="keyword">return</span> SDS_TYPE_8;</span><br><span class="line">    <span class="keyword">if</span> (string_size &lt; <span class="number">1</span>&lt;&lt;<span class="number">16</span>)   <span class="comment">// 65536 64k</span></span><br><span class="line">        <span class="keyword">return</span> SDS_TYPE_16;</span><br><span class="line">    <span class="keyword">if</span> (string_size &lt; <span class="number">1l</span>l&lt;&lt;<span class="number">32</span>)  <span class="comment">// 4294967296 4G</span></span><br><span class="line">        <span class="keyword">return</span> SDS_TYPE_32;</span><br><span class="line">    <span class="keyword">return</span> SDS_TYPE_64;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>下面以3.2版本的<code>sdshdr8</code>看一个示例</p>
+<p><img src="https://oscimg.oschina.net/oscnet/edc82c77be39429071e27195126ac6311c8.jpg" alt></p>
+<ul>
+<li><code>len</code>：记录当前已使用的字节数（不包括<code>&#39;\0&#39;</code>），获取SDS长度的复杂度为O(1)</li>
+<li><code>alloc</code>：记录当前字节数组总共分配的字节数量（不包括<code>&#39;\0&#39;</code>）</li>
+<li><code>flags</code>：标记当前字节数组的属性，是<code>sdshdr8</code>还是<code>sdshdr16</code>等，flags值的定义可以看下面代码</li>
+<li><code>buf</code>：字节数组，用于保存字符串，包括结尾空白字符<code>&#39;\0&#39;</code></li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// flags值定义</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SDS_TYPE_5  0</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SDS_TYPE_8  1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SDS_TYPE_16 2</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SDS_TYPE_32 3</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SDS_TYPE_64 4</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>上面的字节数组的空白处表示未使用空间，是Redis优化的空间策略，给字符串的操作留有余地，保证安全提高效率</p>
+</blockquote>
+<h2 id="SDS与C字符串的区别"><a href="#SDS与C字符串的区别" class="headerlink" title="SDS与C字符串的区别"></a>SDS与C字符串的区别</h2><p>C语言使用长度为N+1的字符数组来表示长度为N的字符串，字符数组的最后一个元素为空字符<code>&#39;\0&#39;</code>，但是这种简单的字符串表示方法并不能满足Redis对于字符串在安全性、效率以及功能方面的要求，那么使用SDS，会有哪些好处呢</p>
+<p>参考于《Redis设计与实现》</p>
+<blockquote>
+<p>常数复杂度获取字符串长度</p>
+</blockquote>
+<p>C字符串不记录字符串长度，获取长度必须遍历整个字符串，复杂度为O(N)；而SDS结构中本身就有记录字符串长度的<code>len</code>属性，所有复杂度为O(1)。Redis将获取字符串长度所需的复杂度从O(N)降到了O(1)，确保获取字符串长度的工作不会成为Redis的性能瓶颈</p>
+<blockquote>
+<p>杜绝缓冲区溢出，减少修改字符串时带来的内存重分配次数</p>
+</blockquote>
+<p>C字符串不记录自身的长度，每次增长或缩短一个字符串，都要对底层的字符数组进行一次内存重分配操作。如果是拼接append操作之前没有通过内存重分配来扩展底层数据的空间大小，就会产生缓存区溢出；如果是截断trim操作之后没有通过内存重分配来释放不再使用的空间，就会产生内存泄漏</p>
+<p>而SDS通过未使用空间解除了字符串长度和底层数据长度的关联，3.0版本是用<code>free</code>属性记录未使用空间，3.2版本则是<code>alloc</code>属性记录总的分配字节数量。通过未使用空间，SDS实现了<strong>空间预分配</strong>和<strong>惰性空间释放</strong>两种优化的空间分配策略，解决了字符串拼接和截取的空间问题</p>
+<blockquote>
+<p>二进制安全</p>
+</blockquote>
+<p>C字符串中的字符必须符合某种编码，除了字符串的末尾，字符串里面是不能包含空字符的，否则会被认为是字符串结尾，这些限制了C字符串只能保存文本数据，而不能保存像图片这样的二进制数据</p>
+<p>而SDS的API都会以处理二进制的方式来处理存放在<code>buf</code>数组里的数据，不会对里面的数据做任何的限制。SDS使用<code>len</code>属性的值来判断字符串是否结束，而不是空字符</p>
+<blockquote>
+<p>兼容部分C字符串函数</p>
+</blockquote>
+<p>虽然SDS的API是二进制安全的，但还是像C字符串一样以空字符结尾，目的是为了让保存文本数据的SDS可以重用一部分C字符串的函数</p>
+<p><strong>C字符串与SDS对比</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">C字符串</th>
+<th>SDS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">获取字符串长度复杂度为O(N)</td>
+<td>获取字符串长度复杂度为O(1)</td>
+</tr>
+<tr>
+<td style="text-align:left">API是不安全的，可能会造成缓冲区溢出</td>
+<td>API是安全的，不会造成缓冲区溢出</td>
+</tr>
+<tr>
+<td style="text-align:left">修改字符串长度必然会需要执行内存重分配</td>
+<td>修改字符串长度N次最多会需要执行N次内存重分配</td>
+</tr>
+<tr>
+<td style="text-align:left">只能保存文本数据</td>
+<td>可以保存文本或二进制数据</td>
+</tr>
+<tr>
+<td style="text-align:left">可以使用所有<code>&lt;string.h&gt;</code>库中的函数</td>
+<td>可以使用一部分<code>&lt;string.h&gt;</code>库中的函数</td>
+</tr>
+</tbody>
+</table>
+<h1 id="链表"><a href="#链表" class="headerlink" title="链表"></a>链表</h1><p>链表是一种比较常见的数据结构了，特点是易于插入和删除、内存利用率高、且可以灵活调整链表长度，但随机访问困难。许多高级编程语言都内置了链表的实现，但是C语言并没有实现链表，所以Redis实现了自己的链表数据结构</p>
+<p>链表在Redis中应用的非常广，列表（List）的底层实现就是链表。此外，Redis的发布与订阅、慢查询、监视器等功能也用到了链表</p>
+<h2 id="链表节点和链表的定义"><a href="#链表节点和链表的定义" class="headerlink" title="链表节点和链表的定义"></a>链表节点和链表的定义</h2><p>链表上的节点定义如下，<code>adlist.h/listNode</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">listNode</span> &#123;</span></span><br><span class="line">    <span class="comment">// 前置节点</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">listNode</span> *<span class="title">prev</span>;</span></span><br><span class="line">    <span class="comment">// 后置节点</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">listNode</span> *<span class="title">next</span>;</span></span><br><span class="line">    <span class="comment">// 节点值</span></span><br><span class="line">    <span class="keyword">void</span> *value;</span><br><span class="line">&#125; listNode;</span><br></pre></td></tr></table></figure>
+<p>链表的定义如下，<code>adlist.h/list</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">list</span> &#123;</span></span><br><span class="line">    <span class="comment">// 链表头节点</span></span><br><span class="line">    listNode *head;</span><br><span class="line">    <span class="comment">// 链表尾节点</span></span><br><span class="line">    listNode *tail;</span><br><span class="line">    <span class="comment">// 节点值复制函数</span></span><br><span class="line">    <span class="keyword">void</span> *(*dup)(<span class="keyword">void</span> *ptr);</span><br><span class="line">    <span class="comment">// 节点值释放函数</span></span><br><span class="line">    <span class="keyword">void</span> (*<span class="built_in">free</span>)(<span class="keyword">void</span> *ptr);</span><br><span class="line">    <span class="comment">// 节点值对比函数</span></span><br><span class="line">    <span class="keyword">int</span> (*match)(<span class="keyword">void</span> *ptr, <span class="keyword">void</span> *key);</span><br><span class="line">    <span class="comment">// 链表所包含的节点数量</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> len;</span><br><span class="line">&#125; <span class="built_in">list</span>;</span><br></pre></td></tr></table></figure>
+<p>每个节点<code>listNode</code>可以通过<code>prev</code>和<code>next</code>指针分布指向前一个节点和后一个节点组成双端链表，同时每个链表还会有一个<code>list</code>结构为链表提供表头指针<code>head</code>、表尾指针<code>tail</code>、以及链表长度计数器<code>len</code>，还有三个用于实现多态链表的类型特定函数</p>
+<ul>
+<li><code>dup</code>：用于复制链表节点所保存的值</li>
+<li><code>free</code>：用于释放链表节点所保存的值</li>
+<li><code>match</code>：用于对比链表节点所保存的值和另一个输入值是否相等</li>
+</ul>
+<p><strong>链表结构图</strong></p>
+<p><img src="https://oscimg.oschina.net/oscnet/7b3d3b0c972bdf9a49983be9711c067c8f2.jpg" alt></p>
+<h2 id="链表特性"><a href="#链表特性" class="headerlink" title="链表特性"></a>链表特性</h2><ul>
+<li>双端链表：带有指向前置节点和后置节点的指针，获取这两个节点的复杂度为O(1)</li>
+<li>无环：表头节点的<code>prev</code>和表尾节点的<code>next</code>都指向NULL，对链表的访问以NULL结束</li>
+<li>链表长度计数器：带有<code>len</code>属性，获取链表长度的复杂度为O(1)</li>
+<li>多态：链表节点使用 <code>void*</code>指针保存节点值，可以保存不同类型的值</li>
+</ul>
+<h1 id="字典"><a href="#字典" class="headerlink" title="字典"></a>字典</h1><p>字典，又称为符号表（symbol table）、关联数组（associative array）或映射（map），是一种用于保存键值对（key-value pair）的抽象数据结构。字典中的每一个键都是唯一的，可以通过键查找与之关联的值，并对其修改或删除</p>
+<p>Redis的键值对存储就是用字典实现的，散列（Hash）的底层实现之一也是字典</p>
+<p>我们直接来看一下字典是如何定义和实现的吧</p>
+<h2 id="字典的定义实现"><a href="#字典的定义实现" class="headerlink" title="字典的定义实现"></a>字典的定义实现</h2><p>Redis的字典底层是使用<strong>哈希表</strong>实现的，一个哈希表里面可以有多个<strong>哈希表节点</strong>，每个哈希表节点中保存了字典中的一个<strong>键值对</strong></p>
+<p>哈希表结构定义，<code>dict.h/dictht</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">dictht</span> &#123;</span></span><br><span class="line">    <span class="comment">// 哈希表数组</span></span><br><span class="line">    dictEntry **table;</span><br><span class="line">    <span class="comment">// 哈希表大小</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> size;</span><br><span class="line">    <span class="comment">// 哈希表大小掩码，用于计算索引值，等于size-1</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> sizemask;</span><br><span class="line">    <span class="comment">// 哈希表已有节点的数量</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> used;</span><br><span class="line">&#125; dictht;</span><br></pre></td></tr></table></figure>
+<p>哈希表是由数组<code>table</code>组成，<code>table</code>中每个元素都是指向<code>dict.h/dictEntry</code>结构的指针，哈希表节点的定义如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">dictEntry</span> &#123;</span></span><br><span class="line">    <span class="comment">// 键</span></span><br><span class="line">    <span class="keyword">void</span> *key;</span><br><span class="line">    <span class="comment">// 值</span></span><br><span class="line">    <span class="keyword">union</span> &#123;</span><br><span class="line">        <span class="keyword">void</span> *val;</span><br><span class="line">        <span class="keyword">uint64_t</span> u64;</span><br><span class="line">        <span class="keyword">int64_t</span> s64;</span><br><span class="line">        <span class="keyword">double</span> d;</span><br><span class="line">    &#125; v;</span><br><span class="line">    <span class="comment">// 指向下一个哈希表节点，形成链表</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">dictEntry</span> *<span class="title">next</span>;</span></span><br><span class="line">&#125; dictEntry;</span><br></pre></td></tr></table></figure>
+<p>其中<code>key</code>是我们的键；<code>v</code>是键值，可以是一个指针，也可以是整数或浮点数；<code>next</code>属性是指向下一个哈希表节点的指针，可以让多个哈希值相同的键值对形成链表，解决键冲突问题</p>
+<p>最后就是我们的字典结构，<code>dict.h/dict</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">dict</span> &#123;</span></span><br><span class="line">    <span class="comment">// 和类型相关的处理函数</span></span><br><span class="line">    dictType *type;</span><br><span class="line">    <span class="comment">// 私有数据</span></span><br><span class="line">    <span class="keyword">void</span> *privdata;</span><br><span class="line">    <span class="comment">// 哈希表</span></span><br><span class="line">    dictht ht[<span class="number">2</span>];</span><br><span class="line">    <span class="comment">// rehash 索引，当rehash不再进行时，值为-1</span></span><br><span class="line">    <span class="keyword">long</span> rehashidx; <span class="comment">/* rehashing not in progress if rehashidx == -1 */</span></span><br><span class="line">    <span class="comment">// 迭代器数量</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> iterators; <span class="comment">/* number of iterators currently running */</span></span><br><span class="line">&#125; dict;</span><br></pre></td></tr></table></figure>
+<p><code>type</code>属性和<code>privdata</code>属性是针对不同类型的键值对，用于创建多类型的字典，<code>type</code>是指向<code>dictType</code>结构的指针，<code>privdata</code>则保存需要传给类型特定函数的可选参数，关于<code>dictType</code>结构和类型特定函数可以看下面代码</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">dictType</span> &#123;</span></span><br><span class="line">    <span class="comment">// 计算哈希值的行数</span></span><br><span class="line">    <span class="keyword">uint64_t</span> (*hashFunction)(<span class="keyword">const</span> <span class="keyword">void</span> *key);</span><br><span class="line">    <span class="comment">// 复制键的函数</span></span><br><span class="line">    <span class="keyword">void</span> *(*keyDup)(<span class="keyword">void</span> *privdata, <span class="keyword">const</span> <span class="keyword">void</span> *key);</span><br><span class="line">    <span class="comment">// 复制值的函数</span></span><br><span class="line">    <span class="keyword">void</span> *(*valDup)(<span class="keyword">void</span> *privdata, <span class="keyword">const</span> <span class="keyword">void</span> *obj);</span><br><span class="line">    <span class="comment">// 对比键的函数</span></span><br><span class="line">    <span class="keyword">int</span> (*keyCompare)(<span class="keyword">void</span> *privdata, <span class="keyword">const</span> <span class="keyword">void</span> *key1, <span class="keyword">const</span> <span class="keyword">void</span> *key2);</span><br><span class="line">    <span class="comment">// 销毁键的函数</span></span><br><span class="line">    <span class="keyword">void</span> (*keyDestructor)(<span class="keyword">void</span> *privdata, <span class="keyword">void</span> *key);</span><br><span class="line">    <span class="comment">// 销毁值的函数</span></span><br><span class="line">    <span class="keyword">void</span> (*valDestructor)(<span class="keyword">void</span> *privdata, <span class="keyword">void</span> *obj);</span><br><span class="line">&#125; dictType;</span><br></pre></td></tr></table></figure>
+<p><code>dict</code>的<code>ht</code>属性是两个元素的数组，包含两个<code>dictht</code>哈希表，一般字典只使用<code>ht[0]</code>哈希表，<code></code>ht[1]<code>哈希表会在对</code>ht[0]<code>哈希表进行</code>rehash<code>（重哈希）的时候使用，即当哈希表的键值对数量超过负载数量过多的时候，会将键值对迁移到</code>ht[1]`上</p>
+<p><code>rehashidx</code>也是跟rehash相关的，rehash的操作不是瞬间完成的，<code>rehashidx</code>记录着rehash的进度，如果目前没有在进行rehash，它的值为-1</p>
+<p>结合上面的几个结构，我们来看一下<strong>字典的结构图</strong>（没有在进行rehash）</p>
+<p><img src="https://oscimg.oschina.net/oscnet/bb0bc1f426384fb070bdaed4f17c08733aa.jpg" alt></p>
+<blockquote>
+<p>在这里，哈希算法和rehash(重新散列)的操作不再详细说明，有机会以后单独介绍</p>
+<p>当一个新的键值对要添加到字典中时，会根据键值对的键计算出哈希值和索引值，根据索引值放到对应的哈希表上，即如果索引值为0，则放到<code>ht[0]</code>哈希表上。当有两个或多个的键分配到了哈希表数组上的同一个索引时，就发生了<strong>键冲突</strong>的问题，哈希表使用<strong>链地址法</strong>来解决，即使用哈希表节点的<code>next</code>指针，将同一个索引上的多个节点连接起来。当哈希表的键值对太多或太少，就需要对哈希表进行扩展和收缩，通过<code>rehash</code>(重新散列)来执行</p>
+</blockquote>
+<h1 id="跳跃表"><a href="#跳跃表" class="headerlink" title="跳跃表"></a>跳跃表</h1><p>一个普通的单链表查询一个元素的时间复杂度为O(N)，即便该单链表是有序的。使用跳跃表（SkipList）是来解决查找问题的，它是一种有序的数据结构，不属于平衡树结构，也不属于Hash结构，它通过在每个节点维持多个指向其他节点的指针，而达到快速访问节点的目的</p>
+<p>跳跃表是有序集合（Sorted Set）的底层实现之一，如果有序集合包含的元素比较多，或者元素的成员是比较长的字符串时，Redis会使用跳跃表做有序集合的底层实现</p>
+<h2 id="跳跃表的定义"><a href="#跳跃表的定义" class="headerlink" title="跳跃表的定义"></a>跳跃表的定义</h2><p>跳跃表其实可以把它理解为<strong>多层的链表</strong>，它有如下的性质</p>
+<ul>
+<li><strong>多层</strong>的结构组成，每层是一个<strong>有序的链表</strong></li>
+<li>最底层（level 1）的链表包含所有的元素</li>
+<li>跳跃表的查找次数近似于层数，时间复杂度为O(logn)，插入、删除也为 O(logn)</li>
+<li>跳跃表是一种随机化的数据结构(通过抛硬币来决定层数)</li>
+</ul>
+<p>那么如何来理解跳跃表呢，我们从最底层的包含所有元素的链表开始，给定如下的链表</p>
+<p><img src="https://oscimg.oschina.net/oscnet/5c1b2b9e3aa0d387089b049a17b33444a3b.jpg" alt></p>
+<p>然后我们每隔一个元素，把它放到上一层的链表当中，这里我把它叫做<strong>上浮</strong>（注意，科学的办法是<strong>抛硬币</strong>的方式，来决定元素是否上浮到上一层链表，我这里先简单每隔一个元素上浮到上一层链表，便于理解），操作完成之后的结构如下</p>
+<p><img src="https://oscimg.oschina.net/oscnet/b191283187a78d88b6d6b288f64ba07f3e2.jpg" alt></p>
+<p>查找元素的方法是这样，从上层开始查找，大数向右找到头，小数向左找到头，例如我要查找<code>17</code>，查询的顺序是：13 -&gt; 46  -&gt; 22 -&gt; 17；如果是查找<code>35</code>，则是 13 -&gt; 46 -&gt; 22 -&gt; 46 -&gt; 35；如果是<code>54</code>，则是 13 -&gt; 46 -&gt; 54</p>
+<p><img src="https://oscimg.oschina.net/oscnet/04fc588fdc911be11a7377adb4fc4a9a49b.jpg" alt></p>
+<p>上面是查找元素，如果是添加元素，是通过抛硬币的方式来决定该元素会出现到多少层，也就是说它会有 1/2的概率出现第二层、1/4 的概率出现在第三层…… </p>
+<blockquote>
+<p>跳跃表节点的删除和添加都是不可预测的，很难保证跳表的索引是始终均匀的，抛硬币的方式可以让大体上是趋于均匀的</p>
+</blockquote>
+<p>假设我们已经有了上述例子的一个跳跃表了，现在往里面添加一个元素<code>18</code>，通过抛硬币的方式来决定它会出现的层数，是正面就继续，反面就停止，假如我抛了2次硬币，第一次为正面，第二次为反面</p>
+<p><img src="https://oscimg.oschina.net/oscnet/517624296108922537c046db78c6f0f6fb0.jpg" alt></p>
+<p>跳跃表的删除很简单，只要先找到要删除的节点，然后顺藤摸瓜删除每一层相同的节点就好了</p>
+<blockquote>
+<p>跳跃表维持结构平衡的是比较低的，完全是依靠随机，相比二叉查找树，在多次插入删除后，需要Rebalance来重新调整结构平衡</p>
+</blockquote>
+<h2 id="跳跃表的实现"><a href="#跳跃表的实现" class="headerlink" title="跳跃表的实现"></a>跳跃表的实现</h2><p>Redis的跳跃表实现是由<code>redis.h/zskiplistNode</code>和<code>redis.h/zskiplist</code>（3.2版本之后redis.h改为了server.h）两个结构定义，<code>zskiplistNode</code>定义跳跃表的节点，<code>zskiplist</code>保存跳跃表节点的相关信息</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* ZSETs use a specialized version of Skiplists */</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">zskiplistNode</span> &#123;</span></span><br><span class="line">    <span class="comment">// 成员对象 （robj *obj;）</span></span><br><span class="line">    sds ele;</span><br><span class="line">    <span class="comment">// 分值</span></span><br><span class="line">    <span class="keyword">double</span> score;</span><br><span class="line">    <span class="comment">// 后退指针</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">zskiplistNode</span> *<span class="title">backward</span>;</span></span><br><span class="line">    <span class="comment">// 层</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">zskiplistLevel</span> &#123;</span></span><br><span class="line">        <span class="comment">// 前进指针</span></span><br><span class="line">        <span class="class"><span class="keyword">struct</span> <span class="title">zskiplistNode</span> *<span class="title">forward</span>;</span></span><br><span class="line">        <span class="comment">// 跨度</span></span><br><span class="line">        <span class="comment">// 跨度实际上是用来计算元素排名(rank)的，在查找某个节点的过程中，将沿途访过的所有层的跨度累积起来，得到的结果就是目标节点在跳跃表中的排位</span></span><br><span class="line">        <span class="keyword">unsigned</span> <span class="keyword">long</span> span;</span><br><span class="line">    &#125; level[];</span><br><span class="line">&#125; zskiplistNode;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">zskiplist</span> &#123;</span></span><br><span class="line">    <span class="comment">// 表头节点和表尾节点</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">zskiplistNode</span> *<span class="title">header</span>, *<span class="title">tail</span>;</span></span><br><span class="line">    <span class="comment">// 表中节点的数量</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> length;</span><br><span class="line">    <span class="comment">// 表中层数最大的节点的层数</span></span><br><span class="line">    <span class="keyword">int</span> level;</span><br><span class="line">&#125; zskiplist;</span><br></pre></td></tr></table></figure>
+<p><code>zskiplistNode</code>结构</p>
+<ul>
+<li><code>level</code>数组（层）：每次创建一个新的跳表节点都会根据幂次定律计算出level数组的大小，也就是次层的高度，每一层带有两个属性-<strong>前进指针</strong>和<strong>跨度</strong>，前进指针用于访问表尾方向的其他指针；跨度用于记录当前节点与前进指针所指节点的距离（指向的为NULL，阔度为0）</li>
+<li><code>backward</code>（后退指针）：指向当前节点的前一个节点</li>
+<li><code>score</code>（分值）：用来排序，如果分值相同看成员变量在字典序大小排序</li>
+<li><code>obj</code>或<code>ele</code>：成员对象是一个指针，指向一个字符串对象，里面保存着一个sds；在跳表中各个节点的成员对象必须唯一，分值可以相同</li>
+</ul>
+<p><code>zskiplist</code>结构</p>
+<ul>
+<li><code>header</code>、<code>tail</code>表头节点和表尾节点</li>
+<li><code>length</code>表中节点的数量</li>
+<li><code>level</code>表中层数最大的节点的层数</li>
+</ul>
+<p>假设我们现在展示一个跳跃表，有四个节点，节点的高度分别是2、1、4、3</p>
+<p><img src="https://oscimg.oschina.net/oscnet/e958c0e4ab37a930b6cdab23617feff932c.jpg" alt></p>
+<p><code>zskiplist</code>的头结点不是一个有效的节点，它有<strong>ZSKIPLIST_MAXLEVEL</strong>层(32层)，每层的<code>forward</code>指向该层跳跃表的第一个节点，若没有则为NULL，在Redis中，上面的跳跃表结构如下</p>
+<p><img src="https://oscimg.oschina.net/oscnet/ef9302d9e33cf1860c9a0b757be257db55b.jpg" alt></p>
+<ul>
+<li>每个跳跃表节点的层数在1-32之间</li>
+<li>一个跳跃表中，节点按照分值大小排序，多个节点的分值是可以相同的，相同时，节点按成员对象大小排序</li>
+<li>每个节点的成员变量必须是唯一的</li>
+</ul>
+<h1 id="整数集合"><a href="#整数集合" class="headerlink" title="整数集合"></a>整数集合</h1><p>整数集合（intset）是Redis用于保存整数值的集合抽象数据结构，可以保存类型为int16_t、int32_t、int64_t的整数值，并且保证集合中不会出现重复元素</p>
+<p>整数集合是集合（Set）的底层实现之一，如果一个集合只包含整数值元素，且元素数量不多时，会使用整数集合作为底层实现</p>
+<h2 id="整数集合的定义实现"><a href="#整数集合的定义实现" class="headerlink" title="整数集合的定义实现"></a>整数集合的定义实现</h2><p>整数集合的定义为<code>inset.h/inset</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">intset</span> &#123;</span></span><br><span class="line">    <span class="comment">// 编码方式</span></span><br><span class="line">    <span class="keyword">uint32_t</span> encoding;</span><br><span class="line">    <span class="comment">// 集合包含的元素数量</span></span><br><span class="line">    <span class="keyword">uint32_t</span> length;</span><br><span class="line">    <span class="comment">// 保存元素的数组</span></span><br><span class="line">    <span class="keyword">int8_t</span> contents[];</span><br><span class="line">&#125; intset;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>contents</code>数组：整数集合的每个元素在数组中按值的大小从小到大排序，且不包含重复项</li>
+<li><code>length</code>记录整数集合的元素数量，即contents数组长度</li>
+<li><code>encoding</code>决定contents数组的真正类型，如INTSET_ENC_INT16、INTSET_ENC_INT32、INTSET_ENC_INT64</li>
+</ul>
+<p><img src="https://oscimg.oschina.net/oscnet/6f55d9ef2f8324a88437c664e891dcac580.jpg" alt></p>
+<h2 id="整数集合的升级"><a href="#整数集合的升级" class="headerlink" title="整数集合的升级"></a>整数集合的升级</h2><p>当想要添加一个新元素到整数集合中时，并且新元素的类型比整数集合现有的所有元素的类型都要长，整数集合需要先进行升级（upgrade），才能将新元素添加到整数集合里面。每次想整数集合中添加新元素都有可能会引起升级，每次升级都需要对底层数组已有的所有元素进行类型转换</p>
+<p>升级添加新元素：</p>
+<ul>
+<li>根据新元素类型，扩展整数集合底层数组的空间大小，并为新元素分配空间</li>
+<li>把数组现有的元素都转换成新元素的类型，并将转换后的元素放到正确的位置，且要保持数组的有序性</li>
+<li>添加新元素到底层数组</li>
+</ul>
+<p>整数集合的升级策略可以提升整数集合的灵活性，并尽可能的节约内存</p>
+<p>另外，整数集合不支持降级，一旦升级，编码就会一直保持升级后的状态</p>
+<h1 id="压缩列表"><a href="#压缩列表" class="headerlink" title="压缩列表"></a>压缩列表</h1><p>压缩列表（ziplist）是为了节约内存而设计的，是由一系列特殊编码的连续内存块组成的顺序性（sequential）数据结构，一个压缩列表可以包含多个节点，每个节点可以保存一个字节数组或者一个整数值</p>
+<p>压缩列表是列表（List）和散列（Hash）的底层实现之一，一个列表只包含少量列表项，并且每个列表项是小整数值或比较短的字符串，会使用压缩列表作为底层实现（在3.2版本之后是使用<code>quicklist</code>实现）</p>
+<h2 id="压缩列表的构成"><a href="#压缩列表的构成" class="headerlink" title="压缩列表的构成"></a>压缩列表的构成</h2><p>一个压缩列表可以包含多个节点（entry），每个节点可以保存一个字节数组或者一个整数值</p>
+<p><img src="https://oscimg.oschina.net/oscnet/e3431295a37c6e31fec4e21eaa4d6c00cb8.jpg" alt></p>
+<p>各部分组成说明如下</p>
+<ul>
+<li><code>zlbytes</code>：记录整个压缩列表占用的内存字节数，在压缩列表内存重分配，或者计算<code>zlend</code>的位置时使用</li>
+<li><code>zltail</code>：记录压缩列表表尾节点距离压缩列表的起始地址有多少字节，通过该偏移量，可以不用遍历整个压缩列表就可以确定表尾节点的地址</li>
+<li><code>zllen</code>：记录压缩列表包含的节点数量，但该属性值小于UINT16_MAX（65535）时，该值就是压缩列表的节点数量，否则需要遍历整个压缩列表才能计算出真实的节点数量</li>
+<li><code>entryX</code>：压缩列表的节点</li>
+<li><code>zlend</code>：特殊值0xFF（十进制255），用于标记压缩列表的末端</li>
+</ul>
+<h2 id="压缩列表节点的构成"><a href="#压缩列表节点的构成" class="headerlink" title="压缩列表节点的构成"></a>压缩列表节点的构成</h2><p>每个压缩列表节点可以保存一个字节数字或者一个整数值，结构如下</p>
+<p><img src="https://oscimg.oschina.net/oscnet/7c38521ac3192f9bebffacf0e79376faf53.jpg" alt></p>
+<ul>
+<li><code>previous_entry_ength</code>：记录压缩列表前一个字节的长度</li>
+<li><code>encoding</code>：节点的encoding保存的是节点的content的内容类型</li>
+<li><code>content</code>：content区域用于保存节点的内容，节点内容类型和长度由encoding决定</li>
+</ul>
+<h1 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h1><p>上面介绍了Redis的主要底层数据结构，包括简单动态字符串（SDS）、链表、字典、跳跃表、整数集合、压缩列表。但是Redis并没有直接使用这些数据结构来构建键值对数据库，而是基于这些数据结构创建了一个对象系统，也就是我们所熟知的可API操作的Redis那些数据类型，如字符串(String)、列表(List)、散列(Hash)、集合(Set)、有序集合(Sorted Set)</p>
+<p>根据对象的类型可以判断一个对象是否可以执行给定的命令，也可针对不同的使用场景，对象设置有多种不同的数据结构实现，从而优化对象在不同场景下的使用效率</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>编码</th>
+<th>BOJECT ENCODING 命令输出</th>
+<th>对象</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>REDIS_STRING</td>
+<td>REDIS_ENCODING_INT</td>
+<td>“int”</td>
+<td>使用整数值实现的字符串对象</td>
+</tr>
+<tr>
+<td>REDIS_STRING</td>
+<td>REDIS_ENCODING_EMBSTR</td>
+<td>“embstr”</td>
+<td>使用embstr编码的简单动态字符串实现的字符串对象</td>
+</tr>
+<tr>
+<td>REDIS_STRING</td>
+<td>REDIS_ENCODING_RAW</td>
+<td>“raw”</td>
+<td>使用简单动态字符串实现的字符串对象</td>
+</tr>
+<tr>
+<td>REDIS_LIST</td>
+<td>REDIS_ENCODING_ZIPLIST</td>
+<td>“ziplist”</td>
+<td>使用压缩列表实现的列表对象</td>
+</tr>
+<tr>
+<td>REDIS_LIST</td>
+<td>REDIS_ENCODING_LINKEDLIST</td>
+<td>‘“linkedlist’</td>
+<td>使用双端链表实现的列表对象</td>
+</tr>
+<tr>
+<td>REDIS_HASH</td>
+<td>REDIS_ENCODING_ZIPLIST</td>
+<td>“ziplist”</td>
+<td>使用压缩列表实现的哈希对象</td>
+</tr>
+<tr>
+<td>REDIS_HASH</td>
+<td>REDIS_ENCODING_HT</td>
+<td>“hashtable”</td>
+<td>使用字典实现的哈希对象</td>
+</tr>
+<tr>
+<td>REDIS_SET</td>
+<td>REDIS_ENCODING_INTSET</td>
+<td>“intset”</td>
+<td>使用整数集合实现的集合对象</td>
+</tr>
+<tr>
+<td>REDIS_SET</td>
+<td>REDIS_ENCODING_HT</td>
+<td>“hashtable”</td>
+<td>使用字典实现的集合对象</td>
+</tr>
+<tr>
+<td>REDIS_ZSET</td>
+<td>REDIS_ENCODING_ZIPLIST</td>
+<td>“ziplist”</td>
+<td>使用压缩列表实现的有序集合对象</td>
+</tr>
+<tr>
+<td>REDIS_ZSET</td>
+<td>REDIS_ENCODING_SKIPLIST</td>
+<td>“skiplist”</td>
+<td>使用跳跃表表实现的有序集合对象</td>
+</tr>
+</tbody>
+</table>
+<p>参考：《Redis设计与实现》</p>
+
+      
+    </div>
+
+    
+      
+
+  <div class="popular-posts-header">Related Posts</div>
+  <ul class="popular-posts">
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="\blog\redis-intro-install-datatype\" rel="bookmark">Redis介绍、安装以及数据结构(操作命令)</a></div>
+      
+    </li>
+  
+  </ul>
+
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+      <div>
+        
+
+
+
+
+  
+
+
+
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>TurboSnail</li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    
+    <a href="https://www.turbosnail.top/blog/redis-base-data-structure/" title="深入了解Redis底层数据结构">https://www.turbosnail.top/blog/redis-base-data-structure/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</span> unless stating additionally.</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Redis/" rel="tag"># Redis</a>
+          
+            <a href="/tags/数据结构/" rel="tag"># 数据结构</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div class="social_share">
+            
+            
+              <div id="needsharebutton-postbottom">
+                <span class="btn">
+                  <i class="fa fa-share-alt" aria-hidden="true"></i>
+                </span>
+              </div>
+            
+            
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/design-pattern-decorator/" rel="next" title="装饰模式-为类动态添加职责">
+                <i class="fa fa-chevron-left"></i> 装饰模式-为类动态添加职责
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="gitalk-container">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/turbo.png" alt="TurboSnail">
+            
+              <p class="site-author-name" itemprop="name">TurboSnail</p>
+              <div class="site-description motion-element" itemprop="description">Please love me three thousand times</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">42</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">48</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21vcmdhbjQxMg==" title="GitHub &rarr; https://github.com/morgan412"><i class="fa fa-fw fa-github"></i>GitHub</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="bWFpbHRvOnpvdXhxNDEyQGZveG1haWwuY29t" title="E-Mail &rarr; mailto:zouxq412@foxmail.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Vfenhx" title="CSDN &rarr; https://blog.csdn.net/e_zxq"><i class="fa fa-fw fa-globe"></i>CSDN</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uaW0vdXNlci81ZDEyZTdjMWYyNjVkYTFiYmU1ZTEzYzY=" title="掘金 &rarr; https://juejin.im/user/5d12e7c1f265da1bbe5e13c6"><i class="fa fa-fw fa-globe"></i>掘金</span>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#说明"><span class="nav-number">1.</span> <span class="nav-text">说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简单动态字符串（SDS）"><span class="nav-number">2.</span> <span class="nav-text">简单动态字符串（SDS）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#SDS的定义"><span class="nav-number">2.1.</span> <span class="nav-text">SDS的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SDS与C字符串的区别"><span class="nav-number">2.2.</span> <span class="nav-text">SDS与C字符串的区别</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#链表"><span class="nav-number">3.</span> <span class="nav-text">链表</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#链表节点和链表的定义"><span class="nav-number">3.1.</span> <span class="nav-text">链表节点和链表的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#链表特性"><span class="nav-number">3.2.</span> <span class="nav-text">链表特性</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#字典"><span class="nav-number">4.</span> <span class="nav-text">字典</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#字典的定义实现"><span class="nav-number">4.1.</span> <span class="nav-text">字典的定义实现</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#跳跃表"><span class="nav-number">5.</span> <span class="nav-text">跳跃表</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#跳跃表的定义"><span class="nav-number">5.1.</span> <span class="nav-text">跳跃表的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#跳跃表的实现"><span class="nav-number">5.2.</span> <span class="nav-text">跳跃表的实现</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#整数集合"><span class="nav-number">6.</span> <span class="nav-text">整数集合</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#整数集合的定义实现"><span class="nav-number">6.1.</span> <span class="nav-text">整数集合的定义实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#整数集合的升级"><span class="nav-number">6.2.</span> <span class="nav-text">整数集合的升级</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#压缩列表"><span class="nav-number">7.</span> <span class="nav-text">压缩列表</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#压缩列表的构成"><span class="nav-number">7.1.</span> <span class="nav-text">压缩列表的构成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#压缩列表节点的构成"><span class="nav-number">7.2.</span> <span class="nav-text">压缩列表节点的构成</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#对象"><span class="nav-number">8.</span> <span class="nav-text">对象</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+  
+    <div id="sidebar-dimmer"></div>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">TurboSnail</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="Symbols count total">290k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="Reading time total">4:24</span>
+  
+</div>
+
+
+  <div class="powered-by">Powered by <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <span class="exturl theme-link" data-url="aHR0cHM6Ly90aGVtZS1uZXh0Lm9yZw==">NexT.Pisces</span></div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script src="//cdn.jsdelivr.net/npm/jquery@2/dist/jquery.min.js"></script>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/fastclick@1/lib/fastclick.min.js"></script>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/jquery-lazyload@1/jquery.lazyload.min.js"></script>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
+
+  
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+
+  
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-reading-progress@1/reading_progress.min.js"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.0"></script>
+
+  <script src="/js/motion.js?v=7.1.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.0"></script>
+
+
+  
+  <script src="/js/js.cookie.js?v=7.1.0"></script>
+  <script src="/js/scroll-cookie.js?v=7.1.0"></script>
+
+
+  
+  <script src="/js/exturl.js?v=7.1.0"></script>
+
+
+  
+  
+  
+    
+  
+
+  
+
+  
+  
+  
+
+
+  
+
+
+  
+    
+
+  
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+
+
+  
+
+<script src="//cdn.jsdelivr.net/npm/js-md5@0/src/md5.min.js"></script>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'f20629d71f8311993aa5',
+    clientSecret: '6d18c3450a1b6a918c5a1d02b0a741dcefce2aad',
+    repo: 'morgan412.github.io',
+    owner: 'morgan412',
+    admin: ['morgan412'],
+    id: md5(location.pathname),
+    
+      language: window.navigator.language || window.navigator.userLanguage,
+    
+    distractionFreeMode: 'true'
+  });
+  gitalk.render('gitalk-container');
+</script>
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+
+  
+<script>
+if ($('body').find('pre.mermaid').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      mermaid.initialize({
+        theme: 'forest',
+        logLevel: 3,
+        flowchart: { curve: 'linear' },
+        gantt: { axisFormat: '%m/%d/%Y' },
+        sequence: { actorMargin: 50 }
+      });
+    }
+  });
+}
+</script>
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+  
+  
+    
+  
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-needmoreshare2@1/needsharebutton.min.js"></script>
+  <script>
+    
+      pbOptions = {};
+      
+        pbOptions.iconStyle = "box";
+      
+        pbOptions.boxForm = "horizontal";
+      
+        pbOptions.position = "bottomCenter";
+      
+        pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+        flOptions.iconStyle = "box";
+      
+        flOptions.boxForm = "horizontal";
+      
+        flOptions.position = "middleRight";
+      
+        flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+
+  
+
+  
+
+  
+  
+  
+    
+  
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-bookmark@1/bookmark.min.js"></script>
+  <script>
+  
+    bookmark.scrollToMark('auto', "#more");
+  
+  </script>
+
+
+  
+
+  
+
+  
+
+
+  
+    
+    
+
+<script src="/static/heart/heart.js"></script>
+<script>
+	$('body').css('background-image', 'url(http://106.13.11.180/' + (Math.floor(Math.random()*40)) + '.jpg)');
+	setInterval(function (){
+		$('body').css('background-image', 'url(http://106.13.11.180/' + (Math.floor(Math.random()*40)) + '.jpg)');
+	},600000);
+</script>
+  
+</body>
+</html>

@@ -157,7 +157,7 @@
 
 
   <meta name="description" content="在微服务架构中，通常存在多个服务调用层。微服务之间通过网络进行通信，从而支撑起整个应用，为了保证高可用，单个服务通常也会集群部署。但由于网络原因或者自身原因，每个服务并不能保证100% 可用。而服务间的依赖关系，会导致故障传播，即服务提供者的不可用会导致消费者不可用，并把不可用逐渐放大，这就是雪崩效应。 这里就引入了请求超时机制和断路器模式 Hystrix 简介Hystrix 是 Netflix">
-<meta name="keywords" content="Spring Cloud,微服务,Feign,Ribbon,Hystrix">
+<meta name="keywords" content="Spring Cloud,Feign,微服务,Ribbon,Hystrix">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spring Cloud 断路器 Hystrix">
 <meta property="og:url" content="https://www.turbosnail.top/blog/spring-cloud-hystrix/index.html">
@@ -325,7 +325,7 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives<span class="badge">41</span></a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives<span class="badge">42</span></a>
 
   </li>
         
@@ -706,7 +706,7 @@
     <li class="popular-posts-item">
       
       
-      <div class="popular-posts-title"><a href="\blog\spring-cloud-config\" rel="bookmark">Spring Cloud Config 统一配置中心</a></div>
+      <div class="popular-posts-title"><a href="\blog\spring-cloud-zuul-filters\" rel="bookmark">Spring Cloud Zuul 过滤器</a></div>
       
     </li>
   
@@ -720,7 +720,7 @@
     <li class="popular-posts-item">
       
       
-      <div class="popular-posts-title"><a href="\blog\spring-cloud-eureka\" rel="bookmark">Spring Cloud 服务注册与发现、高可用（Eureka）</a></div>
+      <div class="popular-posts-title"><a href="\blog\spring-cloud-config\" rel="bookmark">Spring Cloud Config 统一配置中心</a></div>
       
     </li>
   
@@ -772,9 +772,9 @@
           
             <a href="/tags/Spring-Cloud/" rel="tag"># Spring Cloud</a>
           
-            <a href="/tags/微服务/" rel="tag"># 微服务</a>
-          
             <a href="/tags/Feign/" rel="tag"># Feign</a>
+          
+            <a href="/tags/微服务/" rel="tag"># 微服务</a>
           
             <a href="/tags/Ribbon/" rel="tag"># Ribbon</a>
           
@@ -899,7 +899,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">41</span>
+                    <span class="site-state-item-count">42</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -1069,7 +1069,7 @@
                     
                       
                     
-                    <span class="site-state-item-count">47</span>
+                    <span class="site-state-item-count">48</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
@@ -1121,7 +1121,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Vfenhx" title="CSDN &rarr; https://blog.csdn.net/e_zxq"><i class="fa fa-fw fa-csdn"></i>CSDN</span>
+                  <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Vfenhx" title="CSDN &rarr; https://blog.csdn.net/e_zxq"><i class="fa fa-fw fa-globe"></i>CSDN</span>
                 </span>
               
                 <span class="links-of-author-item">
@@ -1132,7 +1132,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uaW0vdXNlci81ZDEyZTdjMWYyNjVkYTFiYmU1ZTEzYzY=" title="掘金 &rarr; https://juejin.im/user/5d12e7c1f265da1bbe5e13c6"><i class="fa fa-fw fa-juejin"></i>掘金</span>
+                  <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uaW0vdXNlci81ZDEyZTdjMWYyNjVkYTFiYmU1ZTEzYzY=" title="掘金 &rarr; https://juejin.im/user/5d12e7c1f265da1bbe5e13c6"><i class="fa fa-fw fa-globe"></i>掘金</span>
                 </span>
               
             </div>
@@ -1205,7 +1205,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="Symbols count total">278k</span>
+    <span title="Symbols count total">290k</span>
   
 
   
@@ -1214,7 +1214,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="Reading time total">4:12</span>
+    <span title="Reading time total">4:24</span>
   
 </div>
 

@@ -165,7 +165,7 @@
 <meta property="og:description" content="装饰模式定义 装饰模式（Decorator Pattern）- 动态地给一个对象添加一些额外的职责，就增加功能来说，装饰模式相比生成子类更为灵活  装饰模式也可以叫做包装器（Wrapper），可以给一个类或对象增加行为 通常有两种方式来给类或对象来增加行为：  继承机制：通过继承一个现有的类可以使得子类在拥有自己方法的同时还可以拥有父类的方法，但是这种方式是静态的，用户不能控制增加行为的方式和时机">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://oscimg.oschina.net/oscnet/6015e9284c05aae0d539b8c9bc23346ec9c.jpg">
-<meta property="og:updated_time" content="2019-08-31T03:24:27.359Z">
+<meta property="og:updated_time" content="2019-09-04T00:56:15.560Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="装饰模式-为类动态添加职责">
 <meta name="twitter:description" content="装饰模式定义 装饰模式（Decorator Pattern）- 动态地给一个对象添加一些额外的职责，就增加功能来说，装饰模式相比生成子类更为灵活  装饰模式也可以叫做包装器（Wrapper），可以给一个类或对象增加行为 通常有两种方式来给类或对象来增加行为：  继承机制：通过继承一个现有的类可以使得子类在拥有自己方法的同时还可以拥有父类的方法，但是这种方式是静态的，用户不能控制增加行为的方式和时机">
@@ -320,7 +320,7 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives<span class="badge">41</span></a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives<span class="badge">42</span></a>
 
   </li>
         
@@ -637,7 +637,7 @@
 </ul>
 <h1 id="为什么选择装饰模式而不是继承"><a href="#为什么选择装饰模式而不是继承" class="headerlink" title="为什么选择装饰模式而不是继承"></a>为什么选择装饰模式而不是继承</h1><p>从上面的例子和总结，我们可以看出使用装饰模式的好处，那么装饰模式和继承同样是可以扩展类的功能，为什么会更偏向使用装饰模式</p>
 <p>我们用一个例子来说明一下，我们去饮品店去买一杯饮料，比如买一杯奶茶<code>MilkyTea</code>，这时服务员问你想要加什么，可以加红豆、椰奶、珍珠…  至于加料之后的奶茶我们很容易想到使用继承去实现，比如红豆<code>OrmosiaMilkyTea</code>、椰奶<code>CoconutMilkyTea</code>、珍珠<code>PearlMilkyTea</code>，假如要加多种料呢？红豆椰奶<code>OrmosiaCoconutMilkyTea</code>  ……</p>
-<p>到这里就会发现，使用继承会要写许多的类，这里才3种加料，假如是可以加十几二十种配料呢，那自有组合的可能性就太多了，使用继承就会是我们的子类爆炸。使用继承我们要添加的功能是静态的，添加的功能便是在子类中实现，在编译时就已经确定下来；而使用装饰模式则是动态的添加功能，我需要什么功能便使用对应的装饰类去装饰，装饰的种类和顺序都是在客户端动态的加载，更加的灵活</p>
+<p>到这里就会发现，使用继承会要写许多的类，这里才3种加料，假如是可以加十几二十种配料呢，那自由组合的可能性就太多了，使用继承就会使我们的子类爆炸。使用继承我们要添加的功能是静态的，添加的功能便是在子类中实现，在编译时就已经确定下来；而使用装饰模式则是动态的添加功能，我需要什么功能便使用对应的装饰类去装饰，装饰的种类和顺序都是在客户端动态的加载，更加的灵活</p>
 
       
     </div>
@@ -651,21 +651,14 @@
     <li class="popular-posts-item">
       
       
-      <div class="popular-posts-title"><a href="\blog\design-pattern-template\" rel="bookmark">模板方法模式-封装不变，扩展可变</a></div>
-      
-    </li>
-  
-    <li class="popular-posts-item">
-      
-      
-      <div class="popular-posts-title"><a href="\blog\design-pattern-singleton\" rel="bookmark">单例模式-只有一个实例</a></div>
-      
-    </li>
-  
-    <li class="popular-posts-item">
-      
-      
       <div class="popular-posts-title"><a href="\blog\design-pattern-prototype\" rel="bookmark">原型模式-通过克隆创建对象</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="\blog\design-pattern-template\" rel="bookmark">模板方法模式-封装不变，扩展可变</a></div>
       
     </li>
   
@@ -679,7 +672,14 @@
     <li class="popular-posts-item">
       
       
-      <div class="popular-posts-title"><a href="\blog\design-pattern-adapter\" rel="bookmark">适配器模式-通过适配器来复用</a></div>
+      <div class="popular-posts-title"><a href="\blog\design-pattern-singleton\" rel="bookmark">单例模式-只有一个实例</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="\blog\design-pattern-factory\" rel="bookmark">工厂模式-简单工厂模式、工厂方法模式、抽象工厂模式</a></div>
       
     </li>
   
@@ -775,6 +775,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/blog/redis-base-data-structure/" rel="prev" title="深入了解Redis底层数据结构">
+                深入了解Redis底层数据结构 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -848,7 +852,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">41</span>
+                    <span class="site-state-item-count">42</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -1018,7 +1022,7 @@
                     
                       
                     
-                    <span class="site-state-item-count">47</span>
+                    <span class="site-state-item-count">48</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
@@ -1070,7 +1074,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Vfenhx" title="CSDN &rarr; https://blog.csdn.net/e_zxq"><i class="fa fa-fw fa-csdn"></i>CSDN</span>
+                  <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Vfenhx" title="CSDN &rarr; https://blog.csdn.net/e_zxq"><i class="fa fa-fw fa-globe"></i>CSDN</span>
                 </span>
               
                 <span class="links-of-author-item">
@@ -1081,7 +1085,7 @@
                   
                     
                   
-                  <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uaW0vdXNlci81ZDEyZTdjMWYyNjVkYTFiYmU1ZTEzYzY=" title="掘金 &rarr; https://juejin.im/user/5d12e7c1f265da1bbe5e13c6"><i class="fa fa-fw fa-juejin"></i>掘金</span>
+                  <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uaW0vdXNlci81ZDEyZTdjMWYyNjVkYTFiYmU1ZTEzYzY=" title="掘金 &rarr; https://juejin.im/user/5d12e7c1f265da1bbe5e13c6"><i class="fa fa-fw fa-globe"></i>掘金</span>
                 </span>
               
             </div>
@@ -1154,7 +1158,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="Symbols count total">278k</span>
+    <span title="Symbols count total">290k</span>
   
 
   
@@ -1163,7 +1167,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="Reading time total">4:12</span>
+    <span title="Reading time total">4:24</span>
   
 </div>
 
