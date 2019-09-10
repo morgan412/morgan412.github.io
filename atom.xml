@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.turbosnail.top/"/>
-  <updated>2019-09-06T03:30:59.251Z</updated>
+  <updated>2019-09-10T09:41:45.953Z</updated>
   <id>https://www.turbosnail.top/</id>
   
   <author>
@@ -17,11 +17,37 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Redis持久化机制：RDB和AOF</title>
+    <link href="https://www.turbosnail.top/blog/redis-data-persistence/"/>
+    <id>https://www.turbosnail.top/blog/redis-data-persistence/</id>
+    <published>2019-09-10T07:11:48.000Z</published>
+    <updated>2019-09-10T09:41:45.953Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;Redis数据持久化&quot;&gt;&lt;a href=&quot;#Redis数据持久化&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="Redis" scheme="https://www.turbosnail.top/categories/Redis/"/>
+    
+    
+      <category term="Redis" scheme="https://www.turbosnail.top/tags/Redis/"/>
+    
+  </entry>
+  
+  <entry>
     <title>深入了解Redis底层数据结构</title>
     <link href="https://www.turbosnail.top/blog/redis-base-data-structure/"/>
     <id>https://www.turbosnail.top/blog/redis-base-data-structure/</id>
     <published>2019-09-06T01:18:52.000Z</published>
-    <updated>2019-09-06T03:30:59.251Z</updated>
+    <updated>2019-09-06T06:20:21.569Z</updated>
     
     <summary type="html">
     
@@ -584,34 +610,6 @@
       <category term="微服务" scheme="https://www.turbosnail.top/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
     
       <category term="服务注册" scheme="https://www.turbosnail.top/tags/%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Git 详细介绍和使用</title>
-    <link href="https://www.turbosnail.top/blog/git-introduction-usage/"/>
-    <id>https://www.turbosnail.top/blog/git-introduction-usage/</id>
-    <published>2019-04-04T09:43:41.000Z</published>
-    <updated>2019-04-30T09:47:52.092Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;git /gɪt/ 是一个开源的分布式版本控制系统&lt;/p&gt;
-&lt;p&gt;最初是 Linus Torvalds 为了帮助管理 Linux 内核开发而开发的一个开放源码的版本控制软件&lt;/p&gt;
-&lt;h1 id=&quot;介绍&quot;&gt;&lt;a href=&quot;#介绍&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="Git" scheme="https://www.turbosnail.top/categories/Git/"/>
-    
-    
-      <category term="Git" scheme="https://www.turbosnail.top/tags/Git/"/>
     
   </entry>
   

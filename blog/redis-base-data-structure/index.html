@@ -156,13 +156,13 @@
 
 
 
-  <meta name="description" content="说明说到Redis的数据结构，我们大概会很快想到Redis的5种常见数据结构：字符串(String)、列表(List)、散列(Hash)、集合(Set)、有序集合(Sorted Set)，以及他们的特点和运用场景。不过它们是Redis对外暴露的数据结构，用于API的操作，而组成它们的底层基础数据结构又是什么呢 简单动态字符串（SDS）Redis是用C语言写的，但是Redis并没有使用C的字符串表示">
+  <meta name="description" content="说明说到Redis的数据结构，我们大概会很快想到Redis的5种常见数据结构：字符串(String)、列表(List)、散列(Hash)、集合(Set)、有序集合(Sorted Set)，以及他们的特点和运用场景。不过它们是Redis对外暴露的数据结构，用于API的操作，而组成它们的底层基础数据结构又是什么呢  简单动态字符串（SDS） 链表 字典 跳跃表 整数集合 压缩列表  简单动态字符串（S">
 <meta name="keywords" content="Redis,数据结构">
 <meta property="og:type" content="article">
 <meta property="og:title" content="深入了解Redis底层数据结构">
 <meta property="og:url" content="https://www.turbosnail.top/blog/redis-base-data-structure/index.html">
 <meta property="og:site_name" content="TurboSnail">
-<meta property="og:description" content="说明说到Redis的数据结构，我们大概会很快想到Redis的5种常见数据结构：字符串(String)、列表(List)、散列(Hash)、集合(Set)、有序集合(Sorted Set)，以及他们的特点和运用场景。不过它们是Redis对外暴露的数据结构，用于API的操作，而组成它们的底层基础数据结构又是什么呢 简单动态字符串（SDS）Redis是用C语言写的，但是Redis并没有使用C的字符串表示">
+<meta property="og:description" content="说明说到Redis的数据结构，我们大概会很快想到Redis的5种常见数据结构：字符串(String)、列表(List)、散列(Hash)、集合(Set)、有序集合(Sorted Set)，以及他们的特点和运用场景。不过它们是Redis对外暴露的数据结构，用于API的操作，而组成它们的底层基础数据结构又是什么呢  简单动态字符串（SDS） 链表 字典 跳跃表 整数集合 压缩列表  简单动态字符串（S">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://oscimg.oschina.net/oscnet/edc82c77be39429071e27195126ac6311c8.jpg">
 <meta property="og:image" content="https://oscimg.oschina.net/oscnet/7b3d3b0c972bdf9a49983be9711c067c8f2.jpg">
@@ -176,10 +176,10 @@
 <meta property="og:image" content="https://oscimg.oschina.net/oscnet/6f55d9ef2f8324a88437c664e891dcac580.jpg">
 <meta property="og:image" content="https://oscimg.oschina.net/oscnet/e3431295a37c6e31fec4e21eaa4d6c00cb8.jpg">
 <meta property="og:image" content="https://oscimg.oschina.net/oscnet/7c38521ac3192f9bebffacf0e79376faf53.jpg">
-<meta property="og:updated_time" content="2019-09-06T03:30:59.251Z">
+<meta property="og:updated_time" content="2019-09-06T06:20:21.569Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入了解Redis底层数据结构">
-<meta name="twitter:description" content="说明说到Redis的数据结构，我们大概会很快想到Redis的5种常见数据结构：字符串(String)、列表(List)、散列(Hash)、集合(Set)、有序集合(Sorted Set)，以及他们的特点和运用场景。不过它们是Redis对外暴露的数据结构，用于API的操作，而组成它们的底层基础数据结构又是什么呢 简单动态字符串（SDS）Redis是用C语言写的，但是Redis并没有使用C的字符串表示">
+<meta name="twitter:description" content="说明说到Redis的数据结构，我们大概会很快想到Redis的5种常见数据结构：字符串(String)、列表(List)、散列(Hash)、集合(Set)、有序集合(Sorted Set)，以及他们的特点和运用场景。不过它们是Redis对外暴露的数据结构，用于API的操作，而组成它们的底层基础数据结构又是什么呢  简单动态字符串（SDS） 链表 字典 跳跃表 整数集合 压缩列表  简单动态字符串（S">
 <meta name="twitter:image" content="https://oscimg.oschina.net/oscnet/edc82c77be39429071e27195126ac6311c8.jpg">
 
 
@@ -331,7 +331,7 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives<span class="badge">42</span></a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives<span class="badge">43</span></a>
 
   </li>
         
@@ -594,6 +594,14 @@
 
       
         <h1 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h1><p>说到Redis的数据结构，我们大概会很快想到Redis的5种常见数据结构：字符串(String)、列表(List)、散列(Hash)、集合(Set)、有序集合(Sorted Set)，以及他们的特点和运用场景。不过它们是Redis对外暴露的数据结构，用于API的操作，而组成它们的底层基础数据结构又是什么呢</p>
+<ul>
+<li>简单动态字符串（SDS）</li>
+<li>链表</li>
+<li>字典</li>
+<li>跳跃表</li>
+<li>整数集合</li>
+<li>压缩列表</li>
+</ul>
 <h1 id="简单动态字符串（SDS）"><a href="#简单动态字符串（SDS）" class="headerlink" title="简单动态字符串（SDS）"></a>简单动态字符串（SDS）</h1><p>Redis是用C语言写的，但是Redis并没有使用C的字符串表示（C是字符串是以<code>\0</code>空字符结尾的字符数组），而是自己构建了一种<strong>简单动态字符串</strong>（simple dynamic string，SDS）的抽象类型，并作为Redis的默认字符串表示</p>
 <p>在Redis中，包含字符串值的键值对底层都是用SDS实现的</p>
 <h2 id="SDS的定义"><a href="#SDS的定义" class="headerlink" title="SDS的定义"></a>SDS的定义</h2><p>SDS的结构定义在<code>sds.h</code>文件中，SDS的定义在Redis 3.2版本之后有一些改变，由一种数据结构变成了5种数据结构，会根据SDS存储的内容长度来选择不同的结构，以达到节省内存的效果，具体的结构定义，我们看以下代码</p>
@@ -889,6 +897,13 @@
       
     </li>
   
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="\blog\redis-data-persistence\" rel="bookmark">Redis持久化机制：RDB和AOF</a></div>
+      
+    </li>
+  
   </ul>
 
 
@@ -981,6 +996,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/blog/redis-data-persistence/" rel="prev" title="Redis持久化机制：RDB和AOF">
+                Redis持久化机制：RDB和AOF <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -1054,7 +1073,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">42</span>
+                    <span class="site-state-item-count">43</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -1360,7 +1379,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="Symbols count total">290k</span>
+    <span title="Symbols count total">296k</span>
   
 
   
@@ -1369,7 +1388,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="Reading time total">4:24</span>
+    <span title="Reading time total">4:29</span>
   
 </div>
 

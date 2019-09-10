@@ -156,25 +156,21 @@
 
 
 
-  <meta name="description" content="Docker 是什么Docker 容器标准化的软件单元 Docker 是开发人员或系统管理员使用容器 开发，部署和运行 应用程序的平台。使用Linux容器部署应用程序称为容器化 容器化越来越受欢迎，因为容器是：  灵活：即使是最复杂的应用也可以集装箱化。 轻量级：容器利用并共享主机内核。 可互换：您可以即时部署更新和升级。 便携式：您可以在本地构建，部署到云，并在任何地方运行。 可扩展：您可以增加">
-<meta name="keywords" content="Docker">
+  <meta name="description" content="Redis数据持久化Redis作为一个内存数据库，数据是以内存为载体存储的，那么一旦Redis服务器进程退出，服务器中的数据也会消失。为了解决这个问题，Redis提供了持久化机制，也就是把内存中的数据保存到磁盘当中，避免数据意外丢失 Redis提供了两种持久化方案：RDB持久化和AOF持久化，一个是快照的方式，一个是类似日志追加的方式 RDB快照持久化RDB持久化是通过快照的方式，即在指定的时间间">
+<meta name="keywords" content="Redis">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Docker 入门实践">
-<meta property="og:url" content="https://www.turbosnail.top/blog/docker-introduction-usage/index.html">
+<meta property="og:title" content="Redis持久化机制：RDB和AOF">
+<meta property="og:url" content="https://www.turbosnail.top/blog/redis-data-persistence/index.html">
 <meta property="og:site_name" content="TurboSnail">
-<meta property="og:description" content="Docker 是什么Docker 容器标准化的软件单元 Docker 是开发人员或系统管理员使用容器 开发，部署和运行 应用程序的平台。使用Linux容器部署应用程序称为容器化 容器化越来越受欢迎，因为容器是：  灵活：即使是最复杂的应用也可以集装箱化。 轻量级：容器利用并共享主机内核。 可互换：您可以即时部署更新和升级。 便携式：您可以在本地构建，部署到云，并在任何地方运行。 可扩展：您可以增加">
+<meta property="og:description" content="Redis数据持久化Redis作为一个内存数据库，数据是以内存为载体存储的，那么一旦Redis服务器进程退出，服务器中的数据也会消失。为了解决这个问题，Redis提供了持久化机制，也就是把内存中的数据保存到磁盘当中，避免数据意外丢失 Redis提供了两种持久化方案：RDB持久化和AOF持久化，一个是快照的方式，一个是类似日志追加的方式 RDB快照持久化RDB持久化是通过快照的方式，即在指定的时间间">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="https://oscimg.oschina.net/oscnet/3d250531f50ae531bc0ae15e3ab83b5458d.jpg">
-<meta property="og:image" content="https://oscimg.oschina.net/oscnet/38c93dc01979c0bcab45162ac79538caff1.jpg">
-<meta property="og:image" content="https://docs.docker.com/engine/images/architecture.svg">
-<meta property="og:image" content="https://oscimg.oschina.net/oscnet/2d8ee53bf18aaf5134d499a35edf5a63d44.jpg">
-<meta property="og:image" content="https://oscimg.oschina.net/oscnet/81f8bd500dc0fea1d919f4367427c7db614.jpg">
-<meta property="og:image" content="https://oscimg.oschina.net/oscnet/b515d4eb3d79306c1ad08e98efed308ab76.jpg">
-<meta property="og:updated_time" content="2019-04-28T01:30:57.208Z">
+<meta property="og:image" content="https://oscimg.oschina.net/oscnet/7863aff17502aef5c492eb46a51a74bcdfb.jpg">
+<meta property="og:image" content="https://oscimg.oschina.net/oscnet/a8feb5a02c3a4dd128e22c97cf11a04f6dc.jpg">
+<meta property="og:updated_time" content="2019-09-10T09:41:45.953Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Docker 入门实践">
-<meta name="twitter:description" content="Docker 是什么Docker 容器标准化的软件单元 Docker 是开发人员或系统管理员使用容器 开发，部署和运行 应用程序的平台。使用Linux容器部署应用程序称为容器化 容器化越来越受欢迎，因为容器是：  灵活：即使是最复杂的应用也可以集装箱化。 轻量级：容器利用并共享主机内核。 可互换：您可以即时部署更新和升级。 便携式：您可以在本地构建，部署到云，并在任何地方运行。 可扩展：您可以增加">
-<meta name="twitter:image" content="https://oscimg.oschina.net/oscnet/3d250531f50ae531bc0ae15e3ab83b5458d.jpg">
+<meta name="twitter:title" content="Redis持久化机制：RDB和AOF">
+<meta name="twitter:description" content="Redis数据持久化Redis作为一个内存数据库，数据是以内存为载体存储的，那么一旦Redis服务器进程退出，服务器中的数据也会消失。为了解决这个问题，Redis提供了持久化机制，也就是把内存中的数据保存到磁盘当中，避免数据意外丢失 Redis提供了两种持久化方案：RDB持久化和AOF持久化，一个是快照的方式，一个是类似日志追加的方式 RDB快照持久化RDB持久化是通过快照的方式，即在指定的时间间">
+<meta name="twitter:image" content="https://oscimg.oschina.net/oscnet/7863aff17502aef5c492eb46a51a74bcdfb.jpg">
 
 
 
@@ -184,7 +180,7 @@
 
   
   
-  <link rel="canonical" href="https://www.turbosnail.top/blog/docker-introduction-usage/">
+  <link rel="canonical" href="https://www.turbosnail.top/blog/redis-data-persistence/">
 
 
 
@@ -194,7 +190,7 @@
   };
 </script>
 
-  <title>Docker 入门实践 | TurboSnail</title>
+  <title>Redis持久化机制：RDB和AOF | TurboSnail</title>
   
 
 
@@ -465,7 +461,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.turbosnail.top/blog/docker-introduction-usage/">
+    <link itemprop="mainEntityOfPage" href="https://www.turbosnail.top/blog/redis-data-persistence/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="TurboSnail">
@@ -482,7 +478,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">Docker 入门实践
+          <h2 class="post-title" itemprop="name headline">Redis持久化机制：RDB和AOF
 
               
             
@@ -508,7 +504,7 @@
                 
               
 
-              <time title="Created: 2019-04-02 17:58:13" itemprop="dateCreated datePublished" datetime="2019-04-02T17:58:13+08:00">2019-04-02</time>
+              <time title="Created: 2019-09-10 15:11:48" itemprop="dateCreated datePublished" datetime="2019-09-10T15:11:48+08:00">2019-09-10</time>
             
 
             
@@ -526,7 +522,7 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Docker/" itemprop="url" rel="index"><span itemprop="name">Docker</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Redis/" itemprop="url" rel="index"><span itemprop="name">Redis</span></a></span>
 
                 
                 
@@ -555,7 +551,7 @@
                   <i class="fa fa-file-word-o"></i>
                 </span>
                 
-                <span title="Symbols count in article">6.3k</span>
+                <span title="Symbols count in article">6.2k</span>
               
 
               
@@ -587,229 +583,142 @@
       
 
       
-        <h1 id="Docker-是什么"><a href="#Docker-是什么" class="headerlink" title="Docker 是什么"></a>Docker 是什么</h1><h2 id="Docker-容器"><a href="#Docker-容器" class="headerlink" title="Docker 容器"></a>Docker 容器</h2><p>标准化的软件单元</p>
-<p>Docker 是开发人员或系统管理员使用容器 <strong>开发，部署和运行</strong> 应用程序的平台。使用Linux容器部署应用程序称为容器化</p>
-<p>容器化越来越受欢迎，因为容器是：</p>
+        <h1 id="Redis数据持久化"><a href="#Redis数据持久化" class="headerlink" title="Redis数据持久化"></a>Redis数据持久化</h1><p>Redis作为一个<strong>内存</strong>数据库，数据是以内存为载体存储的，那么一旦Redis服务器进程退出，服务器中的数据也会消失。为了解决这个问题，Redis提供了持久化机制，也就是把内存中的数据保存到磁盘当中，避免数据意外丢失</p>
+<p>Redis提供了两种持久化方案：<strong>RDB持久化</strong>和<strong>AOF持久化</strong>，一个是快照的方式，一个是类似日志追加的方式</p>
+<h1 id="RDB快照持久化"><a href="#RDB快照持久化" class="headerlink" title="RDB快照持久化"></a>RDB快照持久化</h1><p>RDB持久化是通过<strong>快照</strong>的方式，即在指定的时间间隔内将内存中的数据集快照写入磁盘。在创建快照之后，用户可以备份该快照，可以将快照复制到其他服务器以创建相同数据的服务器副本，或者在重启服务器后恢复数据。RDB是Redis默认的持久化方式</p>
+<h2 id="快照持久化"><a href="#快照持久化" class="headerlink" title="快照持久化"></a>快照持久化</h2><p>RDB持久化会生成RDB文件，该文件是一个<strong>压缩</strong>过的<strong>二进制文件</strong>，可以通过该文件还原快照时的数据库状态，即生成该RDB文件时的服务器数据。RDB文件默认为当前工作目录下的<code>dump.rdb</code>，可以根据配置文件中的<code>dbfilename</code>和<code>dir</code>设置RDB的文件名和文件位置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置 dump 的文件名</span></span><br><span class="line">dbfilename dump.rdb</span><br><span class="line"></span><br><span class="line"><span class="comment"># 工作目录</span></span><br><span class="line"><span class="comment"># 例如上面的 dbfilename 只指定了文件名，</span></span><br><span class="line"><span class="comment"># 但是它会写入到这个目录下。这个配置项一定是个目录，而不能是文件名。</span></span><br><span class="line">dir ./</span><br></pre></td></tr></table></figure>
+<p><strong>触发快照的时机</strong></p>
 <ul>
-<li>灵活：即使是最复杂的应用也可以集装箱化。</li>
-<li>轻量级：容器利用并共享主机内核。</li>
-<li>可互换：您可以即时部署更新和升级。</li>
-<li>便携式：您可以在本地构建，部署到云，并在任何地方运行。</li>
-<li>可扩展：您可以增加并自动分发容器副本。</li>
-<li>可堆叠：您可以垂直和即时堆叠服务。</li>
+<li>执行<code>save</code>和<code>bgsave</code>命令</li>
+<li>配置文件设置<code>save &lt;seconds&gt; &lt;changes&gt;</code>规则，自动间隔性执行<code>bgsave</code>命令</li>
+<li>主从复制时，从库全量复制同步主库数据，主库会执行<code>bgsave</code></li>
+<li>执行<code>flushall</code>命令清空服务器数据</li>
+<li>执行<code>shutdown</code>命令关闭Redis时，会执行<code>save</code>命令</li>
 </ul>
-<p>容器是一个标准的软件单元，它将代码及其所有依赖关系打包，以便应用程序从一个计算环境快速可靠地运行到另一个计算环境。Docker 容器镜像是一个轻量级，独立的可执行软件包，包含运行应用程序所需的一切：代码，运行时，系统工具，系统库和设置。镜像在运行时成为容器，容器将应用与其环境隔离开来，并确保它可以统一运行</p>
-<p>在Docker Engine上运行的Docker容器：</p>
-<ul>
-<li><strong>标准：</strong> Docker创建了容器的行业标准，因此它们可以随处携带</li>
-<li><strong>轻量级：</strong> 容器共享机器的操作系统内核，因此不需要每个应用程序的操作系统，从而提高服务器效率并降低服务器和许可成本</li>
-<li><strong>安全：</strong> 应用程序在容器中更安全，Docker提供业界最强大的默认隔离功能（类似“沙箱“）</li>
-</ul>
-<h2 id="镜像和容器"><a href="#镜像和容器" class="headerlink" title="镜像和容器"></a>镜像和容器</h2><p>通过运行镜像启动容器。一个<strong>镜像</strong>是一个可执行的包，其中包括运行应用程序所需的所有内容—-代码，运行时，库，环境变量，和配置文件。而<strong>容器</strong>是镜像的运行时实例，当执行镜像时，即在内存中变成用户进程，可以使用 <code>docker ps</code> 命令查看正在运行的容器列表</p>
-<p>镜像和容器的关系有些像 Java 中类和对象实例的关系</p>
-<h2 id="容器和虚拟机"><a href="#容器和虚拟机" class="headerlink" title="容器和虚拟机"></a>容器和虚拟机</h2><p>容器和虚拟机具有类似的资源隔离和分配优势，但功能不同，因为容器虚拟化操作系统而不是硬件。容器更便携，更高效。</p>
-<p>一个<strong>容器</strong>中运行<em>原生</em> Linux和共享主机与其它容器的内核。它运行一个独立的进程，不占用任何其他可执行文件的内存，使其轻量级。容器是应用层的抽象，它将代码和依赖关系打包在一起。多个容器可以在同一台机器上运行，并与其他容器共享操作系统内核，每个容器在用户空间中作为独立进程运行。容器占用的空间比VM少（容器映像的大小通常为几十MB），可以处理更多的应用程序，并且需要更少的VM和操作系统</p>
-<p>相比之下，<strong>虚拟机</strong>（VM）运行一个完整的“客户”操作系统，通过虚拟机管理程序对主机资源进行<em>虚拟</em>访问。通常，VM提供的环境比大多数应用程序需要的资源更多。虚拟机（VM）是物理硬件的抽象，将一台服务器转变为多台服务器。管理程序允许多台VM在单台机器上运行。每个VM都包含操作系统的完整副本，应用程序，必要的二进制文件和库 - 占用数十GB。虚拟机也可能很慢启动。</p>
-<p><img src="https://oscimg.oschina.net/oscnet/3d250531f50ae531bc0ae15e3ab83b5458d.jpg" alt></p>
-<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>mac 和 windows 可以直接安装 Docker Desktop 即可，方便开发</p>
-<p>Linux 安装我这里以 Centos 7 为例</p>
-<h2 id="安装-Docker-CE"><a href="#安装-Docker-CE" class="headerlink" title="安装 Docker CE"></a>安装 Docker CE</h2><p>Docker Community Edition 是社区版，适用于个人开发者和小团队</p>
-<p>官方提供了三种方式安装 Docker CE：</p>
-<ul>
-<li>设置 Docker 存储库并安装，便于安装和升级（推荐）</li>
-<li>使用 rpm 包手动安装，需要手动管理升级</li>
-<li>使用便捷脚本安装（不建议生产使用）</li>
-</ul>
-<p>这里使用 Docker 存储库安装</p>
-<h3 id="设置存储库"><a href="#设置存储库" class="headerlink" title="设置存储库"></a>设置存储库</h3><p>1）安装需要的包</p>
-<p><code>yum-utils</code> 提供了 <code>yum-config-manager</code> 的功能，<code>devicemapper</code> 存储驱动需要 <code>device-mapper-persistent-data</code> 和 <code>lvm2</code></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum install -y yum-utils \</span><br><span class="line">  device-mapper-persistent-data \</span><br><span class="line">  lvm2</span><br></pre></td></tr></table></figure>
-<p>2）设置稳定的存储库</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum-config-manager \</span><br><span class="line">    --add-repo \</span><br><span class="line">    https://download.docker.com/linux/centos/docker-ce.repo</span><br></pre></td></tr></table></figure>
-<h3 id="安装-Docker"><a href="#安装-Docker" class="headerlink" title="安装 Docker"></a>安装 Docker</h3><p>安装最新的 Docker CE 和 containerd</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum install docker-ce docker-ce-cli containerd.io</span><br></pre></td></tr></table></figure>
-<p>若需安装特定版本的 Docker CE，可以在 repo 中列出可用版本，并选择安装</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ yum list docker-ce --showduplicates | sort -r</span><br></pre></td></tr></table></figure>
-<p>然后在安装命令上加上版本号即可，假如是 <code>docker-ce-18.09.1</code></p>
-<p><code>$ sudo yum install docker-ce-18.09.1 docker-ce-cli-18.09.1 containerd.io</code></p>
-<h3 id="启动-Docker"><a href="#启动-Docker" class="headerlink" title="启动 Docker"></a>启动 Docker</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl start docker</span><br></pre></td></tr></table></figure>
-<h3 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h3><p>运行 <code>hello-world</code> 镜像验证是否正确安装</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker run hello-world</span><br></pre></td></tr></table></figure>
-<p><img src="https://oscimg.oschina.net/oscnet/38c93dc01979c0bcab45162ac79538caff1.jpg" alt></p>
-<h3 id="使用-rpm-包安装"><a href="#使用-rpm-包安装" class="headerlink" title="使用 rpm 包安装"></a>使用 rpm 包安装</h3><p>到地址  <span class="exturl" data-url="aHR0cHM6Ly9kb3dubG9hZC5kb2NrZXIuY29tL2xpbnV4L2NlbnRvcy83L3g4Nl82NC9zdGFibGUvUGFja2FnZXMv" title="https://download.docker.com/linux/centos/7/x86_64/stable/Packages/">https://download.docker.com/linux/centos/7/x86_64/stable/Packages/<i class="fa fa-external-link"></i></span> 下载对应版本的 rpm 包</p>
-<p>安装对应路径下的包</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum install /path/to/package.rpm</span><br></pre></td></tr></table></figure>
-<h1 id="Docker-系统架构"><a href="#Docker-系统架构" class="headerlink" title="Docker 系统架构"></a>Docker 系统架构</h1><p>Docker使用客户端 - 服务器架构。Docker 客户端与 Docker 守护进程通信，后者负责构建，运行和分发Docker容器。Docker客户端和守护程序可以在同一系统上运行，也可以将Docker客户端连接到远程Docker守护程序。Docker客户端和守护程序使用REST API，通过UNIX套接字或网络接口进行通信</p>
-<p><img src="https://docs.docker.com/engine/images/architecture.svg" alt></p>
-<ul>
-<li><strong>Client：</strong>表示 Docker 客户端，通过 <code>docker build</code> 命令创建 Docker 镜像，<code>docker pull</code> 拉取镜像，<code>docker run</code> 运行镜像，并启动 Docker 容器 </li>
-<li><strong>DOCKER_HOST：</strong>运行 Docker 引擎的宿主机，包括 Docker daemon 后台进程，可通过该进程来创建镜像，并在镜像上启动容器</li>
-<li><strong>Registry：</strong>Docker 官方镜像注册中心，包含大量的Docker 镜像仓库，可以通过 Docker 引擎拉取所需的 Docker 镜像到宿主机。<code>Docker Hub</code> 是公共注册中心，Docker 配置为默认在Docker Hub 上查找镜像</li>
-<li><strong>Images：</strong>Docker 镜像是一个只读模板，它包含创建 Docker容器的说明。它和系统安装光盘有点像，使用系统安装光盘可以安装系统，同理，使用Docker镜像可以运行 Docker镜像中的程序</li>
-<li><strong>Container：</strong>容器是镜像的可运行实例。镜像和容器的关系有点类似于面向对象中，类和对象的关系。可通过 Docker API或者 CLI命令来启停、移动、删除容器</li>
-</ul>
-<h1 id="使用-Dockerfile-构建镜像"><a href="#使用-Dockerfile-构建镜像" class="headerlink" title="使用 Dockerfile 构建镜像"></a>使用 Dockerfile 构建镜像</h1><p>Dockerfile 是一个文本文件，包含了一些指令，这些指令描述了创建镜像的细节</p>
-<p>Dockerfile</p>
-<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置 nginx 基础镜像 </span></span><br><span class="line"><span class="keyword">FROM</span> nginx:<span class="number">1.15</span> </span><br><span class="line"><span class="comment"># 也可以用 LABEL maintainer="zouxq &lt;zouxq412@foxmial.com&gt;"</span></span><br><span class="line"><span class="keyword">MAINTAINER</span> zouxq &lt;zouxq412@foxmial.com&gt; </span><br><span class="line"><span class="comment"># 将 dist 文件中的内容复制到 /usr/share/nginx/html/ 这个目录下面 </span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> dist/ /usr/share/nginx/html/</span></span><br></pre></td></tr></table></figure>
-<p>上面就是简单构建一个静态服务器镜像的 Dockerfile</p>
-<h2 id="Dockerfile-指令介绍"><a href="#Dockerfile-指令介绍" class="headerlink" title="Dockerfile 指令介绍"></a>Dockerfile 指令介绍</h2><p>上面例子的 <code>FROM</code>、<code>MAINTAINER</code>、<code>COPY</code> 就是 Dockerfile 指令，指令的一般格式为：<em>指令名称  参数</em></p>
-<p>1）<strong>FROM</strong> 指定基础镜像</p>
-<p>FROM 指令一般要写在其他指令之前，它指定我们要创建新镜像所依赖的基础镜像</p>
-<ul>
-<li><code>FROM &lt;image&gt;</code></li>
-<li><code>FROM &lt;image&gt;:&lt;tag&gt;</code></li>
-<li><code>FROM &lt;image&gt;@&lt;digest&gt;</code></li>
-</ul>
-<p>例如我们需要构建 Java 应用程序的镜像</p>
-<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> java</span><br></pre></td></tr></table></figure>
-<p>这里使用了 Docker 官方提供的 Java 镜像，是基于 open Jdk 制作的镜像</p>
-<p>2）<strong>RUN</strong> 设置镜像制作过程中需要执行的命令</p>
-<ul>
-<li><code>RUN &lt;command&gt;</code>（该命令在 shell 中运行，在 Linux 默认 <code>/bin/sh -c</code>，Windows是 <code>cmd /S /C</code> ）</li>
-<li><code>RUN [&quot;executable&quot;, &quot;param1&quot;, &quot;param2&quot;]</code>（使用 exec 执行）</li>
-</ul>
-<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">RUN</span><span class="bash"> /bin/bash -c <span class="string">'source $HOME/.bashrc; \</span></span></span><br><span class="line"><span class="bash"><span class="built_in">echo</span> <span class="variable">$HOME</span><span class="string">'</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="save和bgsave命令"><a href="#save和bgsave命令" class="headerlink" title="save和bgsave命令"></a>save和bgsave命令</h2><p>执行<code>save</code>和<code>bgsave</code>命令，可以手动触发快照，生成RDB文件，两者的区别如下</p>
+<p>使用<code>save</code>命令会阻塞Redis服务器进程，服务器进程在RDB文件创建完成之前是不能处理任何的命令请求</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; save</span><br><span class="line">OK</span><br></pre></td></tr></table></figure>
+<p>而使用<code>bgsave</code>命令不同的是，<code>basave</code>命令会<code>fork</code>一个子进程，然后该子进程会负责创建RDB文件，而服务器进程会继续处理命令请求</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; bgsave</span><br><span class="line">Background saving started</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>可以使用多行 RUN 指令，但多条指令通过 <code>\</code> 命令换行符合并成一条，可以减少所构建的镜像的体积，因为在镜像中每执行一条命令，都会形成新的 “镜像层”</p>
+<p><code>fork()</code>是由操作系统提供的函数，作用是创建当前进程的一个副本作为子进程</p>
 </blockquote>
-<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">RUN</span><span class="bash"> [<span class="string">"/bin/bash"</span>, <span class="string">"-c"</span>, <span class="string">"echo hello"</span>]</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://oscimg.oschina.net/oscnet/7863aff17502aef5c492eb46a51a74bcdfb.jpg" alt></p>
 <blockquote>
-<p><em>exec</em> 表单被解析为JSON数组，所以这种方式要使用双引号而不能使用单引号</p>
+<p><code>fork</code>一个子进程，子进程会把数据集先写入临时文件，写入成功之后，再替换之前的RDB文件，用二进制压缩存储，这样可以保证RDB文件始终存储的是完整的持久化内容</p>
 </blockquote>
-<p>3）<strong>ADD</strong> 设置需要添加到容器中的文件</p>
+<h2 id="自动间隔触发"><a href="#自动间隔触发" class="headerlink" title="自动间隔触发"></a>自动间隔触发</h2><p>在配置文件中设置<code>save &lt;seconds&gt; &lt;changes&gt;</code>规则，可以自动间隔性执行<code>bgsave</code>命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">################################ SNAPSHOTTING  ################################</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Save the DB on disk:</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#   save &lt;seconds&gt; &lt;changes&gt;</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#   Will save the DB if both the given number of seconds and the given</span></span><br><span class="line"><span class="comment">#   number of write operations against the DB occurred.</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#   In the example below the behaviour will be to save:</span></span><br><span class="line"><span class="comment">#   after 900 sec (15 min) if at least 1 key changed</span></span><br><span class="line"><span class="comment">#   after 300 sec (5 min) if at least 10 keys changed</span></span><br><span class="line"><span class="comment">#   after 60 sec if at least 10000 keys changed</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#   Note: you can disable saving completely by commenting out all "save" lines.</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#   It is also possible to remove all the previously configured save</span></span><br><span class="line"><span class="comment">#   points by adding a save directive with a single empty string argument</span></span><br><span class="line"><span class="comment">#   like in the following example:</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#   save ""</span></span><br><span class="line"></span><br><span class="line">save 900 1</span><br><span class="line">save 300 10</span><br><span class="line">save 60 10000</span><br></pre></td></tr></table></figure>
+<p><code>save &lt;seconds&gt; &lt;changes&gt;</code>表示在seconds秒内，至少有changes次变化，就会自动触发<code>gbsave</code>命令</p>
 <ul>
-<li><code>ADD [--chown=&lt;user&gt;:&lt;group&gt;] &lt;src&gt;... &lt;dest&gt;</code></li>
-<li><code>ADD [--chown=&lt;user&gt;:&lt;group&gt;] [&quot;&lt;src&gt;&quot;,... &quot;&lt;dest&gt;&quot;]</code></li>
+<li><code>save 900 1</code>  当时间到900秒时，如果至少有1个key发生变化，就会自动触发<code>bgsave</code>命令创建快照</li>
+<li><code>save 300 10</code>  当时间到300秒时，如果至少有10个key发生变化，就会自动触发<code>bgsave</code>命令创建快照</li>
+<li><code>save 60 10000</code>    当时间到60秒时，如果至少有10000个key发生变化，就会自动触发<code>bgsave</code>命令创建快照</li>
 </ul>
-<p>从 src 目录复制文件到容器的 dest, 其中 src 可以是 Dockerfile 所在目录的相对路径，也可以是一个 URL，还可以是个压缩包</p>
-<p>4）<strong>COPY</strong> 复制文件</p>
+<h1 id="AOF持久化"><a href="#AOF持久化" class="headerlink" title="AOF持久化"></a>AOF持久化</h1><p>除了RDB持久化，Redis还提供了AOF（Append Only File）持久化功能，AOF持久化会把被执行的写命令写到AOF文件的末尾，记录数据的变化。默认情况下，Redis是没有开启AOF持久化的，开启后，每执行一条更改Redis数据的命令，都会把该命令追加到AOF文件中，这是会降低Redis的性能，但大部分情况下这个影响是能够接受的，另外使用较快的硬盘可以提高AOF的性能</p>
+<p>可以通过配置<code>redis.conf</code>文件开启AOF持久化，关于AOF的配置如下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># appendonly参数开启AOF持久化</span></span><br><span class="line">appendonly no</span><br><span class="line"></span><br><span class="line"><span class="comment"># AOF持久化的文件名，默认是appendonly.aof</span></span><br><span class="line">appendfilename <span class="string">"appendonly.aof"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># AOF文件的保存位置和RDB文件的位置相同，都是通过dir参数设置的</span></span><br><span class="line">dir ./</span><br><span class="line"></span><br><span class="line"><span class="comment"># 同步策略</span></span><br><span class="line"><span class="comment"># appendfsync always</span></span><br><span class="line">appendfsync everysec</span><br><span class="line"><span class="comment"># appendfsync no</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># aof重写期间是否同步</span></span><br><span class="line">no-appendfsync-on-rewrite no</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重写触发配置</span></span><br><span class="line">auto-aof-rewrite-percentage 100</span><br><span class="line">auto-aof-rewrite-min-size 64mb</span><br><span class="line"></span><br><span class="line"><span class="comment"># 加载aof出错如何处理</span></span><br><span class="line">aof-load-truncated yes</span><br><span class="line"></span><br><span class="line"><span class="comment"># 文件重写策略</span></span><br><span class="line">aof-rewrite-incremental-fsync yes</span><br></pre></td></tr></table></figure>
+<h2 id="AOF的实现"><a href="#AOF的实现" class="headerlink" title="AOF的实现"></a>AOF的实现</h2><p>AOF需要记录Redis的每个写命令，步骤为：命令追加（append）、文件写入（write）和文件同步（sync）</p>
+<h3 id="命令追加-append"><a href="#命令追加-append" class="headerlink" title="命令追加(append)"></a>命令追加(append)</h3><p>开启AOF持久化功能后，服务器每执行一个写命令，都会把该命令以协议格式先追加到<code>aof_buf</code>缓存区的末尾，而不是直接写入文件，避免每次有命令都直接写入硬盘，减少硬盘IO次数</p>
+<h3 id="文件写入-write-和文件同步-sync"><a href="#文件写入-write-和文件同步-sync" class="headerlink" title="文件写入(write)和文件同步(sync)"></a>文件写入(write)和文件同步(sync)</h3><p>对于何时把<code>aof_buf</code>缓冲区的内容写入保存在AOF文件中，Redis提供了多种策略</p>
 <ul>
-<li><code>COPY [--chown=&lt;user&gt;:&lt;group&gt;] &lt;src&gt;... &lt;dest&gt;</code></li>
-<li><code>COPY [--chown=&lt;user&gt;:&lt;group&gt;] [&quot;&lt;src&gt;&quot;,... &quot;&lt;dest&gt;&quot;]</code></li>
+<li><code>appendfsync always</code>：将<code>aof_buf</code>缓冲区的所有内容写入并同步到AOF文件，每个写命令同步写入磁盘</li>
+<li><code>appendfsync everysec</code>：将<code>aof_buf</code>缓存区的内容写入AOF文件，每秒同步一次，该操作由一个线程专门负责</li>
+<li><code>appendfsync no</code>：将<code>aof_buf</code>缓存区的内容写入AOF文件，什么时候同步由操作系统来决定</li>
 </ul>
-<p>COPY 指令和 ADD 指令类似，COPY 不支持 URL 和压缩包</p>
-<p>5）<strong>CMD</strong> 设置容器启动时需要执行的命令</p>
+<p><code>appendfsync</code>选项的默认配置为<code>everysec</code>，即每秒执行一次同步</p>
+<p>关于AOF的同步策略是涉及到操作系统的<code>write</code>函数和<code>fsync</code>函数的，在《Redis设计与实现》中是这样说明的</p>
+<blockquote>
+<p>为了提高文件写入效率，在现代操作系统中，当用户调用<code>write</code>函数，将一些数据写入文件时，操作系统通常会将数据暂存到一个内存缓冲区里，当缓冲区的空间被填满或超过了指定时限后，才真正将缓冲区的数据写入到磁盘里。</p>
+<p>这样的操作虽然提高了效率，但也为数据写入带来了安全问题：如果计算机停机，内存缓冲区中的数据会丢失。为此，系统提供了<code>fsync</code>、<code>fdatasync</code>同步函数，可以强制操作系统立刻将缓冲区中的数据写入到硬盘里，从而确保写入数据的安全性。</p>
+</blockquote>
+<p>从上面的介绍我们知道，我们写入的数据，操作系统并不一定会马上同步到磁盘，所以Redis才提供了<code>appendfsync</code>的选项配置。当该选项时为<code>always</code>时，数据安全性是最高的，但是会对磁盘进行大量的写入，Redis处理命令的速度会受到磁盘性能的限制；<code>appendfsync everysec</code>选项则兼顾了数据安全和写入性能，以每秒一次的频率同步AOF文件，即便出现系统崩溃，最多只会丢失一秒内产生的数据；如果是<code>appendfsync no</code>选项，Redis不会对AOF文件执行同步操作，而是有操作系统决定何时同步，不会对Redis的性能带来影响，但假如系统崩溃，可能会丢失不定数量的数据</p>
+<h2 id="AOF重写-rewrite"><a href="#AOF重写-rewrite" class="headerlink" title="AOF重写(rewrite)"></a>AOF重写(rewrite)</h2><p>在了解AOF重写之前，我们先来看看AOF文件中存储的内容是啥，先执行两个写操作</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; set s1 hello</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; set s2 world</span><br><span class="line">OK</span><br></pre></td></tr></table></figure>
+<p>然后我们打开<code>appendonly.aof</code>文件，可以看到如下内容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">*3</span><br><span class="line">$3</span><br><span class="line">set</span><br><span class="line">$2</span><br><span class="line">s1</span><br><span class="line">$5</span><br><span class="line">hello</span><br><span class="line">*3</span><br><span class="line">$3</span><br><span class="line">set</span><br><span class="line">$2</span><br><span class="line">s2</span><br><span class="line">$5</span><br><span class="line">world</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>该命令格式为Redis的序列化协议（RESP）。<code>*3</code>代表这个命令有三个参数，<code>$3</code>表示该参数长度为3</p>
+</blockquote>
+<p>看了上面的AOP文件的内容，我们应该能想象，随着时间的推移，Redis执行的写命令会越来越多，AOF文件也会越来越大，过大的AOF文件可能会对Redis服务器造成影响，如果使用AOF文件来进行数据还原所需时间也会越长</p>
+<p>时间长了，AOF文件中通常会有一些冗余命令，比如：过期数据的命令、无效的命令（重复设置、删除）、多个命令可合并为一个命令（批处理命令）。所以AOF文件是有精简压缩的空间的</p>
+<p>AOF重写的目的就是减小AOF文件的体积，不过值得注意的是：<strong>AOF文件重写并不需要对现有的AOF文件进行任何读取、分享和写入操作，而是通过读取服务器当前的数据库状态来实现的</strong></p>
+<p>文件重写可分为手动触发和自动触发，手动触发执行<code>bgrewriteaof</code>命令，该命令的执行跟<code>bgsave</code>触发快照时类似的，都是先<code>fork</code>一个子进程做具体的工作</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; bgrewriteaof</span><br><span class="line">Background append only file rewriting started</span><br></pre></td></tr></table></figure>
+<p>自动触发会根据<code>auto-aof-rewrite-percentage</code>和<code>auto-aof-rewrite-min-size 64mb</code>配置来自动执行<code>bgrewriteaof</code>命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 表示当AOF文件的体积大于64MB，且AOF文件的体积比上一次重写后的体积大了一倍（100%）时，会执行`bgrewriteaof`命令</span><br><span class="line">auto-aof-rewrite-percentage 100</span><br><span class="line">auto-aof-rewrite-min-size 64mb</span><br></pre></td></tr></table></figure>
+<p>下面看一下执行<code>bgrewriteaof</code>命令，重写的流程</p>
+<p><img src="https://oscimg.oschina.net/oscnet/a8feb5a02c3a4dd128e22c97cf11a04f6dc.jpg" alt></p>
 <ul>
-<li><code>CMD [&quot;executable&quot;,&quot;param1&quot;,&quot;param2&quot;]</code>（推荐）</li>
-<li><code>CMD [&quot;param1&quot;,&quot;param2&quot;]</code>（作为<em>ENTRYPOINT的默认参数</em>）</li>
-<li><code>CMD command param1 param2</code> （在 shell 中执行）</li>
+<li>重写会有大量的写入操作，所以服务器进程会<code>fork</code>一个子进程来创建一个新的AOF文件</li>
+<li>在重写期间，服务器进程继续处理命令请求，如果有写入的命令，追加到<code>aof_buf</code>的同时，还会追加到<code>aof_rewrite_buf</code>AOF重写缓冲区</li>
+<li>当子进程完成重写之后，会给父进程一个信号，然后父进程会把AOF重写缓冲区的内容写进新的AOF临时文件中，再对新的AOF文件改名完成替换，这样可以保证新的AOF文件与当前数据库数据的一致性</li>
 </ul>
-<p>每个 Dockerfile 只有一个 CMD 命令，多个只有最后被执行</p>
-<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CMD</span><span class="bash"> <span class="built_in">echo</span> <span class="string">"This is a test."</span> | wc -</span></span><br></pre></td></tr></table></figure>
-<h2 id="Dockerfile-指令汇总"><a href="#Dockerfile-指令汇总" class="headerlink" title="Dockerfile 指令汇总"></a>Dockerfile 指令汇总</h2><p>Dockerfile 指令</p>
-<table>
-<thead>
-<tr>
-<th>Dockerfile 指令</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>FROM</td>
-<td>设置基础镜像</td>
-</tr>
-<tr>
-<td>RUN</td>
-<td>设置镜像制作过程中需要执行的命令</td>
-</tr>
-<tr>
-<td>CMD</td>
-<td>设置容器启动时需要执行的命令（可被覆盖）</td>
-</tr>
-<tr>
-<td>LABEL</td>
-<td>添加元数据到镜像（键值对）</td>
-</tr>
-<tr>
-<td>MAINTAINER (deprecated)</td>
-<td>设置维护者信息（被启用，可使用更灵活的LABEL指令）</td>
-</tr>
-<tr>
-<td>EXPOSE</td>
-<td>设置可被暴露的端口号（端口映射）</td>
-</tr>
-<tr>
-<td>ENV</td>
-<td>设置环境变量，可在 RUN 指令中使用</td>
-</tr>
-<tr>
-<td>ADD</td>
-<td>设置需要添加到容器中的文件（自动解压）</td>
-</tr>
-<tr>
-<td>COPY</td>
-<td>设置需要复制到容器中的文件（无法解压）</td>
-</tr>
-<tr>
-<td>ENTRYPOINT</td>
-<td>设置容器启动时需要运行的命令（无法覆盖）</td>
-</tr>
-<tr>
-<td>VOLUME</td>
-<td>设置可被挂载的数据卷（目录映射）</td>
-</tr>
-<tr>
-<td>USER</td>
-<td>设置运行 RUN 指令的用户</td>
-</tr>
-<tr>
-<td>WORKDIR</td>
-<td>设置进入容器时的工作目录</td>
-</tr>
-<tr>
-<td>ARG</td>
-<td></td>
-</tr>
-<tr>
-<td>ONBUILD</td>
-<td>设置在构建时需自动执行的指令</td>
-</tr>
-<tr>
-<td>STOPSIGNAL</td>
-<td>设置将发送到容器的系统调用信号以退出</td>
-</tr>
-<tr>
-<td>HEALTHCHECK</td>
-<td>设置容器的健康检查</td>
-</tr>
-<tr>
-<td>SHELL</td>
-</tr>
-</tbody>
-</table>
-<h2 id="使用-Dockerfile-构建镜像-1"><a href="#使用-Dockerfile-构建镜像-1" class="headerlink" title="使用 Dockerfile 构建镜像"></a>使用 Dockerfile 构建镜像</h2><p>上面介绍了部分的 Dockerfile 指令</p>
-<p>接下来我们用 Dockerfile 去创建一个 Spring Boot 应用的镜像</p>
-<p><strong>1、准备工作</strong></p>
-<p>搭建一个简单的 Spring Boot 应用程序，这里以 Hello World 为例</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DemoApplication</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SpringApplication.run(DemoApplication.class, args);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"/"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">hello</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Hello World"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>使用 maven 打包项目</p>
-<p><code>mvn clean package</code></p>
-<p><strong>2、创建 Dockerfile 文件</strong></p>
-<p>在工程目录下创建一个 Dockerfile 文件，添加以下内容</p>
-<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 基于 java8</span></span><br><span class="line"><span class="keyword">FROM</span> java:<span class="number">8</span></span><br><span class="line"><span class="comment"># 将本地文件夹挂载到当前容器</span></span><br><span class="line"><span class="keyword">VOLUME</span><span class="bash"> /tmp</span></span><br><span class="line"><span class="comment"># 添加文件到容器</span></span><br><span class="line"><span class="keyword">ADD</span><span class="bash"> target/demo-0.0.1-SNAPSHOT.jar /home/demo.jar</span></span><br><span class="line"><span class="comment"># 声明需要暴露的端口</span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">8081</span></span><br><span class="line"><span class="comment"># 配置容器启动后执行的命令</span></span><br><span class="line"><span class="keyword">ENTRYPOINT</span><span class="bash"> [<span class="string">"java"</span>,<span class="string">"-jar"</span>,<span class="string">"/home/demo.jar"</span>]</span></span><br></pre></td></tr></table></figure>
-<p><strong>3、使用 docker build 命令构建镜像</strong></p>
-<p><code>docker build -t demo-server:0.0.1 .</code></p>
-<p>格式： docker build -t 仓库名称/镜像名称(:标签) Dockerfile的相对位置</p>
-<p><code>-t</code> 表示以“name：tag”格式命名和选择标记</p>
-<p>执行命令后，会看到以下信息，可以看到镜像构建的详细过程和结果</p>
-<p><img src="https://oscimg.oschina.net/oscnet/2d8ee53bf18aaf5134d499a35edf5a63d44.jpg" alt></p>
-<p>我们可以通过 <code>docker image ls</code> 或者 <code>docker images</code> 命令来查看镜像列表</p>
-<p><strong>4、启动容器</strong></p>
-<p>运行上面创建的镜像启动容器</p>
-<p><code>docker run -d -p 8081:8081 demo-server:0.0.1</code></p>
-<p><code>-d</code> 表示在后台运行容器并打印容器ID </p>
-<p><code>-p</code> 表示将容器的端口发布到主机</p>
-<p>后面是镜像名称加上标签版本号</p>
-<p><img src="https://oscimg.oschina.net/oscnet/81f8bd500dc0fea1d919f4367427c7db614.jpg" alt></p>
-<p>可以使用 <code>docker container ls</code> 或者 <code>docker ps</code> 来查看在运行的容器，如果要查看所有的容器在后面加上 <code>--all</code></p>
-<p><img src="https://oscimg.oschina.net/oscnet/b515d4eb3d79306c1ad08e98efed308ab76.jpg" alt></p>
+<h1 id="数据恢复"><a href="#数据恢复" class="headerlink" title="数据恢复"></a>数据恢复</h1><p>Redis4.0开始支持RDB和AOF的混合持久化（可以通过配置项 <code>aof-use-rdb-preamble</code> 开启）</p>
+<ul>
+<li>如果是redis进程挂掉，那么重启redis进程即可，直接基于AOF日志文件恢复数据</li>
+<li>如果是redis进程所在机器挂掉，那么重启机器后，尝试重启redis进程，尝试直接基于AOF日志文件进行数据恢复，如果AOF文件破损，那么用<code>redis-check-aof fix</code>命令修复</li>
+<li>如果没有AOF文件，会去加载RDB文件</li>
+<li>如果redis当前最新的AOF和RDB文件出现了丢失/损坏，那么可以尝试基于该机器上当前的某个最新的RDB数据副本进行数据恢复</li>
+</ul>
+<h1 id="RDB-vs-AOF"><a href="#RDB-vs-AOF" class="headerlink" title="RDB vs AOF"></a>RDB vs AOF</h1><p>上面介绍了RDB持久化和AOF持久化，那么来看一下他们各自的优缺点以及该如何选择持久化方案</p>
+<h2 id="RDB和AOF优缺点"><a href="#RDB和AOF优缺点" class="headerlink" title="RDB和AOF优缺点"></a>RDB和AOF优缺点</h2><p>关于RDB和AOF的优缺点，官网上面也给了比较详细的说明<span class="exturl" data-url="aHR0cHM6Ly9yZWRpcy5pby90b3BpY3MvcGVyc2lzdGVuY2U=" title="https://redis.io/topics/persistence">https://redis.io/topics/persistence<i class="fa fa-external-link"></i></span></p>
+<p><strong>RDB</strong></p>
+<p>优点：</p>
+<ul>
+<li>RDB快照是一个压缩过的非常紧凑的文件，保存着某个时间点的数据集，适合做数据的备份，灾难恢复</li>
+<li>可以最大化Redis的性能，在保存RDB文件，服务器进程只需fork一个子进程来完成RDB文件的创建，父进程不需要做IO操作</li>
+<li>与AOF相比，恢复大数据集的时候会更快</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>RDB的数据安全性是不如AOF的，保存整个数据集的过程是比繁重的，根据配置可能要几分钟才快照一次，如果服务器宕机，那么就可能丢失几分钟的数据</li>
+<li>Redis数据集较大时，fork的子进程要完成快照会比较耗CPU、耗时</li>
+</ul>
+<p><strong>AOF</strong></p>
+<p>优点：</p>
+<ul>
+<li>数据更完整，安全性更高，秒级数据丢失（取决fsync策略，如果是everysec，最多丢失1秒的数据）</li>
+<li>AOF文件是一个只进行追加的日志文件，且写入操作是以Redis协议的格式保存的，内容是可读的，适合误删紧急恢复</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>对于相同的数据集，AOF文件的体积要大于RDB文件，数据恢复也会比较慢</li>
+<li>根据所使用的 fsync 策略，AOF 的速度可能会慢于 RDB。 不过在一般情况下， 每秒 fsync 的性能依然非常高</li>
+</ul>
+<h2 id="如何选择RDB和AOF"><a href="#如何选择RDB和AOF" class="headerlink" title="如何选择RDB和AOF"></a>如何选择RDB和AOF</h2><ul>
+<li><p>如果是数据不那么敏感，且可以从其他地方重新生成补回的，那么可以关闭持久化</p>
+</li>
+<li><p>如果是数据比较重要，不想再从其他地方获取，且可以承受数分钟的数据丢失，比如缓存等，那么可以只使用RDB</p>
+</li>
+<li>如果是用做内存数据库，要使用Redis的持久化，建议是RDB和AOF都开启，RDB方式更适合做数据的备份，AOF可以保证数据的不丢失</li>
+</ul>
 
       
     </div>
 
     
       
+
+  <div class="popular-posts-header">Related Posts</div>
+  <ul class="popular-posts">
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="\blog\redis-intro-install-datatype\" rel="bookmark">Redis介绍、安装以及数据结构(操作命令)</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="\blog\redis-base-data-structure\" rel="bookmark">深入了解Redis底层数据结构</a></div>
+      
+    </li>
+  
+  </ul>
 
 
     
@@ -842,7 +751,7 @@
   <li class="post-copyright-link">
     <strong>Post link: </strong>
     
-    <a href="https://www.turbosnail.top/blog/docker-introduction-usage/" title="Docker 入门实践">https://www.turbosnail.top/blog/docker-introduction-usage/</a>
+    <a href="https://www.turbosnail.top/blog/redis-data-persistence/" title="Redis持久化机制：RDB和AOF">https://www.turbosnail.top/blog/redis-data-persistence/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</span> unless stating additionally.</li>
@@ -855,7 +764,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Docker/" rel="tag"># Docker</a>
+            <a href="/tags/Redis/" rel="tag"># Redis</a>
           
         </div>
       
@@ -889,8 +798,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/linux-swap/" rel="next" title="Linux 使用文件增加虚拟内存 swap">
-                <i class="fa fa-chevron-left"></i> Linux 使用文件增加虚拟内存 swap
+              <a href="/blog/redis-base-data-structure/" rel="next" title="深入了解Redis底层数据结构">
+                <i class="fa fa-chevron-left"></i> 深入了解Redis底层数据结构
               </a>
             
           </div>
@@ -898,10 +807,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/blog/git-introduction-usage/" rel="prev" title="Git 详细介绍和使用">
-                Git 详细介绍和使用 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -1240,7 +1145,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-是什么"><span class="nav-number">1.</span> <span class="nav-text">Docker 是什么</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker-容器"><span class="nav-number">1.1.</span> <span class="nav-text">Docker 容器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#镜像和容器"><span class="nav-number">1.2.</span> <span class="nav-text">镜像和容器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#容器和虚拟机"><span class="nav-number">1.3.</span> <span class="nav-text">容器和虚拟机</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-Docker-CE"><span class="nav-number">2.1.</span> <span class="nav-text">安装 Docker CE</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#设置存储库"><span class="nav-number">2.1.1.</span> <span class="nav-text">设置存储库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装-Docker"><span class="nav-number">2.1.2.</span> <span class="nav-text">安装 Docker</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动-Docker"><span class="nav-number">2.1.3.</span> <span class="nav-text">启动 Docker</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#验证"><span class="nav-number">2.1.4.</span> <span class="nav-text">验证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-rpm-包安装"><span class="nav-number">2.1.5.</span> <span class="nav-text">使用 rpm 包安装</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-系统架构"><span class="nav-number">3.</span> <span class="nav-text">Docker 系统架构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用-Dockerfile-构建镜像"><span class="nav-number">4.</span> <span class="nav-text">使用 Dockerfile 构建镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Dockerfile-指令介绍"><span class="nav-number">4.1.</span> <span class="nav-text">Dockerfile 指令介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dockerfile-指令汇总"><span class="nav-number">4.2.</span> <span class="nav-text">Dockerfile 指令汇总</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-Dockerfile-构建镜像-1"><span class="nav-number">4.3.</span> <span class="nav-text">使用 Dockerfile 构建镜像</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis数据持久化"><span class="nav-number">1.</span> <span class="nav-text">Redis数据持久化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RDB快照持久化"><span class="nav-number">2.</span> <span class="nav-text">RDB快照持久化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#快照持久化"><span class="nav-number">2.1.</span> <span class="nav-text">快照持久化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#save和bgsave命令"><span class="nav-number">2.2.</span> <span class="nav-text">save和bgsave命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自动间隔触发"><span class="nav-number">2.3.</span> <span class="nav-text">自动间隔触发</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#AOF持久化"><span class="nav-number">3.</span> <span class="nav-text">AOF持久化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#AOF的实现"><span class="nav-number">3.1.</span> <span class="nav-text">AOF的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#命令追加-append"><span class="nav-number">3.1.1.</span> <span class="nav-text">命令追加(append)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件写入-write-和文件同步-sync"><span class="nav-number">3.1.2.</span> <span class="nav-text">文件写入(write)和文件同步(sync)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AOF重写-rewrite"><span class="nav-number">3.2.</span> <span class="nav-text">AOF重写(rewrite)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据恢复"><span class="nav-number">4.</span> <span class="nav-text">数据恢复</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RDB-vs-AOF"><span class="nav-number">5.</span> <span class="nav-text">RDB vs AOF</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#RDB和AOF优缺点"><span class="nav-number">5.1.</span> <span class="nav-text">RDB和AOF优缺点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何选择RDB和AOF"><span class="nav-number">5.2.</span> <span class="nav-text">如何选择RDB和AOF</span></a></li></ol></li></ol></div>
             
 
           </div>
