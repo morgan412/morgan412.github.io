@@ -156,13 +156,13 @@
 
 
 
-  <meta name="description" content="说明说到Redis的数据结构，我们大概会很快想到Redis的5种常见数据结构：字符串(String)、列表(List)、散列(Hash)、集合(Set)、有序集合(Sorted Set)，以及他们的特点和运用场景。不过它们是Redis对外暴露的数据结构，用于API的操作，而组成它们的底层基础数据结构又是什么呢  简单动态字符串（SDS） 链表 字典 跳跃表 整数集合 压缩列表  简单动态字符串（S">
+  <meta name="description" content="说明说到Redis的数据结构，我们大概会很快想到Redis的5种常见数据结构：字符串(String)、列表(List)、散列(Hash)、集合(Set)、有序集合(Sorted Set)，以及他们的特点和运用场景。不过它们是Redis对外暴露的数据结构，用于API的操作，而组成它们的底层基础数据结构又是什么呢  简单动态字符串（SDS） 链表 字典 跳跃表 整数集合 压缩列表  Redis的Git">
 <meta name="keywords" content="Redis,数据结构">
 <meta property="og:type" content="article">
 <meta property="og:title" content="深入了解Redis底层数据结构">
 <meta property="og:url" content="https://www.turbosnail.top/blog/redis-base-data-structure/index.html">
 <meta property="og:site_name" content="TurboSnail">
-<meta property="og:description" content="说明说到Redis的数据结构，我们大概会很快想到Redis的5种常见数据结构：字符串(String)、列表(List)、散列(Hash)、集合(Set)、有序集合(Sorted Set)，以及他们的特点和运用场景。不过它们是Redis对外暴露的数据结构，用于API的操作，而组成它们的底层基础数据结构又是什么呢  简单动态字符串（SDS） 链表 字典 跳跃表 整数集合 压缩列表  简单动态字符串（S">
+<meta property="og:description" content="说明说到Redis的数据结构，我们大概会很快想到Redis的5种常见数据结构：字符串(String)、列表(List)、散列(Hash)、集合(Set)、有序集合(Sorted Set)，以及他们的特点和运用场景。不过它们是Redis对外暴露的数据结构，用于API的操作，而组成它们的底层基础数据结构又是什么呢  简单动态字符串（SDS） 链表 字典 跳跃表 整数集合 压缩列表  Redis的Git">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://oscimg.oschina.net/oscnet/edc82c77be39429071e27195126ac6311c8.jpg">
 <meta property="og:image" content="https://oscimg.oschina.net/oscnet/7b3d3b0c972bdf9a49983be9711c067c8f2.jpg">
@@ -176,10 +176,10 @@
 <meta property="og:image" content="https://oscimg.oschina.net/oscnet/6f55d9ef2f8324a88437c664e891dcac580.jpg">
 <meta property="og:image" content="https://oscimg.oschina.net/oscnet/e3431295a37c6e31fec4e21eaa4d6c00cb8.jpg">
 <meta property="og:image" content="https://oscimg.oschina.net/oscnet/7c38521ac3192f9bebffacf0e79376faf53.jpg">
-<meta property="og:updated_time" content="2019-09-06T06:20:21.569Z">
+<meta property="og:updated_time" content="2019-09-11T00:30:45.323Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入了解Redis底层数据结构">
-<meta name="twitter:description" content="说明说到Redis的数据结构，我们大概会很快想到Redis的5种常见数据结构：字符串(String)、列表(List)、散列(Hash)、集合(Set)、有序集合(Sorted Set)，以及他们的特点和运用场景。不过它们是Redis对外暴露的数据结构，用于API的操作，而组成它们的底层基础数据结构又是什么呢  简单动态字符串（SDS） 链表 字典 跳跃表 整数集合 压缩列表  简单动态字符串（S">
+<meta name="twitter:description" content="说明说到Redis的数据结构，我们大概会很快想到Redis的5种常见数据结构：字符串(String)、列表(List)、散列(Hash)、集合(Set)、有序集合(Sorted Set)，以及他们的特点和运用场景。不过它们是Redis对外暴露的数据结构，用于API的操作，而组成它们的底层基础数据结构又是什么呢  简单动态字符串（SDS） 链表 字典 跳跃表 整数集合 压缩列表  Redis的Git">
 <meta name="twitter:image" content="https://oscimg.oschina.net/oscnet/edc82c77be39429071e27195126ac6311c8.jpg">
 
 
@@ -331,7 +331,7 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives<span class="badge">43</span></a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives<span class="badge">44</span></a>
 
   </li>
         
@@ -602,6 +602,7 @@
 <li>整数集合</li>
 <li>压缩列表</li>
 </ul>
+<p>Redis的GitHub地址<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FudGlyZXovcmVkaXM=" title="https://github.com/antirez/redis">https://github.com/antirez/redis<i class="fa fa-external-link"></i></span></p>
 <h1 id="简单动态字符串（SDS）"><a href="#简单动态字符串（SDS）" class="headerlink" title="简单动态字符串（SDS）"></a>简单动态字符串（SDS）</h1><p>Redis是用C语言写的，但是Redis并没有使用C的字符串表示（C是字符串是以<code>\0</code>空字符结尾的字符数组），而是自己构建了一种<strong>简单动态字符串</strong>（simple dynamic string，SDS）的抽象类型，并作为Redis的默认字符串表示</p>
 <p>在Redis中，包含字符串值的键值对底层都是用SDS实现的</p>
 <h2 id="SDS的定义"><a href="#SDS的定义" class="headerlink" title="SDS的定义"></a>SDS的定义</h2><p>SDS的结构定义在<code>sds.h</code>文件中，SDS的定义在Redis 3.2版本之后有一些改变，由一种数据结构变成了5种数据结构，会根据SDS存储的内容长度来选择不同的结构，以达到节省内存的效果，具体的结构定义，我们看以下代码</p>
@@ -735,7 +736,7 @@
 <p><img src="https://oscimg.oschina.net/oscnet/517624296108922537c046db78c6f0f6fb0.jpg" alt></p>
 <p>跳跃表的删除很简单，只要先找到要删除的节点，然后顺藤摸瓜删除每一层相同的节点就好了</p>
 <blockquote>
-<p>跳跃表维持结构平衡的是比较低的，完全是依靠随机，相比二叉查找树，在多次插入删除后，需要Rebalance来重新调整结构平衡</p>
+<p>跳跃表维持结构平衡的成本是比较低的，完全是依靠随机，相比二叉查找树，在多次插入删除后，需要Rebalance来重新调整结构平衡</p>
 </blockquote>
 <h2 id="跳跃表的实现"><a href="#跳跃表的实现" class="headerlink" title="跳跃表的实现"></a>跳跃表的实现</h2><p>Redis的跳跃表实现是由<code>redis.h/zskiplistNode</code>和<code>redis.h/zskiplist</code>（3.2版本之后redis.h改为了server.h）两个结构定义，<code>zskiplistNode</code>定义跳跃表的节点，<code>zskiplist</code>保存跳跃表节点的相关信息</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* ZSETs use a specialized version of Skiplists */</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">zskiplistNode</span> &#123;</span></span><br><span class="line">    <span class="comment">// 成员对象 （robj *obj;）</span></span><br><span class="line">    sds ele;</span><br><span class="line">    <span class="comment">// 分值</span></span><br><span class="line">    <span class="keyword">double</span> score;</span><br><span class="line">    <span class="comment">// 后退指针</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">zskiplistNode</span> *<span class="title">backward</span>;</span></span><br><span class="line">    <span class="comment">// 层</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">zskiplistLevel</span> &#123;</span></span><br><span class="line">        <span class="comment">// 前进指针</span></span><br><span class="line">        <span class="class"><span class="keyword">struct</span> <span class="title">zskiplistNode</span> *<span class="title">forward</span>;</span></span><br><span class="line">        <span class="comment">// 跨度</span></span><br><span class="line">        <span class="comment">// 跨度实际上是用来计算元素排名(rank)的，在查找某个节点的过程中，将沿途访过的所有层的跨度累积起来，得到的结果就是目标节点在跳跃表中的排位</span></span><br><span class="line">        <span class="keyword">unsigned</span> <span class="keyword">long</span> span;</span><br><span class="line">    &#125; level[];</span><br><span class="line">&#125; zskiplistNode;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">zskiplist</span> &#123;</span></span><br><span class="line">    <span class="comment">// 表头节点和表尾节点</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">zskiplistNode</span> *<span class="title">header</span>, *<span class="title">tail</span>;</span></span><br><span class="line">    <span class="comment">// 表中节点的数量</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> length;</span><br><span class="line">    <span class="comment">// 表中层数最大的节点的层数</span></span><br><span class="line">    <span class="keyword">int</span> level;</span><br><span class="line">&#125; zskiplist;</span><br></pre></td></tr></table></figure>
@@ -893,14 +894,21 @@
     <li class="popular-posts-item">
       
       
-      <div class="popular-posts-title"><a href="\blog\redis-intro-install-datatype\" rel="bookmark">Redis介绍、安装以及数据结构(操作命令)</a></div>
+      <div class="popular-posts-title"><a href="\blog\redis-data-persistence\" rel="bookmark">Redis持久化机制：RDB和AOF</a></div>
       
     </li>
   
     <li class="popular-posts-item">
       
       
-      <div class="popular-posts-title"><a href="\blog\redis-data-persistence\" rel="bookmark">Redis持久化机制：RDB和AOF</a></div>
+      <div class="popular-posts-title"><a href="\blog\redis-replication\" rel="bookmark">Redis主从复制的配置和实现原理</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="\blog\redis-intro-install-datatype\" rel="bookmark">Redis介绍、安装以及数据结构(操作命令)</a></div>
       
     </li>
   
@@ -1073,7 +1081,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">43</span>
+                    <span class="site-state-item-count">44</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -1379,7 +1387,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="Symbols count total">296k</span>
+    <span title="Symbols count total">302k</span>
   
 
   
@@ -1388,7 +1396,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="Reading time total">4:29</span>
+    <span title="Reading time total">4:35</span>
   
 </div>
 

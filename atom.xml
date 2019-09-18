@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.turbosnail.top/"/>
-  <updated>2019-09-10T09:41:45.953Z</updated>
+  <updated>2019-09-18T00:31:06.778Z</updated>
   <id>https://www.turbosnail.top/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Redis主从复制的配置和实现原理</title>
+    <link href="https://www.turbosnail.top/blog/redis-replication/"/>
+    <id>https://www.turbosnail.top/blog/redis-replication/</id>
+    <published>2019-09-17T09:11:48.000Z</published>
+    <updated>2019-09-18T00:31:06.778Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;Redis的持久化功能在一定程度上保证了数据的安全性，即便是服务器宕机的情况下，也可以保证数据的丢失非常少。通常，为了避免服务的单点故障，会把数据复制到多个副本放在不同的服务器上，且这些拥有数据副本的服务器可以用于处理客户端的读请求，扩展整体的性能&lt;/p&gt;
+&lt;p&gt;下面会介绍
+        
+      
+    
+    </summary>
+    
+      <category term="Redis" scheme="https://www.turbosnail.top/categories/Redis/"/>
+    
+    
+      <category term="Redis" scheme="https://www.turbosnail.top/tags/Redis/"/>
+    
+  </entry>
   
   <entry>
     <title>Redis持久化机制：RDB和AOF</title>
@@ -47,7 +74,7 @@
     <link href="https://www.turbosnail.top/blog/redis-base-data-structure/"/>
     <id>https://www.turbosnail.top/blog/redis-base-data-structure/</id>
     <published>2019-09-06T01:18:52.000Z</published>
-    <updated>2019-09-06T06:20:21.569Z</updated>
+    <updated>2019-09-11T00:30:45.323Z</updated>
     
     <summary type="html">
     
@@ -161,7 +188,7 @@
     <link href="https://www.turbosnail.top/blog/redis-intro-install-datatype/"/>
     <id>https://www.turbosnail.top/blog/redis-intro-install-datatype/</id>
     <published>2019-08-11T02:11:48.000Z</published>
-    <updated>2019-08-13T09:09:51.391Z</updated>
+    <updated>2019-09-09T02:18:25.153Z</updated>
     
     <summary type="html">
     
@@ -409,9 +436,9 @@
     
       <category term="Spring Cloud" scheme="https://www.turbosnail.top/tags/Spring-Cloud/"/>
     
-      <category term="微服务" scheme="https://www.turbosnail.top/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
-    
       <category term="Zuul" scheme="https://www.turbosnail.top/tags/Zuul/"/>
+    
+      <category term="微服务" scheme="https://www.turbosnail.top/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
     
       <category term="服务网关" scheme="https://www.turbosnail.top/tags/%E6%9C%8D%E5%8A%A1%E7%BD%91%E5%85%B3/"/>
     
@@ -441,9 +468,9 @@
     
       <category term="Spring Cloud" scheme="https://www.turbosnail.top/tags/Spring-Cloud/"/>
     
-      <category term="微服务" scheme="https://www.turbosnail.top/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
-    
       <category term="Zuul" scheme="https://www.turbosnail.top/tags/Zuul/"/>
+    
+      <category term="微服务" scheme="https://www.turbosnail.top/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
     
       <category term="服务网关" scheme="https://www.turbosnail.top/tags/%E6%9C%8D%E5%8A%A1%E7%BD%91%E5%85%B3/"/>
     
@@ -473,9 +500,9 @@
     
       <category term="Spring Cloud" scheme="https://www.turbosnail.top/tags/Spring-Cloud/"/>
     
-      <category term="Feign" scheme="https://www.turbosnail.top/tags/Feign/"/>
-    
       <category term="微服务" scheme="https://www.turbosnail.top/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
+    
+      <category term="Feign" scheme="https://www.turbosnail.top/tags/Feign/"/>
     
       <category term="Ribbon" scheme="https://www.turbosnail.top/tags/Ribbon/"/>
     
@@ -507,11 +534,11 @@
     
       <category term="Spring Cloud" scheme="https://www.turbosnail.top/tags/Spring-Cloud/"/>
     
+      <category term="微服务" scheme="https://www.turbosnail.top/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
+    
       <category term="Eureka" scheme="https://www.turbosnail.top/tags/Eureka/"/>
     
       <category term="Feign" scheme="https://www.turbosnail.top/tags/Feign/"/>
-    
-      <category term="微服务" scheme="https://www.turbosnail.top/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
     
   </entry>
   
@@ -539,9 +566,9 @@
     
       <category term="Spring Cloud" scheme="https://www.turbosnail.top/tags/Spring-Cloud/"/>
     
-      <category term="Eureka" scheme="https://www.turbosnail.top/tags/Eureka/"/>
-    
       <category term="微服务" scheme="https://www.turbosnail.top/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
+    
+      <category term="Eureka" scheme="https://www.turbosnail.top/tags/Eureka/"/>
     
       <category term="Ribbon" scheme="https://www.turbosnail.top/tags/Ribbon/"/>
     
@@ -577,39 +604,6 @@
       <category term="微服务" scheme="https://www.turbosnail.top/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
     
       <category term="Spring Cloud Config" scheme="https://www.turbosnail.top/tags/Spring-Cloud-Config/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Spring Cloud 服务注册与发现、高可用（Eureka）</title>
-    <link href="https://www.turbosnail.top/blog/spring-cloud-eureka/"/>
-    <id>https://www.turbosnail.top/blog/spring-cloud-eureka/</id>
-    <published>2019-04-17T09:59:47.000Z</published>
-    <updated>2019-05-06T08:04:05.891Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;Spring Cloud 服务注册与发现、高可用（Eureka）&lt;/p&gt;
-&lt;h1 id=&quot;服务注册发现&quot;&gt;&lt;a href=&quot;#服务注册发现&quot; class=&quot;headerlink&quot; title=&quot;服务注册发现&quot;&gt;&lt;/a&gt;服务注册发现&lt;/h1&gt;&lt;h2 id=&quot;服务发现&quot;&gt;&lt;a
-        
-      
-    
-    </summary>
-    
-      <category term="Spring Cloud" scheme="https://www.turbosnail.top/categories/Spring-Cloud/"/>
-    
-    
-      <category term="Spring Cloud" scheme="https://www.turbosnail.top/tags/Spring-Cloud/"/>
-    
-      <category term="Eureka" scheme="https://www.turbosnail.top/tags/Eureka/"/>
-    
-      <category term="微服务" scheme="https://www.turbosnail.top/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
-    
-      <category term="服务注册" scheme="https://www.turbosnail.top/tags/%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C/"/>
     
   </entry>
   

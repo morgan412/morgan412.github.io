@@ -156,18 +156,23 @@
 
 
 
-  <meta name="description" content="Linux下安装JDK 下载文件从官网下载合适版本如：jdk-8u191-linux-x64.tar.gz 安装文件1.在 /usr/ 目录下创建 java文件夹mkdir /usr/java 2.将压缩包 jdk-8u191-linux-x64.tar.gz 复制到该目录，并解压tar -zxvf jdk-8u191-linux-x64.tar.gz 修改环境变量1.修改 /etc/profil">
-<meta name="keywords" content="Linux,JDK">
+  <meta name="description" content="Redis的持久化功能在一定程度上保证了数据的安全性，即便是服务器宕机的情况下，也可以保证数据的丢失非常少。通常，为了避免服务的单点故障，会把数据复制到多个副本放在不同的服务器上，且这些拥有数据副本的服务器可以用于处理客户端的读请求，扩展整体的性能 下面会介绍Redis的主从复制配置和实现原理，后续还会有Redis的高可用方案：哨兵机制（Sentinel）、分区集群（Cluster） 什么是主从复">
+<meta name="keywords" content="Redis">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux下安装JDK">
-<meta property="og:url" content="https://www.turbosnail.top/blog/linux-jdk-install/index.html">
+<meta property="og:title" content="Redis主从复制的配置和实现原理">
+<meta property="og:url" content="https://www.turbosnail.top/blog/redis-replication/index.html">
 <meta property="og:site_name" content="TurboSnail">
-<meta property="og:description" content="Linux下安装JDK 下载文件从官网下载合适版本如：jdk-8u191-linux-x64.tar.gz 安装文件1.在 /usr/ 目录下创建 java文件夹mkdir /usr/java 2.将压缩包 jdk-8u191-linux-x64.tar.gz 复制到该目录，并解压tar -zxvf jdk-8u191-linux-x64.tar.gz 修改环境变量1.修改 /etc/profil">
+<meta property="og:description" content="Redis的持久化功能在一定程度上保证了数据的安全性，即便是服务器宕机的情况下，也可以保证数据的丢失非常少。通常，为了避免服务的单点故障，会把数据复制到多个副本放在不同的服务器上，且这些拥有数据副本的服务器可以用于处理客户端的读请求，扩展整体的性能 下面会介绍Redis的主从复制配置和实现原理，后续还会有Redis的高可用方案：哨兵机制（Sentinel）、分区集群（Cluster） 什么是主从复">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-04-28T01:30:57.145Z">
+<meta property="og:image" content="https://oscimg.oschina.net/oscnet/0d7debc065dece978d6bc143e6930b0b58d.jpg">
+<meta property="og:image" content="https://oscimg.oschina.net/oscnet/b7d764ef7270251d7d59bb0b1d2bc7dfdba.jpg">
+<meta property="og:image" content="https://oscimg.oschina.net/oscnet/1d55bb1bfe2a343c4ed3ab63f7ea853b063.jpg">
+<meta property="og:image" content="https://oscimg.oschina.net/oscnet/cf2c7059a79f18df050854f9d5d75018fdd.jpg">
+<meta property="og:updated_time" content="2019-09-18T00:31:06.778Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Linux下安装JDK">
-<meta name="twitter:description" content="Linux下安装JDK 下载文件从官网下载合适版本如：jdk-8u191-linux-x64.tar.gz 安装文件1.在 /usr/ 目录下创建 java文件夹mkdir /usr/java 2.将压缩包 jdk-8u191-linux-x64.tar.gz 复制到该目录，并解压tar -zxvf jdk-8u191-linux-x64.tar.gz 修改环境变量1.修改 /etc/profil">
+<meta name="twitter:title" content="Redis主从复制的配置和实现原理">
+<meta name="twitter:description" content="Redis的持久化功能在一定程度上保证了数据的安全性，即便是服务器宕机的情况下，也可以保证数据的丢失非常少。通常，为了避免服务的单点故障，会把数据复制到多个副本放在不同的服务器上，且这些拥有数据副本的服务器可以用于处理客户端的读请求，扩展整体的性能 下面会介绍Redis的主从复制配置和实现原理，后续还会有Redis的高可用方案：哨兵机制（Sentinel）、分区集群（Cluster） 什么是主从复">
+<meta name="twitter:image" content="https://oscimg.oschina.net/oscnet/0d7debc065dece978d6bc143e6930b0b58d.jpg">
 
 
 
@@ -177,7 +182,7 @@
 
   
   
-  <link rel="canonical" href="https://www.turbosnail.top/blog/linux-jdk-install/">
+  <link rel="canonical" href="https://www.turbosnail.top/blog/redis-replication/">
 
 
 
@@ -187,7 +192,7 @@
   };
 </script>
 
-  <title>Linux下安装JDK | TurboSnail</title>
+  <title>Redis主从复制的配置和实现原理 | TurboSnail</title>
   
 
 
@@ -458,7 +463,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.turbosnail.top/blog/linux-jdk-install/">
+    <link itemprop="mainEntityOfPage" href="https://www.turbosnail.top/blog/redis-replication/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="TurboSnail">
@@ -475,7 +480,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">Linux下安装JDK
+          <h2 class="post-title" itemprop="name headline">Redis主从复制的配置和实现原理
 
               
             
@@ -501,7 +506,7 @@
                 
               
 
-              <time title="Created: 2018-12-06 15:45:00" itemprop="dateCreated datePublished" datetime="2018-12-06T15:45:00+08:00">2018-12-06</time>
+              <time title="Created: 2019-09-17 17:11:48" itemprop="dateCreated datePublished" datetime="2019-09-17T17:11:48+08:00">2019-09-17</time>
             
 
             
@@ -519,7 +524,7 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Redis/" itemprop="url" rel="index"><span itemprop="name">Redis</span></a></span>
 
                 
                 
@@ -548,7 +553,7 @@
                   <i class="fa fa-file-word-o"></i>
                 </span>
                 
-                <span title="Symbols count in article">1.4k</span>
+                <span title="Symbols count in article">6.1k</span>
               
 
               
@@ -560,7 +565,7 @@
                   <i class="fa fa-clock-o"></i>
                 </span>
                 
-                <span title="Reading time">1 mins.</span>
+                <span title="Reading time">6 mins.</span>
               
             </div>
           
@@ -580,26 +585,86 @@
       
 
       
-        <p>Linux下安装JDK</p>
-<h3 id="下载文件"><a href="#下载文件" class="headerlink" title="下载文件"></a>下载文件</h3><p>从官网下载合适版本如：jdk-8u191-linux-x64.tar.gz</p>
-<h3 id="安装文件"><a href="#安装文件" class="headerlink" title="安装文件"></a>安装文件</h3><p>1.在 /usr/ 目录下创建 java文件夹<br><code>mkdir /usr/java</code></p>
-<p>2.将压缩包 jdk-8u191-linux-x64.tar.gz 复制到该目录，并解压<br><code>tar -zxvf jdk-8u191-linux-x64.tar.gz</code></p>
-<h3 id="修改环境变量"><a href="#修改环境变量" class="headerlink" title="修改环境变量"></a>修改环境变量</h3><p>1.修改 /etc/profile 文件<br><code>vim /etc/profile</code></p>
-<p>2.在文件后面添加 java 的配置并保存，如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">JAVA_HOME=/usr/java/jdk1.8.0_191</span><br><span class="line">PATH=$JAVA_HOME/bin:$PATH</span><br><span class="line">CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar</span><br><span class="line">export JAVA_HOME</span><br><span class="line">export PATH</span><br><span class="line">export CLASSPATH</span><br></pre></td></tr></table></figure>
-<p>3.让配置生效<br><code>source /etc/profile</code></p>
-<p>4.验证配置信息</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">echo $JAVA_HOME</span><br><span class="line">echo $PATH</span><br><span class="line">echo $CLASSPATH</span><br></pre></td></tr></table></figure>
-<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>查看java版本 <code>java -version</code>，显示如下信息，配置成功</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">java version &quot;1.8.0_191&quot;</span><br><span class="line">Java(TM) SE Runtime Environment (build 1.8.0_191-b12)</span><br><span class="line">Java HotSpot(TM) 64-Bit Server VM (build 25.191-b12, mixed mode)</span><br></pre></td></tr></table></figure>
-<h3 id="rpm方式安装JDK"><a href="#rpm方式安装JDK" class="headerlink" title="rpm方式安装JDK"></a>rpm方式安装JDK</h3><blockquote>
-<p>rpm是由红帽公司开发的软件包管理方式，使用rpm我们可以方便的进行软件的安装、查询、卸载、升级等工作。但是rpm软件包之间的依赖性问题往往会很繁琐,尤其是软件由多个rpm包组成时</p>
+        <p>Redis的持久化功能在一定程度上保证了数据的安全性，即便是服务器宕机的情况下，也可以保证数据的丢失非常少。通常，为了避免服务的单点故障，会把数据复制到多个副本放在不同的服务器上，且这些拥有数据副本的服务器可以用于处理客户端的读请求，扩展整体的性能</p>
+<p>下面会介绍Redis的主从复制配置和实现原理，后续还会有Redis的高可用方案：哨兵机制（Sentinel）、分区集群（Cluster）</p>
+<h1 id="什么是主从复制"><a href="#什么是主从复制" class="headerlink" title="什么是主从复制"></a>什么是主从复制</h1><p>我们可以通过<code>slaveof &lt;host&gt; &lt;port&gt;</code>命令，或者通过配置<code>slaveof</code>选项，来使当前的服务器（slave）复制指定服务器（master）的内容，被复制的服务器称为主服务器（master），对主服务器进行复制操作的为从服务器（slave）</p>
+<p>主服务器master可以进行读写操作，当主服务器的数据发生变化，master会发出命令流来保持对salve的更新，而从服务器slave通常是只读的（可以通过<code>slave-read-only</code>指定），在主从复制模式下，即便master宕机了，slave是不能变为主服务器进行写操作的</p>
+<p>一个master可以有多个slave，即一主多从；而slave也可以接受其他slave的连接，形成“主从链”层叠状结构（cascading-like structure），自 Redis 4.0 起，所有的sub-slave也会从master收到完全一样的复制流。如下图</p>
+<p><img src="https://oscimg.oschina.net/oscnet/0d7debc065dece978d6bc143e6930b0b58d.jpg" alt></p>
+<p><strong>主从复制的好处：</strong></p>
+<ul>
+<li>数据冗余，实现数据的热备份</li>
+<li>故障恢复，避免单点故障带来的服务不可用</li>
+<li>读写分离，负载均衡。主节点负载读写，从节点负责读，提高服务器并发量</li>
+<li>高可用基础，是哨兵机制和集群实现的基础</li>
+</ul>
+<h1 id="主从复制的配置"><a href="#主从复制的配置" class="headerlink" title="主从复制的配置"></a>主从复制的配置</h1><p>使用和配置主从复制是比较简单的，在从服务器slave的配置文件中设置<code>slaveof</code>选项，或者直接使用<code>slaveof &lt;masterip&gt; &lt;masterport&gt;</code>命令</p>
+<p>这里我使用3台虚拟机来搭建一下，主服务器的ip为<code>192.168.249.20</code>，两个从服务器的ip分别为<code>192.168.249.21</code>和<code>192.168.249.21</code>，端口号都为<code>6379</code>，具体的配置如下</p>
+<p>主服务器并不需要额外多配置什么，这里我们先把三台服务器的都需要改的地方列一下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置为后台运行</span></span><br><span class="line">daemonize yes</span><br><span class="line"><span class="comment"># 保存pid的文件，如果是在一台机器搭建主从，需要区分一下</span></span><br><span class="line">pidfile /var/run/redis_6379.pid</span><br><span class="line"><span class="comment"># 绑定的主机地址，这里注释掉，开放ip连接</span></span><br><span class="line"><span class="comment">#bind 127.0.0.1</span></span><br><span class="line"><span class="comment"># 指定日志文件</span></span><br><span class="line">logfile <span class="string">"6379.log"</span></span><br></pre></td></tr></table></figure>
+<p>在从服务器中添加配置<code>slaveof &lt;masterport&gt; &lt;masterport&gt;</code>选项，在5.0版本中使用了<code>replicaof</code>代替了<code>slaveof</code>（<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FudGlyZXovcmVkaXMvaXNzdWVzLzUzMzU=" title="https://github.com/antirez/redis/issues/5335">https://github.com/antirez/redis/issues/5335<i class="fa fa-external-link"></i></span>），<code>slaveof</code>还可以继续使用，不过建议使用<code>replicaof</code>。如果是使用命令行来复制的话，重启之后会无效</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># replicaof &lt;masterip&gt; &lt;masterport&gt;</span><br><span class="line">replicaof 192.168.249.20 6379</span><br></pre></td></tr></table></figure>
+<p>配置好<code>redis.conf</code>之后，我们分别启动3台服务器，可以用户命令<code>info replication</code>查看复制信息</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">192.168.249.20:6379&gt; info replication</span><br><span class="line"><span class="comment"># Replication</span></span><br><span class="line">role:master</span><br><span class="line">connected_slaves:2</span><br><span class="line">slave0:ip=192.168.249.22,port=6379,state=online,offset=700,lag=0</span><br><span class="line">slave1:ip=192.168.249.21,port=6379,state=online,offset=700,lag=0</span><br><span class="line">master_replid:b80a4720c0001efb62940f5ad6abaf9cdaf7a813</span><br><span class="line">master_replid2:0000000000000000000000000000000000000000</span><br><span class="line">master_repl_offset:700</span><br><span class="line">second_repl_offset:-1</span><br><span class="line">repl_backlog_active:1</span><br><span class="line">repl_backlog_size:1048576</span><br><span class="line">repl_backlog_first_byte_offset:1</span><br><span class="line">repl_backlog_histlen:700</span><br><span class="line"></span><br><span class="line">192.168.249.21:6379&gt; info replication</span><br><span class="line"><span class="comment"># Replication</span></span><br><span class="line">role:slave</span><br><span class="line">master_host:192.168.249.20</span><br><span class="line">master_port:6379</span><br><span class="line">master_link_status:up</span><br><span class="line">master_last_io_seconds_ago:3</span><br><span class="line">master_sync_in_progress:0</span><br><span class="line">slave_repl_offset:854</span><br><span class="line">slave_priority:100</span><br><span class="line">slave_read_only:1</span><br><span class="line">connected_slaves:0</span><br><span class="line">master_replid:b80a4720c0001efb62940f5ad6abaf9cdaf7a813</span><br><span class="line">master_replid2:0000000000000000000000000000000000000000</span><br><span class="line">master_repl_offset:854</span><br><span class="line">second_repl_offset:-1</span><br><span class="line">repl_backlog_active:1</span><br><span class="line">repl_backlog_size:1048576</span><br><span class="line">repl_backlog_first_byte_offset:57</span><br><span class="line">repl_backlog_histlen:798</span><br><span class="line"></span><br><span class="line">192.168.249.22:6379&gt; info replication</span><br><span class="line"><span class="comment"># Replication</span></span><br><span class="line">role:slave</span><br><span class="line">master_host:192.168.249.20</span><br><span class="line">master_port:6379</span><br><span class="line">master_link_status:up</span><br><span class="line">master_last_io_seconds_ago:6</span><br><span class="line">master_sync_in_progress:0</span><br><span class="line">slave_repl_offset:854</span><br><span class="line">slave_priority:100</span><br><span class="line">slave_read_only:1</span><br><span class="line">connected_slaves:0</span><br><span class="line">master_replid:b80a4720c0001efb62940f5ad6abaf9cdaf7a813</span><br><span class="line">master_replid2:0000000000000000000000000000000000000000</span><br><span class="line">master_repl_offset:854</span><br><span class="line">second_repl_offset:-1</span><br><span class="line">repl_backlog_active:1</span><br><span class="line">repl_backlog_size:1048576</span><br><span class="line">repl_backlog_first_byte_offset:1</span><br><span class="line">repl_backlog_histlen:854</span><br></pre></td></tr></table></figure>
+<p>接下来我们可以在主服务器中写入数据，然后可以在其他的从服务器中读取数据</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">192.168.249.20:6379&gt; <span class="built_in">set</span> <span class="built_in">test</span> <span class="string">'Hello World'</span></span><br><span class="line">OK</span><br><span class="line"></span><br><span class="line">192.168.249.21:6379&gt; get <span class="built_in">test</span></span><br><span class="line"><span class="string">"Hello World"</span></span><br><span class="line"></span><br><span class="line">192.168.249.22:6379&gt; get <span class="built_in">test</span></span><br><span class="line"><span class="string">"Hello World"</span></span><br></pre></td></tr></table></figure>
+<p>然后我们试着在从服务器中写入数据，会提示不能在只读的从服务器中写入数据</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">192.168.249.21:6379&gt; <span class="built_in">set</span> test2 hello</span><br><span class="line">(error) READONLY You can<span class="string">'t write against a read only replica.</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>如果我们需要slave对master的复制进行验证，可以在master中配置<code>requirepass &lt;password&gt;</code>选项设置密码</p>
+<p>那么需要在从服务器中使用该密码，可以使用命令<code>config set masterauth &lt;password&gt;</code>，或者在配置文件中设置<code>masterauth &lt;password&gt;</code></p>
 </blockquote>
-<p>1.获取rpm 格式的安装包，如 jdk-11.0.1_linux-x64_bin.rpm，复制到 /usr/java 目录下<br>2.执行安装<br><code>rpm -ivh jdk-7u79-linux-x64.rpm</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@instance-idjn8dpx java]# rpm -ivh jdk-11.0.1_linux-x64_bin.rpm</span><br><span class="line">warning: jdk-11.0.1_linux-x64_bin.rpm: Header V3 RSA/SHA256 Signature, key ID ec551f03: NOKEY</span><br><span class="line">Preparing...                          ################################# [100%]</span><br><span class="line">Updating / installing...</span><br><span class="line">   1:jdk-11.0.1-2000:11.0.1-ga        ################################# [100%]</span><br></pre></td></tr></table></figure>
-<p>使用命令 <code># rpm -qa|grep jdk</code> 查看安装的java</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@instance-idjn8dpx java]# rpm -qa|grep jdk</span><br><span class="line">jdk-11.0.1-11.0.1-ga.x86_64</span><br></pre></td></tr></table></figure>
-<p>3.环境变量的配置如上<br>4.rmp卸载<br>使用 <code>rpm -e --nodeps</code> 卸载<br><code>rpm -e --nodeps jdk-11.0.1-11.0.1-ga.x86_64</code></p>
+<h1 id="主从复制的实现原理"><a href="#主从复制的实现原理" class="headerlink" title="主从复制的实现原理"></a>主从复制的实现原理</h1><p>主从复制的配置还是比较简单的，下面来了解下主从复制的实现原理</p>
+<p>Redis的主从复制过程大体上分3个阶段：<strong>建立连接</strong>、<strong>数据同步</strong>、<strong>命令传播</strong></p>
+<h2 id="建立连接"><a href="#建立连接" class="headerlink" title="建立连接"></a>建立连接</h2><p>这个阶段主要是从服务器发出<code>slaveof</code>命令之后，与主服务器如何建立连接，为数据同步做准备的过程。</p>
+<p>1）在<code>slaveof</code>命令执行之后，从服务器根据设置的master的ip地址和端口，创建连向主服务器的socket套接字连接，连接成功后，从服务器会为这个套接字关联一个专门的处理器，用于处理后续的复制工作</p>
+<p>2）建立连接之后，从服务器会向主服务器发送<code>ping</code>命令，确认主服务器是否可用，以及当前是否可用接受处理命令。如果收到主服务器的<code>pong</code>回复说明是可用的，否则有可能是网络超时或主服务器阻塞，从服务器会断开连接发起重连</p>
+<p>3）身份验证。如果主服务器设置了<code>requirepass</code>选项，那么从服务器必须配置<code>masterauth</code>选项，且保证密码一致才能通过验证</p>
+<p>4）身份验证完成之后，从服务器会发送自己的监听端口，主服务器会保存下来</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">192.168.249.20:6379&gt; info replication</span><br><span class="line">...</span><br><span class="line">slave0:ip=192.168.249.22,port=6379,state=online,offset=700,lag=0</span><br><span class="line">slave1:ip=192.168.249.21,port=6379,state=online,offset=700,lag=0</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<h2 id="数据同步"><a href="#数据同步" class="headerlink" title="数据同步"></a>数据同步</h2><p>在主从服务器建立连接确认各自身份之后，就开始数据同步，从服务器向主服务器发送<code>PSYNC</code>命令，执行同步操作，并把自己的数据库状态更新至主服务器的数据库状态</p>
+<p>Redis的主从同步分为：<strong>完整重同步（full resynchronization）</strong>和<strong>部分重同步（partial resynchronization）</strong></p>
+<h3 id="完整重同步"><a href="#完整重同步" class="headerlink" title="完整重同步"></a>完整重同步</h3><p>有两种情况下是完整重同步，一是slave连接上master第一次复制的时候；二是如果当主从断线，重新连接复制的时候有可能是完整重同步，这个在后面说</p>
+<p>下面是完整重同步的步骤</p>
+<p><img src="https://oscimg.oschina.net/oscnet/b7d764ef7270251d7d59bb0b1d2bc7dfdba.jpg" alt></p>
+<ul>
+<li>从服务器连接主服务器，发送SYNC命令</li>
+<li>主服务器接收到SYNC命名后，开始执行<code>bgsave</code>命令生成RDB文件并使用缓冲区记录此后执行的所有写命令</li>
+<li>主服务器<code>basave</code>执行完后，向所有从服务器发送快照文件，并在发送期间继续记录被执行的写命令</li>
+<li>从服务器收到快照文件后丢弃所有旧数据，载入收到的快照</li>
+<li>主服务器快照发送完毕后开始向从服务器发送缓冲区中的写命令</li>
+<li>从服务器完成对快照的载入，开始接收命令请求，并执行来自主服务器缓冲区的写命令</li>
+</ul>
+<h3 id="部分重同步"><a href="#部分重同步" class="headerlink" title="部分重同步"></a>部分重同步</h3><p>部分重同步是用于处理断线后重复制的情况，先介绍几个用于部分重同步的部分</p>
+<ul>
+<li><code>runid</code>(replication ID)，主服务器运行id，Redis实例在启动时，随机生成一个长度40的唯一字符串来标识当前节点</li>
+<li><code>offset</code>，复制偏移量。主服务器和从服务器各自维护一个复制偏移量，记录传输的字节数。当主节点向从节点发送N个字节数据时，主节点的offset增加N，从节点收到主节点传来的N个字节数据时，从节点的offset增加N</li>
+<li><code>replication backlog buffer</code>，复制积压缓冲区。是一个固定长度的FIFO队列，大小由配置参数<code>repl-backlog-size</code>指定，默认大小1MB。需要注意的是该缓冲区由master维护并且有且只有一个，所有slave共享此缓冲区，其作用在于备份最近主库发送给从库的数据</li>
+</ul>
+<p>当slave连接到master，会执行<code>PSYNC &lt;runid&gt; &lt;offset&gt;</code>发送记录旧的master的<code>runid</code>（replication ID）和偏移量<code>offset</code>，这样master能够只发送slave所缺的增量部分。但是如果master的复制积压缓存区没有足够的命令记录，或者slave传的<code>runid</code>(replication ID)不对，就会进行<strong>完整重同步</strong>，即slave会获得一个完整的数据集副本</p>
+<p><img src="https://oscimg.oschina.net/oscnet/1d55bb1bfe2a343c4ed3ab63f7ea853b063.jpg" alt></p>
+<p>PSYNC命令执行完整重同步和部分重同步的流程图</p>
+<p><img src="https://oscimg.oschina.net/oscnet/cf2c7059a79f18df050854f9d5d75018fdd.jpg" alt></p>
+<h2 id="命令传播"><a href="#命令传播" class="headerlink" title="命令传播"></a>命令传播</h2><p>当完成数据同步之后，主从服务器的数据暂时达到一致状态，当主服务器执行了客户端的写命令之后，主从的数据便不再一致。为了能够使主从服务器的数据保持一致性，主服务器会对从服务器执行命令传播操作，即每执行一个写命令就会向从服务器发送同样的写命令</p>
+<p>在命令传播阶段，从服务器会默认以每秒一次的频率向主服务器发送<strong>心跳检测</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">REPLCONF ACK &lt;replication_offset&gt;</span><br></pre></td></tr></table></figure>
+<p>其中<code>replication_offset</code>是当前从服务器的复制偏移量，该命令的作用有三个</p>
+<ul>
+<li>检测主从服务器的网络连接状态</li>
+<li>辅助实现<code>min-slaves</code>选项</li>
+<li>检测命令丢失</li>
+</ul>
+<h1 id="关闭持久化时，复制的安全性"><a href="#关闭持久化时，复制的安全性" class="headerlink" title="关闭持久化时，复制的安全性"></a>关闭持久化时，复制的安全性</h1><p>关于关闭持久化时，复制的安全性问题，我这里摘入官网的一段描述<span class="exturl" data-url="aHR0cDovL3d3dy5yZWRpcy5jbi90b3BpY3MvcmVwbGljYXRpb24uaHRtbA==" title="http://www.redis.cn/topics/replication.html">http://www.redis.cn/topics/replication.html<i class="fa fa-external-link"></i></span></p>
+<p>在使用Redis复制功能时的设置中，强烈建议在master和在slave中启用持久化。当不可能启用时，例如由于非常慢的磁盘性能而导致的延迟问题，<strong>应该配置实例来避免重置后自动重启</strong>。</p>
+<p>为了更好地理解为什么关闭了持久化并配置了自动重启的 master 是危险的，检查以下故障模式，这些故障模式中数据会从 master 和所有 slave 中被删除：</p>
+<ol>
+<li>我们设置节点 A 为 master 并关闭它的持久化设置，节点 B 和 C 从 节点 A 复制数据。</li>
+<li>节点 A 崩溃，但是他有一些自动重启的系统可以重启进程。但是由于持久化被关闭了，节点重启后其数据集合为空。</li>
+<li>节点 B 和 节点 C 会从节点 A 复制数据，但是节点 A 的数据集是空的，因此复制的结果是它们会销毁自身之前的数据副本。</li>
+</ol>
+<p>当 Redis Sentinel 被用于高可用并且 master 关闭持久化，这时如果允许自动重启进程也是很危险的。例如， master 可以重启的足够快以致于 Sentinel 没有探测到故障，因此上述的故障模式也会发生。</p>
+<p>任何时候数据安全性都是很重要的，所以如果 master 使用复制功能的同时未配置持久化，那么自动重启进程这项应该被禁用</p>
+<p>参考：《Redis设计与实现》、<span class="exturl" data-url="aHR0cDovL3d3dy5yZWRpcy5jbi90b3BpY3MvcmVwbGljYXRpb24uaHRtbA==" title="http://www.redis.cn/topics/replication.html">redis replication<i class="fa fa-external-link"></i></span></p>
 
       
     </div>
@@ -613,14 +678,21 @@
     <li class="popular-posts-item">
       
       
-      <div class="popular-posts-title"><a href="\blog\linux-mysql8-install\" rel="bookmark">Linux 下安装 MySql 8</a></div>
+      <div class="popular-posts-title"><a href="\blog\redis-data-persistence\" rel="bookmark">Redis持久化机制：RDB和AOF</a></div>
       
     </li>
   
     <li class="popular-posts-item">
       
       
-      <div class="popular-posts-title"><a href="\blog\linux-swap\" rel="bookmark">Linux 使用文件增加虚拟内存 swap</a></div>
+      <div class="popular-posts-title"><a href="\blog\redis-intro-install-datatype\" rel="bookmark">Redis介绍、安装以及数据结构(操作命令)</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="\blog\redis-base-data-structure\" rel="bookmark">深入了解Redis底层数据结构</a></div>
       
     </li>
   
@@ -657,7 +729,7 @@
   <li class="post-copyright-link">
     <strong>Post link: </strong>
     
-    <a href="https://www.turbosnail.top/blog/linux-jdk-install/" title="Linux下安装JDK">https://www.turbosnail.top/blog/linux-jdk-install/</a>
+    <a href="https://www.turbosnail.top/blog/redis-replication/" title="Redis主从复制的配置和实现原理">https://www.turbosnail.top/blog/redis-replication/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</span> unless stating additionally.</li>
@@ -670,9 +742,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Linux/" rel="tag"># Linux</a>
-          
-            <a href="/tags/JDK/" rel="tag"># JDK</a>
+            <a href="/tags/Redis/" rel="tag"># Redis</a>
           
         </div>
       
@@ -706,15 +776,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/blog/redis-data-persistence/" rel="next" title="Redis持久化机制：RDB和AOF">
+                <i class="fa fa-chevron-left"></i> Redis持久化机制：RDB和AOF
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/blog/linux-mysql8-install/" rel="prev" title="Linux 下安装 MySql 8">
-                Linux 下安装 MySql 8 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -1053,7 +1123,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#下载文件"><span class="nav-number">1.</span> <span class="nav-text">下载文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装文件"><span class="nav-number">2.</span> <span class="nav-text">安装文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改环境变量"><span class="nav-number">3.</span> <span class="nav-text">修改环境变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试"><span class="nav-number">4.</span> <span class="nav-text">测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rpm方式安装JDK"><span class="nav-number">5.</span> <span class="nav-text">rpm方式安装JDK</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是主从复制"><span class="nav-number">1.</span> <span class="nav-text">什么是主从复制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#主从复制的配置"><span class="nav-number">2.</span> <span class="nav-text">主从复制的配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#主从复制的实现原理"><span class="nav-number">3.</span> <span class="nav-text">主从复制的实现原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#建立连接"><span class="nav-number">3.1.</span> <span class="nav-text">建立连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据同步"><span class="nav-number">3.2.</span> <span class="nav-text">数据同步</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#完整重同步"><span class="nav-number">3.2.1.</span> <span class="nav-text">完整重同步</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#部分重同步"><span class="nav-number">3.2.2.</span> <span class="nav-text">部分重同步</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#命令传播"><span class="nav-number">3.3.</span> <span class="nav-text">命令传播</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关闭持久化时，复制的安全性"><span class="nav-number">4.</span> <span class="nav-text">关闭持久化时，复制的安全性</span></a></li></ol></div>
             
 
           </div>
