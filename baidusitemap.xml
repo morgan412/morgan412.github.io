@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://www.turbosnail.top/blog/hibernate-validator-usage/</loc>
+    <lastmod>2019-10-23</lastmod>
+  </url>  <url>
+    <loc>https://www.turbosnail.top/blog/redis-sentinel-cluster/</loc>
+    <lastmod>2019-09-19</lastmod>
+  </url>  <url>
+    <loc>https://www.turbosnail.top/blog/redis-data-persistence/</loc>
+    <lastmod>2019-09-18</lastmod>
+  </url>  <url>
     <loc>https://www.turbosnail.top/blog/redis-replication/</loc>
     <lastmod>2019-09-18</lastmod>
   </url>  <url>
     <loc>https://www.turbosnail.top/blog/redis-base-data-structure/</loc>
     <lastmod>2019-09-11</lastmod>
-  </url>  <url>
-    <loc>https://www.turbosnail.top/blog/redis-data-persistence/</loc>
-    <lastmod>2019-09-10</lastmod>
   </url>  <url>
     <loc>https://www.turbosnail.top/blog/redis-intro-install-datatype/</loc>
     <lastmod>2019-09-09</lastmod>

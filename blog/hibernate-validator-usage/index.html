@@ -1,0 +1,2032 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+  
+  
+    
+  
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/theme-next/theme-next-needmoreshare2@1/needsharebutton.min.css">
+
+
+
+  
+  
+    
+      
+    
+    
+      
+    
+  <script src="//cdn.jsdelivr.net/npm/pace-js@1/pace.min.js"></script>
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/pace-js@1/themes/blue/pace-theme-minimal.css">
+
+
+
+
+
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Pacifico:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
+  
+
+
+
+
+
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/turbo.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/turbo.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/turbo.png?v=7.1.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.1.0',
+    sidebar: {"position":"left","display":"hide","offset":12,"onmobile":true,"dimmer":true,"width":260},
+    back2top: true,
+    back2top_sidebar: true,
+    fancybox: true,
+    fastclick: true,
+    lazyload: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="数据校验是在平时的编码过程中常做的工作，在系统的各个层可能都要去实现一些校验逻辑，再去做业务处理。这些繁琐的校验与我们的业务代码在一块就会显得臃肿。而且这些校验通常是业务无关的。也是在工作中使用到Hibernate Validator，但却发现有人没有使用好它（竟然还能看到一些if else的校验代码…），所以在这里决定整理下关于Hibernate Validator的使用 Bean Valida">
+<meta name="keywords" content="Hibernate Validator">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何优雅的做数据校验-Hibernate Validator详细使用说明">
+<meta property="og:url" content="https://www.turbosnail.top/blog/hibernate-validator-usage/index.html">
+<meta property="og:site_name" content="TurboSnail">
+<meta property="og:description" content="数据校验是在平时的编码过程中常做的工作，在系统的各个层可能都要去实现一些校验逻辑，再去做业务处理。这些繁琐的校验与我们的业务代码在一块就会显得臃肿。而且这些校验通常是业务无关的。也是在工作中使用到Hibernate Validator，但却发现有人没有使用好它（竟然还能看到一些if else的校验代码…），所以在这里决定整理下关于Hibernate Validator的使用 Bean Valida">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-10-23T03:49:07.912Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何优雅的做数据校验-Hibernate Validator详细使用说明">
+<meta name="twitter:description" content="数据校验是在平时的编码过程中常做的工作，在系统的各个层可能都要去实现一些校验逻辑，再去做业务处理。这些繁琐的校验与我们的业务代码在一块就会显得臃肿。而且这些校验通常是业务无关的。也是在工作中使用到Hibernate Validator，但却发现有人没有使用好它（竟然还能看到一些if else的校验代码…），所以在这里决定整理下关于Hibernate Validator的使用 Bean Valida">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="TurboSnail" type="application/atom+xml">
+
+
+
+  
+  
+  <link rel="canonical" href="https://www.turbosnail.top/blog/hibernate-validator-usage/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>如何优雅的做数据校验-Hibernate Validator详细使用说明 | TurboSnail</title>
+  
+
+
+
+
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?c3528f0271a75c57e103a28d6b11ebec";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">TurboSnail</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">The harder, The luckier</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives<span class="badge">46</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags<span class="badge">55</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories<span class="badge">15</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>About</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Search</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+    <div class="reading-progress-bar"></div>
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.turbosnail.top/blog/hibernate-validator-usage/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="TurboSnail">
+      <meta itemprop="description" content="Please love me three thousand times">
+      <meta itemprop="image" content="/images/turbo.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="TurboSnail">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">如何优雅的做数据校验-Hibernate Validator详细使用说明
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-10-23 11:47:48" itemprop="dateCreated datePublished" datetime="2019-10-23T11:47:48+08:00">2019-10-23</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Hibernate-Validator/" itemprop="url" rel="index"><span itemprop="name">Hibernate Validator</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                <span title="Symbols count in article">18k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                <span title="Reading time">16 mins.</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>数据校验是在平时的编码过程中常做的工作，在系统的各个层可能都要去实现一些校验逻辑，再去做业务处理。这些繁琐的校验与我们的业务代码在一块就会显得臃肿。而且这些校验通常是业务无关的。也是在工作中使用到Hibernate Validator，但却发现有人没有使用好它（竟然还能看到一些if else的校验代码…），所以在这里决定整理下关于Hibernate Validator的使用</p>
+<p>Bean Validation 2.0（JSR 380）定义了用于实体和方法验证的元数据模型和API，Hibernate Validator是目前最好的实现，这篇主要是说Hibernate Validator的使用</p>
+<h1 id="Hibernate-Validator的使用"><a href="#Hibernate-Validator的使用" class="headerlink" title="Hibernate Validator的使用"></a>Hibernate Validator的使用</h1><h2 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h2><p>如果是Spring Boot项目，那么<code>spring-boot-starter-web</code>中就已经依赖<code>hibernate-validator</code>了</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>如果是Spring Mvc，那可以直接添加<code>hibernate-validator</code>依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.hibernate.validator<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>hibernate-validator<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>6.0.17.Final<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="bean约束声明和验证，Validator"><a href="#bean约束声明和验证，Validator" class="headerlink" title="bean约束声明和验证，Validator"></a>bean约束声明和验证，Validator</h2><p>先给我们的Java对象添加约束注解</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@AllArgsConstructor</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String id;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@NotBlank</span></span><br><span class="line">    <span class="meta">@Size</span>(max = <span class="number">20</span>)</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@NotNull</span></span><br><span class="line">    <span class="meta">@Pattern</span>(regexp = <span class="string">"[A-Z][a-z][0-9]"</span>)</span><br><span class="line">    <span class="keyword">private</span> String password;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@NotNull</span></span><br><span class="line">    <span class="keyword">private</span> Integer age;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Max</span>(<span class="number">10</span>)</span><br><span class="line">    <span class="meta">@Min</span>(<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">private</span> Integer level;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>验证实体实例需要先获取<code>Validator</code>实例</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ValidatorFactory factory = Validation.buildDefaultValidatorFactory();</span><br><span class="line">validator = factory.getValidator();</span><br></pre></td></tr></table></figure>
+<p><code>Validator</code>接口有三个方法，可用于验证整个实体或仅验证实体的单个属性</p>
+<ul>
+<li><code>Validator#validate()</code>                   验证所有bean的所有约束</li>
+<li><code>Validator#validateProperty()</code>   验证单个属性</li>
+<li><code>Validator#validateValue()</code>         检查给定类的单个属性是否可以成功验证</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Validator validator;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@BeforeAll</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">setUpValidator</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();</span><br><span class="line">        validator = factory.getValidator();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">validatorTest</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        User user = <span class="keyword">new</span> User(<span class="keyword">null</span>, <span class="string">""</span>, <span class="string">"!@#$"</span>, <span class="keyword">null</span>, <span class="number">11</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 验证所有bean的所有约束</span></span><br><span class="line">        Set&lt;ConstraintViolation&lt;User&gt;&gt; constraintViolations = validator.validate(user);</span><br><span class="line">        <span class="comment">// 验证单个属性</span></span><br><span class="line">        Set&lt;ConstraintViolation&lt;User&gt;&gt; constraintViolations2 = validator.validateProperty(user, <span class="string">"name"</span>);</span><br><span class="line">        <span class="comment">// 检查给定类的单个属性是否可以成功验证</span></span><br><span class="line">        Set&lt;ConstraintViolation&lt;User&gt;&gt; constraintViolations3 = validator.validateValue(User.class, <span class="string">"password"</span>, <span class="string">"sa!"</span>);</span><br><span class="line"></span><br><span class="line">        constraintViolations.forEach(constraintViolation -&gt; System.out.println(constraintViolation.getMessage()));</span><br><span class="line">        constraintViolations2.forEach(constraintViolation -&gt; System.out.println(constraintViolation.getMessage()));</span><br><span class="line">        constraintViolations3.forEach(constraintViolation -&gt; System.out.println(constraintViolation.getMessage()));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>测试结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">不能为空</span><br><span class="line">最大不能超过10</span><br><span class="line">需要匹配正则表达式&quot;[A-Z][a-z][0-9]&quot;</span><br><span class="line">不能为null</span><br><span class="line">不能为空</span><br><span class="line">需要匹配正则表达式&quot;[A-Z][a-z][0-9]&quot;</span><br></pre></td></tr></table></figure>
+<h2 id="方法约束声明和验证，ExecutableValidator"><a href="#方法约束声明和验证，ExecutableValidator" class="headerlink" title="方法约束声明和验证，ExecutableValidator"></a>方法约束声明和验证，ExecutableValidator</h2><p>从Bean Validation 1.1开始，约束不仅可以应用于JavaBean及其属性，而且可以应用于任何Java类型的方法和构造函数的参数和返回值，这里简单看一个例子</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RentalStation</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">RentalStation</span><span class="params">(@NotNull String name)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//...</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">rentCar</span><span class="params">(@NotNull @Future LocalDate startDate, @Min(<span class="number">1</span>)</span> <span class="keyword">int</span> durationInDays) </span>&#123;</span><br><span class="line">        <span class="comment">//...</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@NotNull</span></span><br><span class="line">    <span class="meta">@Size</span>(min = <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">public</span> List&lt;<span class="meta">@NotNull</span> String&gt; getCustomers() &#123;</span><br><span class="line">        <span class="comment">//...</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>ExecutableValidator</code>接口可以完成方法约束的验证</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ValidatorFactory factory = Validation.buildDefaultValidatorFactory();</span><br><span class="line">executableValidator = factory.getValidator().forExecutables();</span><br></pre></td></tr></table></figure>
+<p>该<code>ExecutableValidator</code>界面共有四种方法：</p>
+<ul>
+<li><code>validateParameters()</code>和<code>validateReturnValue()</code>用于方法验证</li>
+<li><code>validateConstructorParameters()</code>和<code>validateConstructorReturnValue()</code>用于构造函数验证</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RentalStationTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> ExecutableValidator executableValidator;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@BeforeAll</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">setUpValidator</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();</span><br><span class="line">        executableValidator = factory.getValidator().forExecutables();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">validatorTest</span><span class="params">()</span> <span class="keyword">throws</span> NoSuchMethodException </span>&#123;</span><br><span class="line">        RentalStation rentalStation = <span class="keyword">new</span> RentalStation(<span class="string">"z"</span>);</span><br><span class="line"></span><br><span class="line">        Method method = RentalStation.class.getMethod(<span class="string">"rentCar"</span>, LocalDate.class, <span class="keyword">int</span>.class);</span><br><span class="line">        Object[] parameterValues = &#123;LocalDate.now().minusDays(<span class="number">1</span>), <span class="number">0</span>&#125;;</span><br><span class="line">        Set&lt;ConstraintViolation&lt;RentalStation&gt;&gt; violations = executableValidator.validateParameters(</span><br><span class="line">                rentalStation, method, parameterValues);</span><br><span class="line"></span><br><span class="line">        violations.forEach(violation -&gt; System.out.println(violation.getMessage()));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>测试结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">需要是一个将来的时间</span><br><span class="line">最小不能小于1</span><br></pre></td></tr></table></figure>
+<h2 id="约束注解"><a href="#约束注解" class="headerlink" title="约束注解"></a>约束注解</h2><p>validator-api-2.0的约束注解有22个，具体我们看下面表格</p>
+<h3 id="空与非空检查"><a href="#空与非空检查" class="headerlink" title="空与非空检查"></a>空与非空检查</h3><table>
+<thead>
+<tr>
+<th>注解</th>
+<th>支持Java类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>@Null</td>
+<td>Object</td>
+<td>为null</td>
+</tr>
+<tr>
+<td>@NotNull</td>
+<td>Object</td>
+<td>不为null</td>
+</tr>
+<tr>
+<td>@NotBlank</td>
+<td>CharSequence</td>
+<td>不为null，且必须有一个非空格字符</td>
+</tr>
+<tr>
+<td>@NotEmpty</td>
+<td>CharSequence、Collection、Map、Array</td>
+<td>不为null，且不为空（length/size&gt;0）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="Boolean值检查"><a href="#Boolean值检查" class="headerlink" title="Boolean值检查"></a>Boolean值检查</h3><table>
+<thead>
+<tr>
+<th>注解</th>
+<th>支持Java类型</th>
+<th>说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>@AssertTrue</td>
+<td>boolean、Boolean</td>
+<td>为true</td>
+<td>为null有效</td>
+</tr>
+<tr>
+<td>@AssertFalse</td>
+<td>boolean、Boolean</td>
+<td>为false</td>
+<td>为null有效</td>
+</tr>
+</tbody>
+</table>
+<h3 id="日期检查"><a href="#日期检查" class="headerlink" title="日期检查"></a>日期检查</h3><table>
+<thead>
+<tr>
+<th>注解</th>
+<th>支持Java类型</th>
+<th>说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>@Future</td>
+<td>Date、Calendar、Instant、LocalDate、LocalDateTime、LocalTime、MonthDay、OffsetDateTime、OffsetTime、Year、YearMonth、ZonedDateTime、HijrahDate、JapaneseDate、MinguoDate、ThaiBuddhistDate</td>
+<td>验证日期为当前时间之后</td>
+<td>为null有效</td>
+</tr>
+<tr>
+<td>@FutureOrPresent</td>
+<td>Date、Calendar、Instant、LocalDate、LocalDateTime、LocalTime、MonthDay、OffsetDateTime、OffsetTime、Year、YearMonth、ZonedDateTime、HijrahDate、JapaneseDate、MinguoDate、ThaiBuddhistDate</td>
+<td>验证日期为当前时间或之后</td>
+<td>为null有效</td>
+</tr>
+<tr>
+<td>@Past</td>
+<td>Date、Calendar、Instant、LocalDate、LocalDateTime、LocalTime、MonthDay、OffsetDateTime、OffsetTime、Year、YearMonth、ZonedDateTime、HijrahDate、JapaneseDate、MinguoDate、ThaiBuddhistDate</td>
+<td>验证日期为当前时间之前</td>
+<td>为null有效</td>
+</tr>
+<tr>
+<td>@PastOrPresent</td>
+<td>Date、Calendar、Instant、LocalDate、LocalDateTime、LocalTime、MonthDay、OffsetDateTime、OffsetTime、Year、YearMonth、ZonedDateTime、HijrahDate、JapaneseDate、MinguoDate、ThaiBuddhistDate</td>
+<td>验证日期为当前时间或之前</td>
+<td>为null有效</td>
+</tr>
+</tbody>
+</table>
+<h3 id="数值检查"><a href="#数值检查" class="headerlink" title="数值检查"></a>数值检查</h3><table>
+<thead>
+<tr>
+<th>注解</th>
+<th>支持Java类型</th>
+<th>说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>@Max</td>
+<td>BigDecimal、BigInteger，byte、short、int、long以及包装类</td>
+<td>小于或等于</td>
+<td>为null有效</td>
+</tr>
+<tr>
+<td>@Min</td>
+<td>BigDecimal、BigInteger，byte、short、int、long以及包装类</td>
+<td>大于或等于</td>
+<td>为null有效</td>
+</tr>
+<tr>
+<td>@DecimalMax</td>
+<td>BigDecimal、BigInteger、CharSequence，byte、short、int、long以及包装类</td>
+<td>小于或等于</td>
+<td>为null有效</td>
+</tr>
+<tr>
+<td>@DecimalMin</td>
+<td>BigDecimal、BigInteger、CharSequence，byte、short、int、long以及包装类</td>
+<td>大于或等于</td>
+<td>为null有效</td>
+</tr>
+<tr>
+<td>@Negative</td>
+<td>BigDecimal、BigInteger，byte、short、int、long、float、double以及包装类</td>
+<td>负数</td>
+<td>为null有效，0无效</td>
+</tr>
+<tr>
+<td>@NegativeOrZero</td>
+<td>BigDecimal、BigInteger，byte、short、int、long、float、double以及包装类</td>
+<td>负数或零</td>
+<td>为null有效</td>
+</tr>
+<tr>
+<td>@Positive</td>
+<td>BigDecimal、BigInteger，byte、short、int、long、float、double以及包装类</td>
+<td>正数</td>
+<td>为null有效，0无效</td>
+</tr>
+<tr>
+<td>@PositiveOrZero</td>
+<td>BigDecimal、BigInteger，byte、short、int、long、float、double以及包装类</td>
+<td>正数或零</td>
+<td>为null有效</td>
+</tr>
+<tr>
+<td>@Digits(integer = 3, fraction = 2)</td>
+<td>BigDecimal、BigInteger、CharSequence，byte、short、int、long以及包装类</td>
+<td>整数位数和小数位数上限</td>
+<td>为null有效</td>
+</tr>
+</tbody>
+</table>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><table>
+<thead>
+<tr>
+<th>注解</th>
+<th>支持Java类型</th>
+<th>说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>@Pattern</td>
+<td>CharSequence</td>
+<td>匹配指定的正则表达式</td>
+<td>为null有效</td>
+</tr>
+<tr>
+<td>@Email</td>
+<td>CharSequence</td>
+<td>邮箱地址</td>
+<td>为null有效，默认正则 <code>&#39;.*&#39;</code></td>
+</tr>
+<tr>
+<td>@Size</td>
+<td>CharSequence、Collection、Map、Array</td>
+<td>大小范围（length/size&gt;0）</td>
+<td>为null有效</td>
+</tr>
+</tbody>
+</table>
+<h3 id="hibernate-validator扩展约束（部分）"><a href="#hibernate-validator扩展约束（部分）" class="headerlink" title="hibernate-validator扩展约束（部分）"></a>hibernate-validator扩展约束（部分）</h3><table>
+<thead>
+<tr>
+<th>注解</th>
+<th>支持Java类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>@Length</td>
+<td>String</td>
+<td>字符串长度范围</td>
+</tr>
+<tr>
+<td>@Range</td>
+<td>数值类型和String</td>
+<td>指定范围</td>
+</tr>
+<tr>
+<td>@URL</td>
+<td></td>
+<td>URL地址验证</td>
+</tr>
+</tbody>
+</table>
+<h2 id="自定义约束注解"><a href="#自定义约束注解" class="headerlink" title="自定义约束注解"></a>自定义约束注解</h2><p>除了以上提供的约束注解（大部分情况都是能够满足的），我们还可以根据自己的需求自定义自己的约束注解</p>
+<p>定义自定义约束，有三个步骤</p>
+<ul>
+<li>创建约束注解</li>
+<li>实现一个验证器</li>
+<li>定义默认的错误信息</li>
+</ul>
+<p>那么下面就直接来定义一个简单的验证手机号码的注解</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Target</span>(&#123;METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE&#125;)</span><br><span class="line"><span class="meta">@Constraint</span>(validatedBy = &#123;MobileValidator.class&#125;)</span><br><span class="line"><span class="meta">@Retention</span>(RUNTIME)</span><br><span class="line"><span class="meta">@Repeatable</span>(Mobile.List.class)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Mobile &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 错误提示信息，可以写死,也可以填写国际化的key</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function">String <span class="title">message</span><span class="params">()</span> <span class="keyword">default</span> "手机号码不正确"</span>;</span><br><span class="line"></span><br><span class="line">    Class&lt;?&gt;[] groups() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line">    </span><br><span class="line">    Class&lt;? extends Payload&gt;[] payload() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">regexp</span><span class="params">()</span> <span class="keyword">default</span> "^1<span class="params">([<span class="number">38</span>][<span class="number">0</span><span class="number">-9</span>]|<span class="number">4</span>[<span class="number">579</span>]|<span class="number">5</span>[<span class="number">0</span><span class="number">-3</span>,<span class="number">5</span><span class="number">-9</span>]|<span class="number">6</span>[<span class="number">6</span>]|<span class="number">7</span>[<span class="number">0135678</span>]|<span class="number">9</span>[<span class="number">89</span>])</span>\\d</span>&#123;<span class="number">8</span>&#125;$<span class="string">";</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    @Target(&#123;METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE&#125;)</span></span><br><span class="line"><span class="string">    @Retention(RUNTIME)</span></span><br><span class="line"><span class="string">    @Documented</span></span><br><span class="line"><span class="string">    @interface List &#123;</span></span><br><span class="line"><span class="string">        Mobile[] value();</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>关于注解的配置这里不说了，自定义约束需要下面3个属性</p>
+<ul>
+<li><code>message</code> 错误提示信息，可以写死,也可以填写国际化的key</li>
+<li><code>groups</code> 分组信息，允许指定此约束所属的验证组（下面会说到分组约束）</li>
+<li><code>payload</code> 有效负载，可以通过payload来标记一些需要特殊处理的操作</li>
+</ul>
+<p><code>@Repeatable</code>注解和<code>List</code>定义可以让该注解在同一个位置重复多次，通常是不同的配置（比如不同的分组和消息）</p>
+<p><code>@Constraint(validatedBy = {MobileValidator.class})</code>该注解是指明我们的自定义约束的验证器，那下面就看一下验证器的写法，需要实现<code>javax.validation.ConstraintValidator</code>接口</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MobileValidator</span> <span class="keyword">implements</span> <span class="title">ConstraintValidator</span>&lt;<span class="title">Mobile</span>, <span class="title">String</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 手机验证规则</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> Pattern pattern;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initialize</span><span class="params">(Mobile mobile)</span> </span>&#123;</span><br><span class="line">        pattern = Pattern.compile(mobile.regexp());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isValid</span><span class="params">(String value, ConstraintValidatorContext context)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (value == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> pattern.matcher(value).matches();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>ConstraintValidator</code>接口定义了在实现中设置的两个类型参数。第一个指定要验证的注解类（如<code>Mobile</code>），第二个指定验证器可以处理的元素类型（如<code>String</code>）；<code>initialize()</code>方法可以访问约束注解的属性值；<code>isValid()</code>方法用于验证，返回true表示验证通过</p>
+<blockquote>
+<p>Bean验证规范建议将空值视为有效。如果<code>null</code>不是元素的有效值，则应使用<code>@NotNull</code> 显式注释</p>
+</blockquote>
+<p>到这里我们自定义的约束就写好了，可以用个例子来测试一下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MobileTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setMobile</span><span class="params">(@Mobile String mobile)</span></span>&#123;</span><br><span class="line">        <span class="comment">// to do</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> ExecutableValidator executableValidator;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@BeforeAll</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">setUpValidator</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();</span><br><span class="line">        executableValidator = factory.getValidator().forExecutables();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">manufacturerIsNull</span><span class="params">()</span> <span class="keyword">throws</span> NoSuchMethodException </span>&#123;</span><br><span class="line">        MobileTest mobileTest = <span class="keyword">new</span> MobileTest();</span><br><span class="line"></span><br><span class="line">        Method method = MobileTest.class.getMethod(<span class="string">"setMobile"</span>, String.class);</span><br><span class="line">        Object[] parameterValues = &#123;<span class="string">"1111111"</span>&#125;;</span><br><span class="line">        Set&lt;ConstraintViolation&lt;MobileTest&gt;&gt; violations = executableValidator.validateParameters(</span><br><span class="line">                mobileTest, method, parameterValues);</span><br><span class="line"></span><br><span class="line">        violations.forEach(violation -&gt; System.out.println(violation.getMessage()));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">手机号码不正确</span><br></pre></td></tr></table></figure>
+<h2 id="分组约束"><a href="#分组约束" class="headerlink" title="分组约束"></a>分组约束</h2><p>在上面的自定义约束中，有个<code>groups</code>属性是用来指定验证约束的分组，我们在为属性加上注解的时候，如果没有配置分组信息，那么默认会采用默认分组 <code>javax.validation.groups.Default</code></p>
+<p>分组是用接口定义的，用做标识，这里创建两个标识<code>AddGroup</code>和<code>UpdateGroup</code>，分别标识新增和修改</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public interface AddGroup &#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public interface UpdateGroup &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后对我们的<code>User</code>对象的id属性做分组标识</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@NoArgsConstructor</span></span><br><span class="line"><span class="meta">@AllArgsConstructor</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Null</span>(groups = AddGroup.class)</span><br><span class="line">    <span class="meta">@NotBlank</span>(groups = UpdateGroup.class)</span><br><span class="line">    <span class="keyword">private</span> String id;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// ... 省略了其他属性</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们看下如何使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void validatorGroupTest() &#123;</span><br><span class="line">	User user = new User();</span><br><span class="line"></span><br><span class="line">    // 检查给定类的单个属性是否可以成功验证</span><br><span class="line">    Set&lt;ConstraintViolation&lt;User&gt;&gt; constraintViolations = validator.validateValue(User.class, &quot;id&quot;, &quot;&quot;, UpdateGroup.class);</span><br><span class="line">    Set&lt;ConstraintViolation&lt;User&gt;&gt; constraintViolations2 = validator.validateValue(User.class, &quot;id&quot;, &quot;&quot;);</span><br><span class="line">    Set&lt;ConstraintViolation&lt;User&gt;&gt; constraintViolations3 = validator.validateValue(User.class, &quot;id&quot;, &quot;&quot;, AddGroup.class);</span><br><span class="line"></span><br><span class="line">	constraintViolations.forEach(constraintViolation -&gt; System.out.println(constraintViolation.getMessage()));</span><br><span class="line">	constraintViolations2.forEach(constraintViolation -&gt; System.out.println(constraintViolation.getMessage()));</span><br><span class="line">	constraintViolations3.forEach(constraintViolation -&gt; System.out.println(constraintViolation.getMessage()));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的测试只有加了<code>UpdateGroug</code>分组才会验证，返回错误信息，而下面的constraintViolations2并不会去验证，因为默认会采用<code>Default</code>分组。如果想要不标记分组的时候，也会去验证<code>Default</code>分组，可以去继承默认分组</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">AddGroup</span> <span class="keyword">extends</span> <span class="title">Default</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="在Spring中使用Hibernate-Validator"><a href="#在Spring中使用Hibernate-Validator" class="headerlink" title="在Spring中使用Hibernate Validator"></a>在Spring中使用Hibernate Validator</h1><p>上面介绍了Validator的一些使用，还有注解的介绍，那么在Spring中我们怎么去使用Hibernate Validator做验证呢？或者说再Web项目中怎么使用Hibernate Validator？</p>
+<p><code>spring-boot-starter-web</code>中是添加了<code>hibernate-validator</code>依赖的，说明Spring Boot本身也是使用到了Hibernate Validator验证框架的</p>
+<h2 id="配置Validator"><a href="#配置Validator" class="headerlink" title="配置Validator"></a>配置Validator</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ValidatorConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 配置验证器</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> validator</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Validator <span class="title">validator</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        ValidatorFactory validatorFactory = Validation.byProvider(HibernateValidator.class)</span><br><span class="line">                .configure()</span><br><span class="line">                <span class="comment">// 快速失败模式</span></span><br><span class="line">                .failFast(<span class="keyword">true</span>)</span><br><span class="line">                <span class="comment">// .addProperty( "hibernate.validator.fail_fast", "true" )</span></span><br><span class="line">                .buildValidatorFactory();</span><br><span class="line">        <span class="keyword">return</span> validatorFactory.getValidator();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以通过方法 <code>failFast(true)</code>或 <code>addProperty(&quot;hibernate.validator.fail_fast&quot;, &quot;true&quot;)</code>设置为<strong>快速失败模式</strong>，快速失败模式在校验过程中，当遇到第一个不满足条件的参数时就立即返回，不再继续后面参数的校验。否则会一次性校验所有参数，并返回所有不符合要求的错误信息</p>
+<p>如果是Spring MVC的话，需要xml配置可参考下面的配置</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mvc:annotation-driven</span> <span class="attr">validator</span>=<span class="string">"validator"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- validator基本配置 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"validator"</span> <span class="attr">class</span>=<span class="string">"org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"providerClass"</span> <span class="attr">value</span>=<span class="string">"org.hibernate.validator.HibernateValidator"</span>/&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 映射资源文件 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"validationMessageSource"</span> <span class="attr">ref</span>=<span class="string">"messageSource"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"messageSource"</span> <span class="attr">class</span>=<span class="string">"org.springframework.context.support.ReloadableResourceBundleMessageSource"</span> <span class="attr">name</span>=<span class="string">"messageSource"</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--&lt;property name="basenames"&gt;</span></span><br><span class="line"><span class="comment">                &lt;list&gt;</span></span><br><span class="line"><span class="comment">                    &lt;value&gt;classpath:messages/messages&lt;/value&gt;</span></span><br><span class="line"><span class="comment">                    &lt;value&gt;classpath:messages/ValidationMessages&lt;/value&gt;</span></span><br><span class="line"><span class="comment">                &lt;/list&gt;</span></span><br><span class="line"><span class="comment">            &lt;/property&gt;--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"useCodeAsDefaultMessage"</span> <span class="attr">value</span>=<span class="string">"false"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"defaultEncoding"</span> <span class="attr">value</span>=<span class="string">"UTF-8"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"cacheSeconds"</span> <span class="attr">value</span>=<span class="string">"60"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="请求参数bean验证"><a href="#请求参数bean验证" class="headerlink" title="请求参数bean验证"></a>请求参数bean验证</h2><p>接口上的Bean验证，需要在参数前加上<code>@Valid</code>或Spring的 <code>@Validated</code>注解，这两种注释都会导致应用标准Bean验证。如果验证不通过会抛出<code>BindException</code>异常，并变成400（BAD_REQUEST）响应；或者可以通过<code>Errors</code>或<code>BindingResult</code>参数在控制器内本地处理验证错误。另外，如果参数前有<code>@RequestBody</code>注解，验证错误会抛出<code>MethodArgumentNotValidException</code>异常。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@PostMapping</span>(<span class="string">"/user"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> R <span class="title">handle</span><span class="params">(@Valid @RequestBody User user, BindingResult result)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 在控制器内本地处理验证错误</span></span><br><span class="line">        <span class="keyword">if</span> (result.hasErrors()) &#123;</span><br><span class="line">            result.getAllErrors().forEach(s -&gt; System.out.println(s.getDefaultMessage()));</span><br><span class="line">             <span class="keyword">return</span> R.fail(result.getAllErrors().get(<span class="number">0</span>).getDefaultMessage());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">        <span class="keyword">return</span> R.success();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@PostMapping</span>(<span class="string">"/user2"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> R <span class="title">handle2</span><span class="params">(@Valid User user, BindingResult result)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 在控制器内本地处理验证错误</span></span><br><span class="line">        <span class="keyword">if</span> (result.hasErrors()) &#123;</span><br><span class="line">            result.getAllErrors().forEach(s -&gt; System.out.println(s.getDefaultMessage()));</span><br><span class="line">             <span class="keyword">return</span> R.fail(result.getAllErrors().get(<span class="number">0</span>).getDefaultMessage());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">        <span class="keyword">return</span> R.success();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 验证不通过抛出 `MethodArgumentNotValidException`</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@PostMapping</span>(<span class="string">"/user3"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> R <span class="title">handle3</span><span class="params">(@Valid @RequestBody User user)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">        <span class="keyword">return</span> R.success();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 验证不通过抛出 `BindException`</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@PostMapping</span>(<span class="string">"/user4"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> R <span class="title">handle4</span><span class="params">(@Valid User user)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">        <span class="keyword">return</span> R.success();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>配合Spring的<code>BindingResult</code>参数，我们是可以在控制器中去处理验证错误，不过通常也是把验证错误的消息转成我们自己的返回格式，那么在每个方法中都去做这样的验证错误处理，显然是没有必要的。我们可以利用验证不通过的异常来做统一的错误处理</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Slf</span>4j</span><br><span class="line"><span class="meta">@RestControllerAdvice</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GlobalExceptionHandler</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * hibernate validator 数据绑定验证异常拦截</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> e 绑定验证异常</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 错误返回消息</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@ResponseStatus</span>(HttpStatus.BAD_REQUEST)</span><br><span class="line">    <span class="meta">@ExceptionHandler</span>(BindException.class)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> R <span class="title">validateErrorHandler</span><span class="params">(BindException e)</span> </span>&#123;</span><br><span class="line">        ObjectError error = e.getAllErrors().get(<span class="number">0</span>);</span><br><span class="line">        log.info(<span class="string">"数据验证异常：&#123;&#125;"</span>, error.getDefaultMessage());</span><br><span class="line">        <span class="keyword">return</span> R.fail(error.getDefaultMessage());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * hibernate validator 数据绑定验证异常拦截</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> e 绑定验证异常</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 错误返回消息</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@ResponseStatus</span>(HttpStatus.BAD_REQUEST)</span><br><span class="line">    <span class="meta">@ExceptionHandler</span>(MethodArgumentNotValidException.class)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> R <span class="title">validateErrorHandler</span><span class="params">(MethodArgumentNotValidException e)</span> </span>&#123;</span><br><span class="line">        ObjectError error = e.getBindingResult().getAllErrors().get(<span class="number">0</span>);</span><br><span class="line">        log.info(<span class="string">"数据验证异常：&#123;&#125;"</span>, error.getDefaultMessage());</span><br><span class="line">        <span class="keyword">return</span> R.fail(error.getDefaultMessage());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="方法参数验证"><a href="#方法参数验证" class="headerlink" title="方法参数验证"></a>方法参数验证</h2><h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>Hibernate Validator是可以在方法级验证参数的，Spring中当然也是有实现的。</p>
+<p>我们在Validator的配置中，添加<code>MethodValidationPostProcessor</code>Bean，在上面的ValidatorConfig.java中添加一下配置</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 设置方法参数验证器</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> MethodValidationPostProcessor <span class="title">methodValidationPostProcessor</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    MethodValidationPostProcessor postProcessor = <span class="keyword">new</span> MethodValidationPostProcessor();</span><br><span class="line">    <span class="comment">// 设置validator模式为快速失败返回</span></span><br><span class="line">    postProcessor.setValidator(validator());</span><br><span class="line">    <span class="keyword">return</span> postProcessor;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果是Spring Mvc，那么要在spring-mvc.xml中声明bean信息，不然在Controller里面是无效的</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 设置方法参数验证器 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"methodValidationPostProcessor"</span> <span class="attr">class</span>=<span class="string">"org.springframework.validation.beanvalidation.MethodValidationPostProcessor"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"validator"</span> <span class="attr">ref</span>=<span class="string">"validator"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>配置了上面的<code>MethodValidationPostProcessor</code>，我们就可以在方法参数或返回值使用约束注解了，要注意的是，在要使用参数验证的类上一定要加上<code>@Validated</code>注解，否则无效</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 一定要加上 `<span class="doctag">@Validated</span>` 注解</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Validated</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping</span>(<span class="string">"/user"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> R <span class="title">handle</span><span class="params">(@Mobile String mobile)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">        <span class="keyword">return</span> R.success();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果验证不通过，会抛出<code>ConstraintViolationException</code>异常，同样的，我们可以在全局的异常处理器里面处理验证错误，在GlobalExceptionHandler中添加一下代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * spring validator 方法参数验证异常拦截</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> e 绑定验证异常</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 错误返回消息</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@ResponseStatus</span>(HttpStatus.BAD_REQUEST)</span><br><span class="line"><span class="meta">@ExceptionHandler</span>(ConstraintViolationException.class)</span><br><span class="line"><span class="function"><span class="keyword">public</span> R <span class="title">defaultErrorHandler</span><span class="params">(ConstraintViolationException e)</span> </span>&#123;</span><br><span class="line">    Set&lt;ConstraintViolation&lt;?&gt;&gt; violations = e.getConstraintViolations();</span><br><span class="line">    ConstraintViolation&lt;?&gt; violation = violations.iterator().next();</span><br><span class="line">    log.info(<span class="string">"数据验证异常：&#123;&#125;"</span>, violation.getMessage());</span><br><span class="line">    <span class="keyword">return</span> R.fail(violation.getMessage());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="分组"><a href="#分组" class="headerlink" title="分组"></a>分组</h2><p>Spring的<code>@Validate</code>直接是可以支持分组验证的</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@PostMapping</span>(<span class="string">"/user"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> R <span class="title">handle</span><span class="params">(@Validated(AddGroup.class)</span> @RequestBody User user) </span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="keyword">return</span> R.success();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+      
+
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+      <div>
+        
+
+
+
+
+  
+
+
+
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>TurboSnail</li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    
+    <a href="https://www.turbosnail.top/blog/hibernate-validator-usage/" title="如何优雅的做数据校验-Hibernate Validator详细使用说明">https://www.turbosnail.top/blog/hibernate-validator-usage/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</span> unless stating additionally.</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hibernate-Validator/" rel="tag"># Hibernate Validator</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div class="social_share">
+            
+            
+              <div id="needsharebutton-postbottom">
+                <span class="btn">
+                  <i class="fa fa-share-alt" aria-hidden="true"></i>
+                </span>
+              </div>
+            
+            
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/redis-sentinel-cluster/" rel="next" title="Redis的高可用：哨兵（Sentinel）和集群（Cluster）">
+                <i class="fa fa-chevron-left"></i> Redis的高可用：哨兵（Sentinel）和集群（Cluster）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="gitalk-container">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/turbo.png" alt="TurboSnail">
+            
+              <p class="site-author-name" itemprop="name">TurboSnail</p>
+              <div class="site-description motion-element" itemprop="description">Please love me three thousand times</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">46</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">49</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21vcmdhbjQxMg==" title="GitHub &rarr; https://github.com/morgan412"><i class="fa fa-fw fa-github"></i>GitHub</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="bWFpbHRvOnpvdXhxNDEyQGZveG1haWwuY29t" title="E-Mail &rarr; mailto:zouxq412@foxmail.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Vfenhx" title="CSDN &rarr; https://blog.csdn.net/e_zxq"><i class="fa fa-fw fa-globe"></i>CSDN</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uaW0vdXNlci81ZDEyZTdjMWYyNjVkYTFiYmU1ZTEzYzY=" title="掘金 &rarr; https://juejin.im/user/5d12e7c1f265da1bbe5e13c6"><i class="fa fa-fw fa-globe"></i>掘金</span>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Hibernate-Validator的使用"><span class="nav-number">1.</span> <span class="nav-text">Hibernate Validator的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#依赖"><span class="nav-number">1.1.</span> <span class="nav-text">依赖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bean约束声明和验证，Validator"><span class="nav-number">1.2.</span> <span class="nav-text">bean约束声明和验证，Validator</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法约束声明和验证，ExecutableValidator"><span class="nav-number">1.3.</span> <span class="nav-text">方法约束声明和验证，ExecutableValidator</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#约束注解"><span class="nav-number">1.4.</span> <span class="nav-text">约束注解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#空与非空检查"><span class="nav-number">1.4.1.</span> <span class="nav-text">空与非空检查</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Boolean值检查"><span class="nav-number">1.4.2.</span> <span class="nav-text">Boolean值检查</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#日期检查"><span class="nav-number">1.4.3.</span> <span class="nav-text">日期检查</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数值检查"><span class="nav-number">1.4.4.</span> <span class="nav-text">数值检查</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他"><span class="nav-number">1.4.5.</span> <span class="nav-text">其他</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hibernate-validator扩展约束（部分）"><span class="nav-number">1.4.6.</span> <span class="nav-text">hibernate-validator扩展约束（部分）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义约束注解"><span class="nav-number">1.5.</span> <span class="nav-text">自定义约束注解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分组约束"><span class="nav-number">1.6.</span> <span class="nav-text">分组约束</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#在Spring中使用Hibernate-Validator"><span class="nav-number">2.</span> <span class="nav-text">在Spring中使用Hibernate Validator</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#配置Validator"><span class="nav-number">2.1.</span> <span class="nav-text">配置Validator</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#请求参数bean验证"><span class="nav-number">2.2.</span> <span class="nav-text">请求参数bean验证</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法参数验证"><span class="nav-number">2.3.</span> <span class="nav-text">方法参数验证</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#配置"><span class="nav-number">2.3.1.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用"><span class="nav-number">2.3.2.</span> <span class="nav-text">使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分组"><span class="nav-number">2.4.</span> <span class="nav-text">分组</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+  
+    <div id="sidebar-dimmer"></div>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">TurboSnail</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="Symbols count total">321k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="Reading time total">4:52</span>
+  
+</div>
+
+
+  <div class="powered-by">Powered by <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <span class="exturl theme-link" data-url="aHR0cHM6Ly90aGVtZS1uZXh0Lm9yZw==">NexT.Pisces</span></div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script src="//cdn.jsdelivr.net/npm/jquery@2/dist/jquery.min.js"></script>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/fastclick@1/lib/fastclick.min.js"></script>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/jquery-lazyload@1/jquery.lazyload.min.js"></script>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
+
+  
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+
+  
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-reading-progress@1/reading_progress.min.js"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.0"></script>
+
+  <script src="/js/motion.js?v=7.1.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.0"></script>
+
+
+  
+  <script src="/js/js.cookie.js?v=7.1.0"></script>
+  <script src="/js/scroll-cookie.js?v=7.1.0"></script>
+
+
+  
+  <script src="/js/exturl.js?v=7.1.0"></script>
+
+
+  
+  
+  
+    
+  
+
+  
+
+  
+  
+  
+
+
+  
+
+
+  
+    
+
+  
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+
+
+  
+
+<script src="//cdn.jsdelivr.net/npm/js-md5@0/src/md5.min.js"></script>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'f20629d71f8311993aa5',
+    clientSecret: '6d18c3450a1b6a918c5a1d02b0a741dcefce2aad',
+    repo: 'morgan412.github.io',
+    owner: 'morgan412',
+    admin: ['morgan412'],
+    id: md5(location.pathname),
+    
+      language: window.navigator.language || window.navigator.userLanguage,
+    
+    distractionFreeMode: 'true'
+  });
+  gitalk.render('gitalk-container');
+</script>
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+
+  
+<script>
+if ($('body').find('pre.mermaid').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      mermaid.initialize({
+        theme: 'forest',
+        logLevel: 3,
+        flowchart: { curve: 'linear' },
+        gantt: { axisFormat: '%m/%d/%Y' },
+        sequence: { actorMargin: 50 }
+      });
+    }
+  });
+}
+</script>
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+  
+  
+    
+  
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-needmoreshare2@1/needsharebutton.min.js"></script>
+  <script>
+    
+      pbOptions = {};
+      
+        pbOptions.iconStyle = "box";
+      
+        pbOptions.boxForm = "horizontal";
+      
+        pbOptions.position = "bottomCenter";
+      
+        pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+        flOptions.iconStyle = "box";
+      
+        flOptions.boxForm = "horizontal";
+      
+        flOptions.position = "middleRight";
+      
+        flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+
+  
+
+  
+
+  
+  
+  
+    
+  
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-bookmark@1/bookmark.min.js"></script>
+  <script>
+  
+    bookmark.scrollToMark('auto', "#more");
+  
+  </script>
+
+
+  
+
+  
+
+  
+
+
+  
+    
+    
+
+<script src="/static/heart/heart.js"></script>
+<script>
+	$('body').css('background-image', 'url(http://106.13.11.180/' + (Math.floor(Math.random()*40)) + '.jpg)');
+	setInterval(function (){
+		$('body').css('background-image', 'url(http://106.13.11.180/' + (Math.floor(Math.random()*40)) + '.jpg)');
+	},600000);
+</script>
+  
+</body>
+</html>

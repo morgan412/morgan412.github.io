@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.turbosnail.top/"/>
-  <updated>2019-09-18T00:31:06.778Z</updated>
+  <updated>2019-10-23T03:49:07.912Z</updated>
   <id>https://www.turbosnail.top/</id>
   
   <author>
@@ -15,6 +15,59 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>如何优雅的做数据校验-Hibernate Validator详细使用说明</title>
+    <link href="https://www.turbosnail.top/blog/hibernate-validator-usage/"/>
+    <id>https://www.turbosnail.top/blog/hibernate-validator-usage/</id>
+    <published>2019-10-23T03:47:48.000Z</published>
+    <updated>2019-10-23T03:49:07.912Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;数据校验是在平时的编码过程中常做的工作，在系统的各个层可能都要去实现一些校验逻辑，再去做业务处理。这些繁琐的校验与我们的业务代码在一块就会显得臃肿。而且这些校验通常是业务无关的。也是在工作中使用到Hibernate
+        
+      
+    
+    </summary>
+    
+      <category term="Hibernate Validator" scheme="https://www.turbosnail.top/categories/Hibernate-Validator/"/>
+    
+    
+      <category term="Hibernate Validator" scheme="https://www.turbosnail.top/tags/Hibernate-Validator/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Redis的高可用：哨兵（Sentinel）和集群（Cluster）</title>
+    <link href="https://www.turbosnail.top/blog/redis-sentinel-cluster/"/>
+    <id>https://www.turbosnail.top/blog/redis-sentinel-cluster/</id>
+    <published>2019-09-18T06:20:48.000Z</published>
+    <updated>2019-09-19T07:21:40.743Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;上一篇聊了Redis的主从复制以及实现原理，下面会在复制的基础上来谈谈Redis的高可用方案：哨兵机制和集群&lt;/p&gt;
+&lt;h1 id=&quot;哨兵机制&quot;&gt;&lt;a href=&quot;#哨兵机制&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="Redis" scheme="https://www.turbosnail.top/categories/Redis/"/>
+    
+    
+      <category term="Redis" scheme="https://www.turbosnail.top/tags/Redis/"/>
+    
+  </entry>
   
   <entry>
     <title>Redis主从复制的配置和实现原理</title>
@@ -48,7 +101,7 @@
     <link href="https://www.turbosnail.top/blog/redis-data-persistence/"/>
     <id>https://www.turbosnail.top/blog/redis-data-persistence/</id>
     <published>2019-09-10T07:11:48.000Z</published>
-    <updated>2019-09-10T09:41:45.953Z</updated>
+    <updated>2019-09-18T02:42:49.301Z</updated>
     
     <summary type="html">
     
@@ -539,71 +592,6 @@
       <category term="Eureka" scheme="https://www.turbosnail.top/tags/Eureka/"/>
     
       <category term="Feign" scheme="https://www.turbosnail.top/tags/Feign/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Spring Cloud 服务消费（Ribbon）</title>
-    <link href="https://www.turbosnail.top/blog/spring-cloud-consumer-ribbon/"/>
-    <id>https://www.turbosnail.top/blog/spring-cloud-consumer-ribbon/</id>
-    <published>2019-05-01T09:29:43.000Z</published>
-    <updated>2019-05-06T01:59:47.235Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;之前介绍了使用 Eureka 作为服务发现组件，构建了 Eureka Server 作为服务注册中心，使用 Eureka Client 去注册服务 &lt;span class=&quot;exturl&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="Spring Cloud" scheme="https://www.turbosnail.top/categories/Spring-Cloud/"/>
-    
-    
-      <category term="Spring Cloud" scheme="https://www.turbosnail.top/tags/Spring-Cloud/"/>
-    
-      <category term="微服务" scheme="https://www.turbosnail.top/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
-    
-      <category term="Eureka" scheme="https://www.turbosnail.top/tags/Eureka/"/>
-    
-      <category term="Ribbon" scheme="https://www.turbosnail.top/tags/Ribbon/"/>
-    
-      <category term="RestTemplate" scheme="https://www.turbosnail.top/tags/RestTemplate/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Spring Cloud Config 统一配置中心</title>
-    <link href="https://www.turbosnail.top/blog/spring-cloud-config/"/>
-    <id>https://www.turbosnail.top/blog/spring-cloud-config/</id>
-    <published>2019-04-24T15:30:38.000Z</published>
-    <updated>2019-05-06T07:59:35.631Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;Spring Cloud Config 统一配置中心 &lt;/p&gt;
-&lt;h1 id=&quot;统一配置中心&quot;&gt;&lt;a href=&quot;#统一配置中心&quot; class=&quot;headerlink&quot; title=&quot;统一配置中心&quot;&gt;&lt;/a&gt;统一配置中心&lt;/h1&gt;&lt;h2 id=&quot;统一管理配置&quot;&gt;&lt;a
-        
-      
-    
-    </summary>
-    
-      <category term="Spring Cloud" scheme="https://www.turbosnail.top/categories/Spring-Cloud/"/>
-    
-    
-      <category term="Spring Cloud" scheme="https://www.turbosnail.top/tags/Spring-Cloud/"/>
-    
-      <category term="微服务" scheme="https://www.turbosnail.top/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
-    
-      <category term="Spring Cloud Config" scheme="https://www.turbosnail.top/tags/Spring-Cloud-Config/"/>
     
   </entry>
   
