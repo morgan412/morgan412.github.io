@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.turbosnail.top/"/>
-  <updated>2019-10-23T03:49:07.912Z</updated>
+  <updated>2019-10-30T11:55:08.897Z</updated>
   <id>https://www.turbosnail.top/</id>
   
   <author>
@@ -17,11 +17,38 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Redis的高可用，哨兵机制Sentinel</title>
+    <link href="https://www.turbosnail.top/blog/redis-sentinel/"/>
+    <id>https://www.turbosnail.top/blog/redis-sentinel/</id>
+    <published>2019-10-30T06:20:48.000Z</published>
+    <updated>2019-10-30T11:55:08.897Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;上一篇聊了Redis的主从复制以及实现原理，下面会在复制的基础上来说说Redis的高可用方案：哨兵机制&lt;/p&gt;
+&lt;h1 id=&quot;哨兵机制&quot;&gt;&lt;a href=&quot;#哨兵机制&quot; class=&quot;headerlink&quot; title=&quot;哨兵机制&quot;&gt;&lt;/a&gt;哨兵机制&lt;/h1&gt;&lt;h2
+        
+      
+    
+    </summary>
+    
+      <category term="Redis" scheme="https://www.turbosnail.top/categories/Redis/"/>
+    
+    
+      <category term="Redis" scheme="https://www.turbosnail.top/tags/Redis/"/>
+    
+  </entry>
+  
+  <entry>
     <title>如何优雅的做数据校验-Hibernate Validator详细使用说明</title>
     <link href="https://www.turbosnail.top/blog/hibernate-validator-usage/"/>
     <id>https://www.turbosnail.top/blog/hibernate-validator-usage/</id>
     <published>2019-10-23T03:47:48.000Z</published>
-    <updated>2019-10-23T03:49:07.912Z</updated>
+    <updated>2019-10-25T00:54:56.940Z</updated>
     
     <summary type="html">
     
@@ -39,33 +66,6 @@
     
     
       <category term="Hibernate Validator" scheme="https://www.turbosnail.top/tags/Hibernate-Validator/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Redis的高可用：哨兵（Sentinel）和集群（Cluster）</title>
-    <link href="https://www.turbosnail.top/blog/redis-sentinel-cluster/"/>
-    <id>https://www.turbosnail.top/blog/redis-sentinel-cluster/</id>
-    <published>2019-09-18T06:20:48.000Z</published>
-    <updated>2019-09-19T07:21:40.743Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;上一篇聊了Redis的主从复制以及实现原理，下面会在复制的基础上来谈谈Redis的高可用方案：哨兵机制和集群&lt;/p&gt;
-&lt;h1 id=&quot;哨兵机制&quot;&gt;&lt;a href=&quot;#哨兵机制&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="Redis" scheme="https://www.turbosnail.top/categories/Redis/"/>
-    
-    
-      <category term="Redis" scheme="https://www.turbosnail.top/tags/Redis/"/>
     
   </entry>
   

@@ -164,7 +164,7 @@
 <meta property="og:site_name" content="TurboSnail">
 <meta property="og:description" content="数据校验是在平时的编码过程中常做的工作，在系统的各个层可能都要去实现一些校验逻辑，再去做业务处理。这些繁琐的校验与我们的业务代码在一块就会显得臃肿。而且这些校验通常是业务无关的。也是在工作中使用到Hibernate Validator，但却发现有人没有使用好它（竟然还能看到一些if else的校验代码…），所以在这里决定整理下关于Hibernate Validator的使用 Bean Valida">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-10-23T03:49:07.912Z">
+<meta property="og:updated_time" content="2019-10-25T00:54:56.940Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何优雅的做数据校验-Hibernate Validator详细使用说明">
 <meta name="twitter:description" content="数据校验是在平时的编码过程中常做的工作，在系统的各个层可能都要去实现一些校验逻辑，再去做业务处理。这些繁琐的校验与我们的业务代码在一块就会显得臃肿。而且这些校验通常是业务无关的。也是在工作中使用到Hibernate Validator，但却发现有人没有使用好它（竟然还能看到一些if else的校验代码…），所以在这里决定整理下关于Hibernate Validator的使用 Bean Valida">
@@ -603,7 +603,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RentalStation</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">RentalStation</span><span class="params">(@NotNull String name)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//...</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">rentCar</span><span class="params">(@NotNull @Future LocalDate startDate, @Min(<span class="number">1</span>)</span> <span class="keyword">int</span> durationInDays) </span>&#123;</span><br><span class="line">        <span class="comment">//...</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@NotNull</span></span><br><span class="line">    <span class="meta">@Size</span>(min = <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">public</span> List&lt;<span class="meta">@NotNull</span> String&gt; getCustomers() &#123;</span><br><span class="line">        <span class="comment">//...</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><code>ExecutableValidator</code>接口可以完成方法约束的验证</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ValidatorFactory factory = Validation.buildDefaultValidatorFactory();</span><br><span class="line">executableValidator = factory.getValidator().forExecutables();</span><br></pre></td></tr></table></figure>
-<p>该<code>ExecutableValidator</code>界面共有四种方法：</p>
+<p>该<code>ExecutableValidator</code>接口共有四种方法：</p>
 <ul>
 <li><code>validateParameters()</code>和<code>validateReturnValue()</code>用于方法验证</li>
 <li><code>validateConstructorParameters()</code>和<code>validateConstructorReturnValue()</code>用于构造函数验证</li>
@@ -965,8 +965,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/redis-sentinel-cluster/" rel="next" title="Redis的高可用：哨兵（Sentinel）和集群（Cluster）">
-                <i class="fa fa-chevron-left"></i> Redis的高可用：哨兵（Sentinel）和集群（Cluster）
+              <a href="/blog/redis-replication/" rel="next" title="Redis主从复制的配置和实现原理">
+                <i class="fa fa-chevron-left"></i> Redis主从复制的配置和实现原理
               </a>
             
           </div>
@@ -974,6 +974,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/redis-sentinel/" rel="prev" title="Redis的高可用，哨兵机制Sentinel">
+                Redis的高可用，哨兵机制Sentinel <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -1358,7 +1362,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="Symbols count total">321k</span>
+    <span title="Symbols count total">325k</span>
   
 
   
@@ -1367,7 +1371,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="Reading time total">4:52</span>
+    <span title="Reading time total">4:56</span>
   
 </div>
 

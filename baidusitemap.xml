@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://www.turbosnail.top/blog/hibernate-validator-usage/</loc>
-    <lastmod>2019-10-23</lastmod>
+    <loc>https://www.turbosnail.top/blog/git-introduction-usage/</loc>
+    <lastmod>2019-10-31</lastmod>
   </url>  <url>
-    <loc>https://www.turbosnail.top/blog/redis-sentinel-cluster/</loc>
-    <lastmod>2019-09-19</lastmod>
+    <loc>https://www.turbosnail.top/blog/redis-sentinel/</loc>
+    <lastmod>2019-10-30</lastmod>
+  </url>  <url>
+    <loc>https://www.turbosnail.top/blog/hibernate-validator-usage/</loc>
+    <lastmod>2019-10-25</lastmod>
   </url>  <url>
     <loc>https://www.turbosnail.top/blog/redis-data-persistence/</loc>
     <lastmod>2019-09-18</lastmod>
@@ -81,9 +84,6 @@
   </url>  <url>
     <loc>https://www.turbosnail.top/blog/spring-boot-profiles/</loc>
     <lastmod>2019-05-05</lastmod>
-  </url>  <url>
-    <loc>https://www.turbosnail.top/blog/git-introduction-usage/</loc>
-    <lastmod>2019-04-30</lastmod>
   </url>  <url>
     <loc>https://www.turbosnail.top/blog/docker-introduction-usage/</loc>
     <lastmod>2019-04-28</lastmod>

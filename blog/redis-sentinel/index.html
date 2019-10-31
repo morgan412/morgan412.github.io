@@ -156,19 +156,19 @@
 
 
 
-  <meta name="description" content="上一篇聊了Redis的主从复制以及实现原理，下面会在复制的基础上来谈谈Redis的高可用方案：哨兵机制和集群 哨兵机制简介在主从复制的模式下，主服务器宕机后，从服务器是不能自动转为主服务器的，只能手动进行故障转移 而哨兵机制（Sentinel）就是Redis的高可用解决方案，由一个或多个Sentinel实例组成的Sentinel系统用来管理主服务器以及连接的所有从服务器。可以实现故障发现、故障自动">
+  <meta name="description" content="上一篇聊了Redis的主从复制以及实现原理，下面会在复制的基础上来说说Redis的高可用方案：哨兵机制 哨兵机制什么是哨兵机制在主从复制的模式下，主服务器宕机后，从服务器是不能自动转为主服务器的，只能手动进行故障转移 而哨兵机制（Sentinel）就是Redis的高可用解决方案，由一个或多个Sentinel实例组成的Sentinel系统用来管理主服务器以及连接的所有从服务器。可以实现故障发现、故障">
 <meta name="keywords" content="Redis">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Redis的高可用：哨兵（Sentinel）和集群（Cluster）">
-<meta property="og:url" content="https://www.turbosnail.top/blog/redis-sentinel-cluster/index.html">
+<meta property="og:title" content="Redis的高可用，哨兵机制Sentinel">
+<meta property="og:url" content="https://www.turbosnail.top/blog/redis-sentinel/index.html">
 <meta property="og:site_name" content="TurboSnail">
-<meta property="og:description" content="上一篇聊了Redis的主从复制以及实现原理，下面会在复制的基础上来谈谈Redis的高可用方案：哨兵机制和集群 哨兵机制简介在主从复制的模式下，主服务器宕机后，从服务器是不能自动转为主服务器的，只能手动进行故障转移 而哨兵机制（Sentinel）就是Redis的高可用解决方案，由一个或多个Sentinel实例组成的Sentinel系统用来管理主服务器以及连接的所有从服务器。可以实现故障发现、故障自动">
+<meta property="og:description" content="上一篇聊了Redis的主从复制以及实现原理，下面会在复制的基础上来说说Redis的高可用方案：哨兵机制 哨兵机制什么是哨兵机制在主从复制的模式下，主服务器宕机后，从服务器是不能自动转为主服务器的，只能手动进行故障转移 而哨兵机制（Sentinel）就是Redis的高可用解决方案，由一个或多个Sentinel实例组成的Sentinel系统用来管理主服务器以及连接的所有从服务器。可以实现故障发现、故障">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://oscimg.oschina.net/oscnet/2a347abe540d0bab266e5b6e3ff4a4ee74b.jpg">
-<meta property="og:updated_time" content="2019-09-19T07:21:40.743Z">
+<meta property="og:updated_time" content="2019-10-30T11:55:08.897Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Redis的高可用：哨兵（Sentinel）和集群（Cluster）">
-<meta name="twitter:description" content="上一篇聊了Redis的主从复制以及实现原理，下面会在复制的基础上来谈谈Redis的高可用方案：哨兵机制和集群 哨兵机制简介在主从复制的模式下，主服务器宕机后，从服务器是不能自动转为主服务器的，只能手动进行故障转移 而哨兵机制（Sentinel）就是Redis的高可用解决方案，由一个或多个Sentinel实例组成的Sentinel系统用来管理主服务器以及连接的所有从服务器。可以实现故障发现、故障自动">
+<meta name="twitter:title" content="Redis的高可用，哨兵机制Sentinel">
+<meta name="twitter:description" content="上一篇聊了Redis的主从复制以及实现原理，下面会在复制的基础上来说说Redis的高可用方案：哨兵机制 哨兵机制什么是哨兵机制在主从复制的模式下，主服务器宕机后，从服务器是不能自动转为主服务器的，只能手动进行故障转移 而哨兵机制（Sentinel）就是Redis的高可用解决方案，由一个或多个Sentinel实例组成的Sentinel系统用来管理主服务器以及连接的所有从服务器。可以实现故障发现、故障">
 <meta name="twitter:image" content="https://oscimg.oschina.net/oscnet/2a347abe540d0bab266e5b6e3ff4a4ee74b.jpg">
 
 
@@ -179,7 +179,7 @@
 
   
   
-  <link rel="canonical" href="https://www.turbosnail.top/blog/redis-sentinel-cluster/">
+  <link rel="canonical" href="https://www.turbosnail.top/blog/redis-sentinel/">
 
 
 
@@ -189,7 +189,7 @@
   };
 </script>
 
-  <title>Redis的高可用：哨兵（Sentinel）和集群（Cluster） | TurboSnail</title>
+  <title>Redis的高可用，哨兵机制Sentinel | TurboSnail</title>
   
 
 
@@ -460,7 +460,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.turbosnail.top/blog/redis-sentinel-cluster/">
+    <link itemprop="mainEntityOfPage" href="https://www.turbosnail.top/blog/redis-sentinel/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="TurboSnail">
@@ -477,7 +477,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">Redis的高可用：哨兵（Sentinel）和集群（Cluster）
+          <h2 class="post-title" itemprop="name headline">Redis的高可用，哨兵机制Sentinel
 
               
             
@@ -503,7 +503,7 @@
                 
               
 
-              <time title="Created: 2019-09-18 14:20:48" itemprop="dateCreated datePublished" datetime="2019-09-18T14:20:48+08:00">2019-09-18</time>
+              <time title="Created: 2019-10-30 14:20:48" itemprop="dateCreated datePublished" datetime="2019-10-30T14:20:48+08:00">2019-10-30</time>
             
 
             
@@ -550,7 +550,7 @@
                   <i class="fa fa-file-word-o"></i>
                 </span>
                 
-                <span title="Symbols count in article">517</span>
+                <span title="Symbols count in article">4.8k</span>
               
 
               
@@ -562,7 +562,7 @@
                   <i class="fa fa-clock-o"></i>
                 </span>
                 
-                <span title="Reading time">1 mins.</span>
+                <span title="Reading time">4 mins.</span>
               
             </div>
           
@@ -582,8 +582,8 @@
       
 
       
-        <p>上一篇聊了Redis的主从复制以及实现原理，下面会在复制的基础上来谈谈Redis的高可用方案：哨兵机制和集群</p>
-<h1 id="哨兵机制"><a href="#哨兵机制" class="headerlink" title="哨兵机制"></a>哨兵机制</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在主从复制的模式下，主服务器宕机后，从服务器是不能自动转为主服务器的，只能手动进行故障转移</p>
+        <p>上一篇聊了Redis的主从复制以及实现原理，下面会在复制的基础上来说说Redis的高可用方案：哨兵机制</p>
+<h1 id="哨兵机制"><a href="#哨兵机制" class="headerlink" title="哨兵机制"></a>哨兵机制</h1><h2 id="什么是哨兵机制"><a href="#什么是哨兵机制" class="headerlink" title="什么是哨兵机制"></a>什么是哨兵机制</h2><p>在主从复制的模式下，主服务器宕机后，从服务器是不能自动转为主服务器的，只能手动进行故障转移</p>
 <p>而<strong>哨兵机制</strong>（Sentinel）就是Redis的高可用解决方案，由一个或多个Sentinel实例组成的Sentinel系统用来管理主服务器以及连接的所有从服务器。可以实现故障发现、故障自动转移、配置中心和客户端通知</p>
 <ul>
 <li><strong>监控（Monitoring</strong>）：Sentinel会不断地检查你的主服务器和从服务器是否运作正常</li>
@@ -591,7 +591,89 @@
 <li><strong>自动故障迁移（Automatic failover）</strong>：当一个主服务器不能正常工作时， Sentinel会开始一次自动故障迁移操作，它会将失效主服务器的其中一个从服务器升级为新的主服务器，并让失效主服务器的其他从服务器改为复制新的主服务器；当客户端试图连接失效的主服务器时，集群也会向客户端返回新主服务器的地址，使得集群可以使用新主服务器代替失效服务器</li>
 </ul>
 <p><img src="https://oscimg.oschina.net/oscnet/2a347abe540d0bab266e5b6e3ff4a4ee74b.jpg" alt></p>
-<h1 id="Redis集群"><a href="#Redis集群" class="headerlink" title="Redis集群"></a>Redis集群</h1>
+<p>看了上图，我们可以理解哨兵机制就是在复制基础上的一套监管系统，能及时的进行故障转移。那么就先了解下，Redis是如何故障判定和故障转移的</p>
+<h2 id="故障判定"><a href="#故障判定" class="headerlink" title="故障判定"></a>故障判定</h2><p>故障判定，也就是Sentinel在做的任务，当一个Sentinel启动后会定期的去执行以下的任务</p>
+<ul>
+<li>每个Sentinel进程会以<strong>每秒一次</strong>的频率向已知的主服务器、从服务器以及其他的Sentinel实例发送一个<code>PING</code>命令</li>
+<li>每个实例（instance）距离最后一次有效回复<code>PING</code>命令的时间超过<code>down-after-milliseconds</code>选项所指定的值，那么该实例会被标记为<strong>主观下线</strong>。一个有效回复可以是：<code>+PONG</code>、<code>-LOADING</code>或者<code>-MASTERDOWN</code></li>
+<li>如果一个<code>Master</code>主服务器被标记为<strong>主观下线</strong>，那么监视该主服务器的所有的Sentinel会以<strong>每秒一次</strong>的频率确认主服务器的确是进入主线下线状态</li>
+<li>如果有足够数量的Sentinel（至少达到配置文件指定的数量）在指定时间范围内确认一个<code>Master</code>主服务器为<strong>主观下线</strong>状态，那么该主服务器被标记为<strong>客观下线</strong></li>
+<li>一般情况下，每个Sentinel会<strong>每10秒一次</strong>的频率向已知的主服务器和从服务器发送<code>INFO</code>命令，当一个主服务器被标记为<strong>客观下线</strong>时，发送<code>INFO</code>命令的频率会改为每秒一次</li>
+<li>没有足够数量的Sentinel同意主服务器下线，主服务器的客观下线状态会被移除；当主服务器重新向Sentinel的<code>PING</code>命令返回有效回复，主服务器的主观下线状态就会被移除</li>
+</ul>
+<blockquote>
+<p><strong>主观下线（Subjectively Down，SDOWN）</strong>指单个Sentinel实例对服务器做出下线判断</p>
+<p><strong>客观下线（Objectively Down，ODOWN）</strong>指多个Sentinel实例对服务器做出SDOWN判断， 并且通过 SENTINEL <code>is-master-down-by-addr</code>命令互相交流之后，，得出的服务器下线判断</p>
+</blockquote>
+<h1 id="搭建哨兵实例"><a href="#搭建哨兵实例" class="headerlink" title="搭建哨兵实例"></a>搭建哨兵实例</h1><h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><p>我这里是准备了3个虚拟机，1主2从的Redis服务器和3个哨兵实例。官网上是推荐至少部署3个Sentinel实例保证健壮性，具体的地址端口如下</p>
+<table>
+<thead>
+<tr>
+<th>服务</th>
+<th>ip</th>
+<th>port</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Redis（master）</td>
+<td>192.168.249.20</td>
+<td>6379</td>
+</tr>
+<tr>
+<td>Redis</td>
+<td>192.168.249.21</td>
+<td>6379</td>
+</tr>
+<tr>
+<td>Redis</td>
+<td>192.168.249.22</td>
+<td>6379</td>
+</tr>
+<tr>
+<td>Sentinel</td>
+<td>192.168.249.20</td>
+<td>26379</td>
+</tr>
+<tr>
+<td>Sentinel</td>
+<td>192.168.249.21</td>
+<td>26379</td>
+</tr>
+<tr>
+<td>Sentinel</td>
+<td>192.168.249.22</td>
+<td>26379</td>
+</tr>
+</tbody>
+</table>
+<p>1主2从的Redis服务的配置如下，修改一下<code>redis.conf</code>文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置为后台运行</span></span><br><span class="line">daemonize yes</span><br><span class="line"><span class="comment"># 绑定的主机地址，这里注释掉，开放ip连接</span></span><br><span class="line"><span class="comment">#bind 127.0.0.1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 主服务上可以设置密码</span></span><br><span class="line">requirepass 123456</span><br></pre></td></tr></table></figure>
+<p>在从服务器上添加主服务器的地址信息</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置主服务器的地址</span></span><br><span class="line"><span class="comment"># replicaof &lt;masterip&gt; &lt;masterport&gt;</span></span><br><span class="line">replicaof 192.168.249.20 6379</span><br><span class="line"><span class="comment"># 设置主服务器的密码</span></span><br><span class="line"><span class="comment"># masterauth &lt;master-password&gt;</span></span><br><span class="line">masterauth 123456</span><br></pre></td></tr></table></figure>
+<p>3个哨兵的配置都是一样的，可以从Redis的安装目录拷贝一份<code>sentinel.conf</code>，修改内容如下，主要是配置下主服务器的地址</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置为后台运行</span></span><br><span class="line">daemonize yes</span><br><span class="line">logfile <span class="string">"26379.log"</span></span><br><span class="line"><span class="comment"># 设置主服务器的地址，quorum为2表示当有2个或以上的哨兵认为主服务器不可用时，才进行故障转移操作</span></span><br><span class="line"><span class="comment"># sentinel monitor &lt;master-name&gt; &lt;ip&gt; &lt;redis-port&gt; &lt;quorum&gt;</span></span><br><span class="line">sentinel monitor mymaster 192.168.249.20 6379 2</span><br><span class="line"><span class="comment"># 设置服务器密码</span></span><br><span class="line"><span class="comment"># sentinel auth-pass &lt;master-name&gt; &lt;password&gt;</span></span><br><span class="line">sentinel auth-pass mymaster 123456</span><br><span class="line"></span><br><span class="line"><span class="comment"># 指定了 Sentinel 认为服务器已经断线所需的毫秒数</span></span><br><span class="line"><span class="comment"># sentinel down-after-milliseconds &lt;master-name&gt; &lt;milliseconds&gt;</span></span><br><span class="line">sentinel down-after-milliseconds mymaster 30000</span><br><span class="line"><span class="comment"># 指定了在执行故障转移时，最多可以有多少个从服务器同时对新的主服务器进行同步， 这个数字越小，完成故障转移所需的时间就越长。但是如果这个数字越大，就意味着越多的slave因为replication而不可用。</span></span><br><span class="line"><span class="comment"># 可以通过将这个值设为 1 来保证每次只有一个slave 处于不能处理命令请求的状态</span></span><br><span class="line"><span class="comment"># sentinel parallel-syncs &lt;master-name&gt; &lt;numreplicas&gt;</span></span><br><span class="line">sentinel parallel-syncs mymaster 1</span><br><span class="line"><span class="comment"># 指定故障转移超时时间</span></span><br><span class="line"><span class="comment"># sentinel failover-timeout &lt;master-name&gt; &lt;milliseconds&gt;</span></span><br><span class="line">sentinel failover-timeout mymaster 180000</span><br></pre></td></tr></table></figure>
+<p>Sentinel可用通过Redis实例的发布/订阅功能自动发现同样在监控主服务器的其他Sentinel，以及可以通过主服务器获取其他从服务器的信息，所以我们只需配置主服务器的地址即可</p>
+<h2 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h2><p>启动顺序分别是：主服务器，从服务器，然后是3个哨兵进程</p>
+<p>启动Redis服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./redis-server ../redis.conf</span><br></pre></td></tr></table></figure>
+<p>Sentinel其实也是一个Redis服务，可以看做一个特殊模式的Redis服务，启动的命令有两种</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">./redis-server ../sentinel.conf --sentinel</span><br><span class="line"></span><br><span class="line">./redis-sentinel ../sentinel.conf</span><br></pre></td></tr></table></figure>
+<p>这两种方式启动哨兵的效果都是一样的，在启动运行时必须要使用配置文件，因为系统需要这个文件来保存当前状态，以便重启时加载</p>
+<h2 id="查看主机状态"><a href="#查看主机状态" class="headerlink" title="查看主机状态"></a>查看主机状态</h2><p>我们可以用客户端连接哨兵，使用<code>sentinel master &lt;master-name&gt;</code>查看其监视的主服务器的状态</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">$ ./redis-cli -h 192.168.249.20 -p 26379</span><br><span class="line">192.168.249.20:26379&gt; sentinel master mymaster</span><br><span class="line"> 1) <span class="string">"name"</span></span><br><span class="line"> 2) <span class="string">"mymaster"</span></span><br><span class="line"> 3) <span class="string">"ip"</span></span><br><span class="line"> 4) <span class="string">"192.168.249.20"</span></span><br><span class="line"> 5) <span class="string">"port"</span></span><br><span class="line"> 6) <span class="string">"6379"</span></span><br><span class="line"> 7) <span class="string">"runid"</span></span><br><span class="line"> 8) <span class="string">"2a58b746fe9c963e69887efbc877aa3143eb6ec6"</span></span><br><span class="line"> 9) <span class="string">"flags"</span></span><br><span class="line">10) <span class="string">"master"</span></span><br><span class="line">11) <span class="string">"link-pending-commands"</span></span><br><span class="line">12) <span class="string">"0"</span></span><br><span class="line">13) <span class="string">"link-refcount"</span></span><br><span class="line">14) <span class="string">"1"</span></span><br><span class="line">15) <span class="string">"last-ping-sent"</span></span><br><span class="line">16) <span class="string">"0"</span></span><br><span class="line">17) <span class="string">"last-ok-ping-reply"</span></span><br><span class="line">18) <span class="string">"167"</span></span><br><span class="line">19) <span class="string">"last-ping-reply"</span></span><br><span class="line">20) <span class="string">"167"</span></span><br><span class="line">21) <span class="string">"down-after-milliseconds"</span></span><br><span class="line">22) <span class="string">"30000"</span></span><br><span class="line">23) <span class="string">"info-refresh"</span></span><br><span class="line">24) <span class="string">"2941"</span></span><br><span class="line">25) <span class="string">"role-reported"</span></span><br><span class="line">26) <span class="string">"master"</span></span><br><span class="line">27) <span class="string">"role-reported-time"</span></span><br><span class="line">28) <span class="string">"2006632"</span></span><br><span class="line">29) <span class="string">"config-epoch"</span></span><br><span class="line">30) <span class="string">"0"</span></span><br><span class="line">31) <span class="string">"num-slaves"</span></span><br><span class="line">32) <span class="string">"2"</span></span><br><span class="line">33) <span class="string">"num-other-sentinels"</span></span><br><span class="line">34) <span class="string">"2"</span></span><br><span class="line">35) <span class="string">"quorum"</span></span><br><span class="line">36) <span class="string">"2"</span></span><br><span class="line">37) <span class="string">"failover-timeout"</span></span><br><span class="line">38) <span class="string">"180000"</span></span><br><span class="line">39) <span class="string">"parallel-syncs"</span></span><br><span class="line">40) <span class="string">"1"</span></span><br></pre></td></tr></table></figure>
+<p>我们看到关于主服务器的一些监控信息</p>
+<p><code>num-slaves</code>为从服务器的数量；<code>num-other-sentinels</code>其他哨兵的数量；<code>flags</code>标记为master，当主机掉线了，会变为s_down或o_down</p>
+<p>另外，想查看其他从服务器和其他哨兵的状态，可以用以下的命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sentinel slaves &lt;master-name&gt;</span><br><span class="line">sentinel sentinels &lt;master-name&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="故障转移"><a href="#故障转移" class="headerlink" title="故障转移"></a>故障转移</h2><p>我们可以手动模拟一下，当主服务器挂了，故障故障转移情况。</p>
+<p>想要获取当前主服务器的地址信息，客户端可以使用<code>sentinel get-master-addr-by-name &lt;master-name&gt;</code>命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">192.168.249.20:26379&gt; sentinel get-master-addr-by-name mymaster</span><br><span class="line">1) &quot;192.168.249.20&quot;</span><br><span class="line">2) &quot;6379&quot;</span><br></pre></td></tr></table></figure>
+<p>可以看到当前的主服务地址为<code>192.168.249.20</code>，这是我们手动关闭该服务，或者使用以下命令让服务器睡眠40秒</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ ./redis-cli -h 192.168.249.20  -p 6379</span><br><span class="line">192.168.249.20:6379&gt; auth 123456</span><br><span class="line">OK</span><br><span class="line">192.168.249.20:6379&gt; debug sleep 40</span><br><span class="line">OK</span><br><span class="line">(40.01s)</span><br></pre></td></tr></table></figure>
+<p>这个时候我们再次查看主服务的地址时，应该是可以看到不同信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">192.168.249.20:26379&gt; sentinel get-master-addr-by-name mymaster</span><br><span class="line">1) &quot;192.168.249.22&quot;</span><br><span class="line">2) &quot;6379&quot;</span><br></pre></td></tr></table></figure>
+
       
     </div>
 
@@ -662,7 +744,7 @@
   <li class="post-copyright-link">
     <strong>Post link: </strong>
     
-    <a href="https://www.turbosnail.top/blog/redis-sentinel-cluster/" title="Redis的高可用：哨兵（Sentinel）和集群（Cluster）">https://www.turbosnail.top/blog/redis-sentinel-cluster/</a>
+    <a href="https://www.turbosnail.top/blog/redis-sentinel/" title="Redis的高可用，哨兵机制Sentinel">https://www.turbosnail.top/blog/redis-sentinel/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</span> unless stating additionally.</li>
@@ -709,8 +791,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/redis-replication/" rel="next" title="Redis主从复制的配置和实现原理">
-                <i class="fa fa-chevron-left"></i> Redis主从复制的配置和实现原理
+              <a href="/blog/hibernate-validator-usage/" rel="next" title="如何优雅的做数据校验-Hibernate Validator详细使用说明">
+                <i class="fa fa-chevron-left"></i> 如何优雅的做数据校验-Hibernate Validator详细使用说明
               </a>
             
           </div>
@@ -718,10 +800,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/blog/hibernate-validator-usage/" rel="prev" title="如何优雅的做数据校验-Hibernate Validator详细使用说明">
-                如何优雅的做数据校验-Hibernate Validator详细使用说明 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -1064,7 +1142,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#哨兵机制"><span class="nav-number">1.</span> <span class="nav-text">哨兵机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.1.</span> <span class="nav-text">简介</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis集群"><span class="nav-number">2.</span> <span class="nav-text">Redis集群</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#哨兵机制"><span class="nav-number">1.</span> <span class="nav-text">哨兵机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是哨兵机制"><span class="nav-number">1.1.</span> <span class="nav-text">什么是哨兵机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#故障判定"><span class="nav-number">1.2.</span> <span class="nav-text">故障判定</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#搭建哨兵实例"><span class="nav-number">2.</span> <span class="nav-text">搭建哨兵实例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#准备"><span class="nav-number">2.1.</span> <span class="nav-text">准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动"><span class="nav-number">2.2.</span> <span class="nav-text">启动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看主机状态"><span class="nav-number">2.3.</span> <span class="nav-text">查看主机状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#故障转移"><span class="nav-number">2.4.</span> <span class="nav-text">故障转移</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -1106,7 +1184,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="Symbols count total">321k</span>
+    <span title="Symbols count total">325k</span>
   
 
   
@@ -1115,7 +1193,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="Reading time total">4:52</span>
+    <span title="Reading time total">4:56</span>
   
 </div>
 
